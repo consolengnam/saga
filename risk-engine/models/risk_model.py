@@ -17,15 +17,12 @@ class RiskModels(models.Model):
     type_id = fields.Many2one('risk.models.types', string='Type', required=True)
 
 
-
-
-
 class RiskModelTypes(models.Model):
     _name = 'risk.models.types'
     _description = 'This applies to country risk, borrower risk, lender risk and transaction risk'
 
-    type = fields.Char(string='Type', required=True)
-    description = fields.Text(string='Description', required=True)
+    risk_type = fields.Char(string='Type', required=True)
+    risk_description = fields.Text(string='Description', required=True)
     risk_models = fields.One2many('risk.models', 'type_id', string='Risks')
 
 
