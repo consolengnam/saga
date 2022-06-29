@@ -27,6 +27,9 @@
         # 'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
+        'views/risk_view_risk_models.xml',
+        'views/risk_menu.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [
