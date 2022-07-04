@@ -1,0 +1,97 @@
+<odoo>
+    <data>
+        <!-- explicit  view definition -->
+        <record id="risk_engine_recovery_rate_search_view" model="ir.ui.view">
+            <field name="name">risk.recovery.rate.search</field>
+            <field name="model">risk.recovery.rate</field>
+            <field name="arch" type="xml">
+                <search string="Search Recovery rate Models">
+                    <field name="rate"/>
+                    <field name="country_id"/>
+                    <filter name="status"/>
+                    <group expand="0" string="Group By">
+                        <filter name="status" domain="[]" context="{'group_by': 'status'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+                <!-- Tree recovery rate models -->
+        <record id="risk_engine_recovery_rate_tree_view" model="ir.ui.view">
+            <field name="name">risk.recovery.rate.tree</field>
+            <field name="model">risk.recovery.rate</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="rate"/>
+                    <field name="country_id"/>
+                    <field name="status" optional="show" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+                <!-- Form recovery rate models -->
+        <record id="risk_engine_recovery_rate_form_view" model="ir.ui.view">
+            <field name="name">risk.recovery.rate.form</field>
+            <field name="model">risk.recovery.rate</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <!--<button name="button_active"  string="Set to Active" type="object" data-hotkey="a"/>
+                        <button name="button_inactive"  string="Set to Inactive" type="object" data-hotkey="i"/>-->
+                        <field name="status" widget="statusbar" statusbar_visible="1,2" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="rate"/>
+                            <field name="country_id"/>
+                            <field name="status"/>
+                        </group>
+
+                        <notebook>
+                        <page string="Recovery Rate" name="risk_model_rate">
+
+
+                            <div class="oe_clear"/>
+                        </page>
+                        <page string="Other Information" >
+                            <group>
+                                <group >
+
+                                </group>
+                                <group >
+
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Kanban recovery rate models -->
+        <record id="risk_engine_recovery_rate_tree_view" model="ir.ui.view">
+            <field name="name">risk.recovery.rate.tree</field>
+            <field name="model">risk.recovery.rate</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="rate"/>
+                    <field name="country_id"/>
+                    <field name="status" optional="show" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+        <record id="risk-engine_recovery_rate_action" model="ir.actions.act_window">
+            <field name="name">Recovery Rate Risk Models</field>
+            <field name="res_model">risk.recovery.rate</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+    </data>
+</odoo>

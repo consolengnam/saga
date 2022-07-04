@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="risk_engine_models_premium_f_search_view">
+      <field name="name">risk.models.premium.f.search</field>
+      <field name="model">risk.premium.f.curves</field>
+      <field name="arch" type="xml">
+        <search string="Search Risk Model premium F">
+          <field name="x_period"/>
+          <field name="rate"/>
+         <filter name="status" />
+                    <group expand="0" string="Group By">
+                        <filter  name="status" domain="[]" context="{'group_by': 'status'}"/>
+                     </group>
+        </search>
+      </field>
+    </record>
+
+    <record id="risk_engine_models_premium_f_tree_view" model="ir.ui.view">
+            <field name="name">risk.models.premium.f.tree</field>
+            <field name="model">risk.premium.f.curves</field>
+
+            <field name="arch" type="xml">
+                <tree>
+<!--                    <field name="conversion_factor_default_rate"/>-->
+                    <field name="x_period"/>
+                    <field name="rate"/>
+                    <field name="status" optional="show" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+    <record model="ir.ui.view" id="risk_engine_models_premium_f_form_view">
+      <field name="name">risk.models.premium.f.form</field>
+      <field name="model">risk.premium.f.curves</field>
+      <field name="arch" type="xml">
+        <form>
+            <header>
+                <field name="status" widget="statusbar" statusbar_visible="1,2" readonly="1"/>
+            </header>
+            <sheet>
+                <group>
+<!--                    <field name="conversion_factor_default_rate"/>-->
+                    <field name="x_period"/>
+                     <field name="rate"/>
+                </group>
+                <notebook>
+                        <page string="Model premium F" name="risk_model_premium_f">
+
+
+                            <div class="oe_clear"/>
+                        </page>
+                        <page string="Other Information" >
+                            <group>
+                                <group >
+
+                                </group>
+                                <group >
+
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="risk-engine_premium_f_action">
+      <field name="name">Pricing Model Matrix – Premium F</field>
+      <field name="res_model">risk.premium.f.curves</field>
+      <field name="view_mode">tree,form,kanban</field>
+<!--        <field name="search_view_id" ref="risk-engine_premium_d_search_view"/>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              Create a new Risk Engine Premium F
+            </p><p>
+              You must define a Risk Engine Premium F.
+            </p>
+          </field>
+    </record>
+
+  </data>
+</odoo>

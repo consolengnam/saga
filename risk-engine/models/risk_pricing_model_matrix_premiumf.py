@@ -13,3 +13,4 @@ class RiskPricingModelMatrixPremium(models.Model):
     period = fields.Integer('period', required=True),
     rate = fields.Float('rate', digits=(12, 6), required=True)
     status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1')
+    # conversion_factor_default_rate = fields.Many2one('risk.pricing.model.constants', required=True)
