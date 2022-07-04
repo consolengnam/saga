@@ -1,33 +1,33 @@
-<?xml version="1.0"?>
 <odoo>
   <data>
-    <!-- explicit list view definition -->
+    <!-- explicit  view definition -->
 
-    <record model="ir.ui.view" id="risk_engine_warf_weight_matrix_search_view">
-      <field name="name">risk.warf.weight.matrices.search</field>
-      <field name="model">risk.warf.weight.matrices</field>
-      <field name="arch" type="xml">
-        <search string="Search Risk Model Warf Weight Matrix">
-          <field name="product_id"/>
-          <field name="country_weight"/>
-          <field name="lender_weight"/>
-          <field name="borrower_weight"/>
-          <field name="transaction_weight"/>
-         <filter name="status" />
+
+       <record id="risk_engine_warf_weight_matrix_search_view" model="ir.ui.view">
+            <field name="name">risk.warf.weight.matrices.search</field>
+            <field name="model">risk.warf.weight.matrices</field>
+            <field name="arch" type="xml">
+                <search string="Search Risk Model Warf Weight Matrix">
+                    <field name="product_id"/>
+                    <field name="country_weight"/>
+                    <field name="lender_weight"/>
+                    <field name="borrower_weight"/>
+                    <field name="transaction_weight"/>
                     <group expand="0" string="Group By">
                         <filter  name="status" domain="[]" context="{'group_by': 'status'}"/>
                      </group>
-        </search>
-      </field>
-    </record>
+                </search>
+            </field>
+        </record>
 
-    <record id="risk_engine_warf_weight_matrix_tree_view" model="ir.ui.view">
+
+       <record id="risk_engine_warf_weight_matrix_tree_view" model="ir.ui.view">
             <field name="name">risk.warf.weight.matrices.tree</field>
             <field name="model">risk.warf.weight.matrices</field>
-
+            <field name="priority" eval="1"/>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="product_id"/>
+                   <field name="product_id"/>
                     <field name="country_weight"/>
                     <field name="lender_weight"/>
                     <field name="borrower_weight"/>
@@ -37,24 +37,29 @@
             </field>
         </record>
 
-    <record model="ir.ui.view" id="risk_engine_warf_weight_matrix_form_view">
-      <field name="name">risk.warf.weight.matrices.form</field>
-      <field name="model">risk.warf.weight.matrices</field>
-      <field name="arch" type="xml">
-        <form>
-            <header>
-                <field name="status" widget="statusbar" statusbar_visible="1,2" readonly="1"/>
-            </header>
-            <sheet>
-                <group>
-                     <field name="product_id"/>
-                    <field name="country_weight"/>
-                    <field name="lender_weight"/>
-                    <field name="borrower_weight"/>
-                    <field name="transaction_weight"/>
-                </group>
+       <record id="risk_engine_warf_weight_matrix_form_view" model="ir.ui.view">
+            <field name="name">risk.warf.weight.matrices.form</field>
+            <field name="model">risk.warf.weight.matrices</field>
+            <field name="arch" type="xml">
+                <form>
+                <header>
+                    <field name="status" widget="statusbar" statusbar_visible="1,2" readonly="1"/>
+                </header>
+                <sheet>
 
-                 <notebook>
+                    <group>
+                        <group>
+                             <field name="product_id"/>
+                             <field name="country_weight"/>
+                             <field name="lender_weight"/>
+                             <field name="borrower_weight"/>
+                             <field name="transaction_weight"/>
+                        </group>
+                        <group>
+                             <field name="status"/>
+                        </group>
+                    </group>
+                    <notebook>
                         <page string="Model Warf Weight" name="risk_engine_warf_weight_matrix">
 
 
@@ -66,24 +71,31 @@
 
                                 </group>
                                 <group >
-
                                 </group>
                             </group>
                         </page>
                     </notebook>
-            </sheet>
-        </form>
-      </field>
-    </record>
+                </sheet>
+
+                </form>
+            </field>
+        </record>
 
 
     <!-- actions opening views on models -->
+    <record id="risk-engine_warf_weight_matrix_action" model="ir.actions.act_window">
+          <field name="name">Pricing Model Warf Weight Matrix</field>
+          <field name="res_model">risk.warf.weight.matrices</field>
+          <field name="view_mode">tree,kanban,form</field>
+          <field name="search_view_id" ref="risk_engine_warf_weight_matrix_search_view"/>
+          <field name="context">{
+                'default_type_id':1,
+                'search_default_type_id': 1,
+                'search_default_to_process':1,
+                'tree_view_ref': 'risk_engine_warf_weight_matrix_tree_view',
+                'form_view_ref': '"risk_engine_warf_weight_matrix_form_view'
 
-    <record model="ir.actions.act_window" id="risk-engine_warf_weight_matrix_action">
-      <field name="name">Pricing Model Warf Weight Matrix</field>
-      <field name="res_model">risk.warf.weight.matrices</field>
-      <field name="view_mode">tree,form,kanban</field>
-<!--        <field name="search_view_id" ref="risk-engine_premium_d_search_view"/>-->
+                }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
               Create a new Warf Weight Matrix
@@ -92,8 +104,6 @@
             </p>
           </field>
     </record>
-
-
 
   </data>
 </odoo>

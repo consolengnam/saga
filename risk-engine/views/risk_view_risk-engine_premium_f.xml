@@ -8,9 +8,9 @@
       <field name="model">risk.premium.f.curves</field>
       <field name="arch" type="xml">
         <search string="Search Risk Model premium F">
-          <field name="x_period"/>
+          <field name="period"/>
           <field name="rate"/>
-         <filter name="status" />
+            <filter name="status" />
                     <group expand="0" string="Group By">
                         <filter  name="status" domain="[]" context="{'group_by': 'status'}"/>
                      </group>
@@ -18,35 +18,34 @@
       </field>
     </record>
 
-    <record id="risk_engine_models_premium_f_tree_view" model="ir.ui.view">
+   <record id="risk_engine_models_premium_f_tree_view" model="ir.ui.view">
             <field name="name">risk.models.premium.f.tree</field>
             <field name="model">risk.premium.f.curves</field>
-
             <field name="arch" type="xml">
                 <tree>
-<!--                    <field name="conversion_factor_default_rate"/>-->
-                    <field name="x_period"/>
+<!--                    <field name="risk_premium_d_curves"/>-->
+                    <field name="period"/>
                     <field name="rate"/>
                     <field name="status" optional="show" widget="badge"/>
                 </tree>
             </field>
-        </record>
+   </record>
 
     <record model="ir.ui.view" id="risk_engine_models_premium_f_form_view">
       <field name="name">risk.models.premium.f.form</field>
       <field name="model">risk.premium.f.curves</field>
       <field name="arch" type="xml">
         <form>
-            <header>
+             <header>
                 <field name="status" widget="statusbar" statusbar_visible="1,2" readonly="1"/>
             </header>
             <sheet>
                 <group>
-<!--                    <field name="conversion_factor_default_rate"/>-->
-                    <field name="x_period"/>
+<!--                    <field name="risk_premium_d_curves"/>-->
+                    <field name="period"/>
                      <field name="rate"/>
                 </group>
-                <notebook>
+                 <notebook>
                         <page string="Model premium F" name="risk_model_premium_f">
 
 
@@ -78,9 +77,9 @@
 <!--        <field name="search_view_id" ref="risk-engine_premium_d_search_view"/>-->
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-              Create a new Risk Engine Premium F
+              Create a new Pricing Model Matrix F
             </p><p>
-              You must define a Risk Engine Premium F.
+              You must define a Pricing Model Matrix F.
             </p>
           </field>
     </record>
