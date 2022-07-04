@@ -28,6 +28,12 @@
         'views/views.xml',
         'views/templates.xml',
         'views/risk_view_risk_models.xml',
+        'views/risk_view_risk-engine_premium_d.xml',
+        'views/risk_view_risk-engine_premium_f.xml',
+        'views/risk_view_risk-engine_warf_weight_matrix.xml',
+        'views/risk_view_risk-engine_pricing_model_constants.xml',
+        'views/risk_view_risk-engine_recovery_rate.xml',
+        'views/risk_view_risk-engine_period_after_default_for_recovery.xml',
         'views/risk_menu.xml',
 
     ],

@@ -55,12 +55,12 @@
     <menuitem name="Transaction Risk Models" id="risk-engine_transaction_risk_model" parent="risk-engine_management" action="risk-engine.risk-engine_transaction_action"/>
 
 
-    <menuitem name="Pricing Model Matrix – Recovery Rate" id="risk-engine_recovery_rate" parent="risk-model_simulation" action="risk-engine.risk-engine_country_action"/>
-    <menuitem name="Pricing Model Matrix – Period After Default for Recovery" id="risk-engine_period_after_default_for_recovery" parent="risk-model_simulation" action="risk-engine.risk-engine_lender_action"/>
-    <menuitem name="Pricing Model Matrix – Premium F" id="risk-engine_premium_f" parent="risk-model_simulation" action="risk-engine.risk-engine_borrower_action"/>
-    <menuitem name="Pricing Model Matrix – Premium D" id="risk-engine_premium_d" parent="risk-model_simulation" action="risk-engine.risk-engine_transaction_action"/>
-    <menuitem name="Pricing Model Matrix – WARF Weight Matrix" id="risk-engine_warf_weight_matrix" parent="risk-model_simulation" action="risk-engine.risk-engine_borrower_action"/>
-    <menuitem name="Pricing Model Matrix – Pricing Model Constants" id="risk-engine_pricing_model_constants" parent="risk-model_simulation" action="risk-engine.risk-engine_transaction_action"/>
+    <menuitem name="Pricing Model Matrix – Recovery Rate" id="risk-engine_recovery_rate" parent="risk-model_simulation" action="risk-engine.risk-engine_recovery_rate_action"/>
+    <menuitem name="Pricing Model Matrix – Period After Default for Recovery" id="risk-engine_period_after_default_for_recovery" parent="risk-model_simulation" action="risk-engine.risk_view_risk-engine_period_after_default_for_recovery"/>
+    <menuitem name="Pricing Model Matrix – Premium F" id="risk-engine_premium_f" parent="risk-model_simulation" action="risk-engine.risk-engine_premium_f_action"/>
+    <menuitem name="Pricing Model Matrix – Premium D" id="risk-engine_premium_d" parent="risk-model_simulation" action="risk-engine.risk-engine_premium_d_action"/>
+    <menuitem name="Pricing Model Matrix – WARF Weight Matrix" id="risk-engine_warf_weight_matrix" parent="risk-model_simulation" action="risk-engine.risk-engine_warf_weight_matrix_action"/>
+    <menuitem name="Pricing Model Matrix – Pricing Model Constants" id="risk-engine_pricing_model_constants" parent="risk-model_simulation" action="risk-engine.risk-engine_pricing_model_constants_action"/>
 
   </data>
 </odoo>

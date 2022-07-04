@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+    <record model="ir.ui.view" id="risk_engine_models_premium_f_search_view">
+      <field name="name">risk.pricing.model.constants.search</field>
+      <field name="model">risk.pricing.model.constants</field>
+      <field name="arch" type="xml">
+        <search string="Search Risk Model premium F">
+                     <field name="premium_d"/>
+                     <field name="premium_f"/>
+                    <field name="conversion_factor_default_rate"/>
+        </search>
+      </field>
+    </record>
+
+    <record id="risk_engine_models_premium_f_tree_view" model="ir.ui.view">
+            <field name="name">risk.pricing.model.constants.tree</field>
+            <field name="model">risk.pricing.model.constants</field>
+
+            <field name="arch" type="xml">
+                <tree>
+<!--                    <field name="conversion_factor_default_rate"/>-->
+                    <field name="premium_d"/>
+                     <field name="premium_f"/>
+                    <field name="conversion_factor_default_rate"/>
+                </tree>
+            </field>
+        </record>
+
+    <record model="ir.ui.view" id="risk_engine_models_premium_f_form_view">
+      <field name="name">risk.pricing.model.constants.form</field>
+      <field name="model">risk.pricing.model.constants</field>
+      <field name="arch" type="xml">
+        <form>
+
+            <sheet>
+                <group>
+<!--                    <field name="conversion_factor_default_rate"/>-->
+                    <field name="premium_d"/>
+                     <field name="premium_f"/>
+                    <field name="conversion_factor_default_rate"/>
+                </group>
+
+                <notebook>
+                        <page string="model constants" name="risk_model_constants">
+
+
+                            <div class="oe_clear"/>
+                        </page>
+                        <page string="Other Information" >
+                            <group>
+                                <group >
+
+                                </group>
+                                <group >
+
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="risk-engine_pricing_model_constants_action">
+      <field name="name">Risk pricing model constants</field>
+      <field name="res_model">risk.pricing.model.constants</field>
+      <field name="view_mode">tree,form,kanban</field>
+<!--        <field name="search_view_id" ref="risk-engine_premium_d_search_view"/>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              Create a new Risk Engine Pricing Model Constants
+            </p><p>
+              You must define a Risk Engine Pricing Model Constants.
+            </p>
+          </field>
+    </record>
+
+  </data>
+</odoo>
