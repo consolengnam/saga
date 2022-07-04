@@ -265,7 +265,11 @@
       <record id="risk-engine_transaction_action" model="ir.actions.act_window">
           <field name="name">Tansaction Risk Models</field>
           <field name="res_model">risk.models</field>
+<<<<<<< HEAD
           <field name="view_mode">tree,kanban,form</field>
+=======
+          <field name="view_mode"> tree,kanban,form  </field>
+>>>>>>> 18a5b3edffe22afb9c9e1ec1dbb4f9dfe5a5a92c
           <field name="search_view_id" ref="risk_engine_models_search_view"/>
           <field name="context">{
                 'default_type_id':4,
