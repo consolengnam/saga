@@ -7,6 +7,7 @@ _logger = logging.getLogger(__name__)
 class RiskWarfWeightMatrices(models.Model):
     _name = 'risk.warf.weight.matrices'
     _description = 'No description at the moment'
+    _rec_name = 'product_id'
 
     # product_name = fields.Char(string='Product Name', required=True)
     country_weight = fields.Float(string='Country Weight', digits=(5, 2), required=True)

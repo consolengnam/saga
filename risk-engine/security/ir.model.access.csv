@@ -1,2 +1,12 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_risk-engine_risk-engine,risk-engine.risk-engine,model_risk-engine_risk-engine,base.group_user,1,1,1,1
+access_risk_models1,risk.models1,model_risk_models,,1,1,1,1
+access_risk_models_types1,risk.models.types1,model_risk_models_types,,1,1,1,1
+access_risk_model_sub_factor_answers1,risk.model.sub.factor.answers1,model_risk_model_sub_factor_answers,,1,1,1,1
+access_risk_model_sub_factor1,risk.model.sub.factor1,model_risk_model_sub_factor,,1,1,1,1
+access_risk_model_factor1,risk.model.factor1,model_risk_model_factor,,1,1,1,1
+access_risk_period_after_default_for_recovery1,risk.period.after.default.for.recovery1,model_risk_period_after_default_for_recovery,,1,1,1,1
+access_risk_pricing_model_constants1,risk.pricing.model.constants1,model_risk_pricing_model_constants,,1,1,1,1
+access_risk_premium_d_curves1,risk.premium.d.curves1,model_risk_premium_d_curves,,1,1,1,1
+access_risk_premium_f_curves1,risk.premium_f_curves1,model_risk_premium_f_curves,,1,1,1,1
+access_risk_recovery_rate1,risk.recovery.rate1,model_risk_recovery_rate,,1,1,1,1
+access_risk_warf_weight_matrices1,risk.warf.weight.matrices1,model_risk_warf_weight_matrices,,1,1,1,1
