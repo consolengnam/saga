@@ -66,7 +66,7 @@
                                 <field name="model_description"/>
                             </group>
                             <group>
-                                <field name="type_id"/>
+                                <field name="type_risk"/>
                                 <field name="status"/>
                             </group>
                         </group>
@@ -284,10 +284,12 @@
             <field name="name">Country Risk Models</field>
             <field name="res_model">risk.models</field>
             <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[ '&amp;',('type_risk', '=', 'country_risk_models') ,('type_risk', '=', 'country_risk_models') ]
+            </field>
             <field name="search_view_id" ref="risk_engine_models_search_view"/>
             <field name="context">{
-                'default_type_id':1,
-                'search_default_type_id': 1,
+                'default_type_risk':'country_risk_models',
+                'search_default_type_risk': 'country_risk_models',
                 'search_default_to_process':1,
                 'tree_view_ref': 'risk_engine_models_tree_view',
                 'form_view_ref': 'risk_engine_models_form_view'
@@ -308,10 +310,12 @@
             <field name="name">Lender Risk Models</field>
             <field name="res_model">risk.models</field>
             <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[ '&amp;',('type_risk', '=', 'lender_risk_models') ,('type_risk', '=', 'lender_risk_models') ]
+            </field>
             <field name="search_view_id" ref="risk_engine_models_search_view"/>
             <field name="context">{
-                'default_type_id':2,
-                'search_default_type_id': 1,
+                'default_type_risk':'lender_risk_models',
+                'search_default_type_risk': 'lender_risk_models',
                 'search_default_to_process':1,
                 'tree_view_ref': 'risk_engine_models_tree_view',
                 'form_view_ref': 'risk_engine_models_form_view'
@@ -332,10 +336,12 @@
             <field name="name">Borrower Risk Models</field>
             <field name="res_model">risk.models</field>
             <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[ '&amp;',('type_risk', '=', 'borrower_risk_models') ,('type_risk', '=', 'borrower_risk_models') ]
+            </field>
             <field name="search_view_id" ref="risk_engine_models_search_view"/>
             <field name="context">{
-                'default_type_id':3,
-                'search_default_type_id': 3,
+                'default_type_risk':'borrower_risk_models',
+                'search_default_type_risk': 'borrower_risk_models',
                 'search_default_to_process':1,
                 'tree_view_ref': 'risk_engine_models_tree_view',
                 'form_view_ref': 'risk_engine_models_form_view'
@@ -357,10 +363,12 @@
             <field name="name">Tansaction Risk Models</field>
             <field name="res_model">risk.models</field>
             <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[ '&amp;',('type_risk', '=', 'transaction_risk_models') ,('type_risk', '=', 'transaction_risk_models') ]
+            </field>
             <field name="search_view_id" ref="risk_engine_models_search_view"/>
             <field name="context">{
-                'default_type_id':4,
-                'search_default_type_id': 4,
+                'default_type_risk':'transaction_risk_models',
+                'search_default_type_risk': 'transaction_risk_models',
                 'search_default_to_process':1,
                 'tree_view_ref': 'risk_engine_models_tree_view',
                 'form_view_ref': 'risk_engine_models_form_view'
