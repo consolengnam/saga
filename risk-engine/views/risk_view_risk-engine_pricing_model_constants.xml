@@ -8,8 +8,8 @@
       <field name="model">risk.pricing.model.constants</field>
       <field name="arch" type="xml">
         <search string="Search Risk Model premium F">
-                     <field name="premium_d"/>
-                     <field name="premium_f"/>
+<!--                     <field name="premium_d"/>-->
+<!--                     <field name="premium_f"/>-->
                     <field name="conversion_factor_default_rate"/>
         </search>
       </field>
@@ -22,8 +22,8 @@
             <field name="arch" type="xml">
                 <tree>
 <!--                    <field name="conversion_factor_default_rate"/>-->
-                    <field name="premium_d"/>
-                     <field name="premium_f"/>
+<!--                    <field name="premium_d"/>-->
+<!--                     <field name="premium_f"/>-->
                     <field name="conversion_factor_default_rate"/>
                 </tree>
             </field>
@@ -38,8 +38,8 @@
             <sheet>
                 <group>
 <!--                    <field name="conversion_factor_default_rate"/>-->
-                    <field name="premium_d"/>
-                     <field name="premium_f"/>
+<!--                    <field name="premium_d"/>-->
+<!--                     <field name="premium_f"/>-->
                     <field name="conversion_factor_default_rate"/>
                 </group>
 

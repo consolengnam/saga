@@ -10,6 +10,6 @@ class RiskPricingModelMatrixPremiumD(models.Model):
     _name = 'risk.premium.d.curves'
     _description = 'No description at the moment'
 
-    # risk_premium_d_curves = fields.Many2one('risk.pricing.model.constants', required=True)
+    conversion_factor_default_rate_id = fields.Many2one('risk.pricing.model.constants', string='Conversion_factor_default_rate' , required=True)
     period = fields.Integer('period', required=True)
     rate = fields.Float('rate', digits=(12, 6), required=True)
