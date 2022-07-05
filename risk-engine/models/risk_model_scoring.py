@@ -24,6 +24,7 @@ class RiskModelSubFactor(models.Model):
     weight = fields.Float(compute="_value_pc", store=True)
     risk_model_sub_factor_answers = fields.One2many('risk.model.sub.factor.answers', 'risk_model_subfactor_id', required=True)
     risk_model_factor_id = fields.Many2one('risk.model.factor', 'factor_name', required=True)
+    _rec_name = 'subfactor_name'
 
 
 class RiskModelFactor(models.Model):
@@ -35,6 +36,7 @@ class RiskModelFactor(models.Model):
     Weight = fields.Float(compute="_value_pc", store=True)
     risk_model_id = fields.Many2one('risk.models', 'model_name', required=True)
     risk_model_sub_factors = fields.One2many('risk.model.sub.factor', 'risk_model_factor_id', required=True)
+    _rec_name = 'factor_name'
 
 #
 # class RiskModels(models.Model):

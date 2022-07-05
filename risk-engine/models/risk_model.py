@@ -3,10 +3,7 @@ from odoo import models, fields, api
 from datetime import datetime
 from odoo.osv import expression
 
-
 _logger = logging.getLogger(__name__)
-
-
 
 
 class RiskModels(models.Model):
@@ -27,7 +24,7 @@ class RiskModelTypes(models.Model):
     type = fields.Char(string='Type', required=True)
     description = fields.Text(string='Description', required=True)
     risk_models = fields.One2many('risk.models', 'type_id', string='Risks')
-
+    _rec_name = 'type'
 
 # class RiskModels(models.Model):
 #     _name = 'risk.models'
@@ -46,9 +43,3 @@ class RiskModelTypes(models.Model):
 #     risk_type = fields.Char(string='Type', required=True)
 #     risk_description = fields.Text(string='Description', required=True)
 #     risk_models = fields.One2many('risk.models', 'type_id', string='Risks')
-
-
-
-
-
-

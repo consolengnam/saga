@@ -21,6 +21,7 @@ class RiskGuaranteeProducts(models.Model):
     _name = 'risk.guarantee.products'
     _description = 'No description at the moment'
 
+    _rec_name = 'product_name'
     product_name = fields.Char(string='Product Name', required=True)
     product_desc = fields.Char(string='Product Desc', required=True)
     risk_warf_weight_matrices = fields.One2many('risk.warf.weight.matrices', 'product_id', string='Product')

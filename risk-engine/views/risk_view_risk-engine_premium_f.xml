@@ -10,6 +10,7 @@
         <search string="Search Risk Model premium F">
           <field name="period"/>
           <field name="rate"/>
+            <field name="conversion_factor_default_rate_id"/>
             <filter name="status" />
                     <group expand="0" string="Group By">
                         <filter  name="status" domain="[]" context="{'group_by': 'status'}"/>
@@ -26,6 +27,7 @@
 <!--                    <field name="risk_premium_d_curves"/>-->
                     <field name="period"/>
                     <field name="rate"/>
+                    <field name="conversion_factor_default_rate_id"/>
                     <field name="status" optional="show" widget="badge"/>
                 </tree>
             </field>
@@ -44,6 +46,7 @@
 <!--                    <field name="risk_premium_d_curves"/>-->
                     <field name="period"/>
                      <field name="rate"/>
+                    <field name="conversion_factor_default_rate_id"/>
                 </group>
                  <notebook>
                         <page string="Model premium F" name="risk_model_premium_f">

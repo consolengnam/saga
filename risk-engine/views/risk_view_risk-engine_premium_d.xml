@@ -10,6 +10,7 @@
         <search string="Search Risk Model premium D">
           <field name="period"/>
           <field name="rate"/>
+            <field name="conversion_factor_default_rate_id"/>
 <!--            <field name="risk_premium_d_curves"/>-->
         </search>
       </field>
@@ -23,6 +24,7 @@
 <!--                    <field name="risk_premium_d_curves"/>-->
                     <field name="period"/>
                     <field name="rate"/>
+                    <field name="conversion_factor_default_rate_id"/>
                 </tree>
             </field>
    </record>
@@ -38,6 +40,7 @@
 <!--                    <field name="risk_premium_d_curves"/>-->
                     <field name="period"/>
                      <field name="rate"/>
+                    <field name="conversion_factor_default_rate_id"/>
                 </group>
                  <notebook>
                         <page string="Model premium D" name="risk_model_premium_d">
