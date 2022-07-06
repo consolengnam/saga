@@ -10,3 +10,6 @@ access_risk_premium_d_curves1,risk.premium.d.curves1,model_risk_premium_d_curves
 access_risk_premium_f_curves1,risk.premium_f_curves1,model_risk_premium_f_curves,,1,1,1,1
 access_risk_recovery_rate1,risk.recovery.rate1,model_risk_recovery_rate,,1,1,1,1
 access_risk_warf_weight_matrices1,risk.warf.weight.matrices1,model_risk_warf_weight_matrices,,1,1,1,1
+access_risk_guarantee_products1,risk.guarantee.products1,model_risk_guarantee_products,,1,1,1,1
+
+
