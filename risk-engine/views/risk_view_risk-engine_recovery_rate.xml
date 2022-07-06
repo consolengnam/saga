@@ -23,8 +23,8 @@
             <field name="priority" eval="1"/>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="rate"/>
                     <field name="country_id"/>
+                    <field name="rate"/>
                     <field name="status" optional="show" widget="badge"/>
                 </tree>
             </field>

@@ -13,6 +13,6 @@ class RecoveryRates(models.Model):
     _description = 'Pricing model matrix'
     _rec_name = 'rate'
 
-    rate = fields.Float('rate', digits=(12, 6), required=True)
+    rate = fields.Float(string='Rate(%)', digits=(5, 2), required=True)
     status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1')
     country_id = fields.Many2one('res.country', string='Country', required=True)

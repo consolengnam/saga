@@ -29,5 +29,4 @@ class RiskModelTypes(models.Model):
 
     type = fields.Char(string='Type', required=True)
     description = fields.Text(string='Description', required=True)
-    #risk_models = fields.One2many('risk.models', 'type_id', string='Risks')
     code = fields.Char(string='Type', required=True)

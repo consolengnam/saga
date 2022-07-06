@@ -25,8 +25,8 @@
             <field name="priority" eval="1"/>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="period"/>
                     <field name="country_id"/>
+                    <field name="period"/>
                     <field name="status" optional="show" widget="badge"/>
                 </tree>
             </field>

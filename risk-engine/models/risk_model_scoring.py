@@ -24,9 +24,9 @@ class RiskModelSubFactor(models.Model):
     subfactor_name = fields.Char(string='sub factor name', required=True)
     subfactor_description = fields.Text(string='factor sub description', required=True)
     weight = fields.Float(store=True)
-    risk_model_sub_factor_answers = fields.One2many('risk.model.sub.factor.answers', 'risk_model_subfactor_id', required=True)
+    risk_model_sub_factor_answers = fields.One2many('risk.model.sub.factor.answers', 'risk_model_subfactor_id',
+                                                    required=True)
     risk_model_factor_id = fields.Many2one('risk.model.factor', 'factor_name', required=True)
-
 
 
 class RiskModelFactor(models.Model):
@@ -34,9 +34,8 @@ class RiskModelFactor(models.Model):
     _description = 'This applies to country risk, borrower risk, lender risk and transaction risk'
     _rec_name = 'factor_name'
 
-    factor_name = fields.Char(string='name factor', required=True)
+    factor_name = fields.Char(string='Name Factor', required=True)
     factor_description = fields.Text(string='Risk Description')
     Weight = fields.Float(store=True)
     risk_model_id = fields.Many2one('risk.models', 'model_name', required=True)
     risk_model_sub_factors = fields.One2many('risk.model.sub.factor', 'risk_model_factor_id', required=True)
-

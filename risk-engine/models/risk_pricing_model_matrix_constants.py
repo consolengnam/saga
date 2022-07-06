@@ -9,6 +9,6 @@ class RiskPricingModelConstants(models.Model):
     _description = 'No description at the moment'
     _rec_name = 'conversion_factor_default_rate'
 
-    risk_premium_d_curves = fields.One2many('risk.premium.d.curves', 'conversion_factor_default_rate_id', required=True)
-    risk_premium_f_curves = fields.One2many('risk.premium.f.curves', 'conversion_factor_default_rate_id', required=True)
-    conversion_factor_default_rate = fields.Float('Conversion Factor Default Rate', digits=(5, 2), required=True)
+    premium_d = fields.Many2one('risk.premium.d.curves', string='Premium D', required=True)
+    premium_f = fields.Many2one('risk.premium.f.curves', string='Premium F', required=True)
+    conversion_factor_default_rate = fields.Float(string='Conversion Factor Default Rate', digits=(5, 2), required=True)

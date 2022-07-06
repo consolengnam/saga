@@ -3,33 +3,33 @@
   <data>
     <!-- explicit list view definition -->
 
-    <record model="ir.ui.view" id="risk_engine_models_premium_f_search_view">
+    <record model="ir.ui.view" id="risk_engine_models_constant_search_view">
       <field name="name">risk.pricing.model.constants.search</field>
       <field name="model">risk.pricing.model.constants</field>
       <field name="arch" type="xml">
-        <search string="Search Risk Model premium F">
-<!--                     <field name="premium_d"/>-->
-<!--                     <field name="premium_f"/>-->
+        <search string="Search Risk Model Constant">
+                     <field name="premium_d"/>
+                     <field name="premium_f"/>
                     <field name="conversion_factor_default_rate"/>
         </search>
       </field>
     </record>
 
-    <record id="risk_engine_models_premium_f_tree_view" model="ir.ui.view">
+    <record id="risk_engine_models_constant_tree_view" model="ir.ui.view">
             <field name="name">risk.pricing.model.constants.tree</field>
             <field name="model">risk.pricing.model.constants</field>
 
             <field name="arch" type="xml">
                 <tree>
 <!--                    <field name="conversion_factor_default_rate"/>-->
-<!--                    <field name="premium_d"/>-->
-<!--                     <field name="premium_f"/>-->
+                      <field name="premium_d"/>
+                     <field name="premium_f"/>
                     <field name="conversion_factor_default_rate"/>
                 </tree>
             </field>
         </record>
 
-    <record model="ir.ui.view" id="risk_engine_models_premium_f_form_view">
+    <record model="ir.ui.view" id="risk_engine_models_constant_form_view">
       <field name="name">risk.pricing.model.constants.form</field>
       <field name="model">risk.pricing.model.constants</field>
       <field name="arch" type="xml">
@@ -38,8 +38,9 @@
             <sheet>
                 <group>
 <!--                    <field name="conversion_factor_default_rate"/>-->
-<!--                    <field name="premium_d"/>-->
-<!--                     <field name="premium_f"/>-->
+<!--                      <field name="risk_premium_f_curves"/>-->
+                    <field name="premium_d"/>
+                     <field name="premium_f"/>
                     <field name="conversion_factor_default_rate"/>
                 </group>
 

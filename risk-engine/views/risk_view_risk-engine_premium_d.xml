@@ -10,8 +10,6 @@
         <search string="Search Risk Model premium D">
           <field name="period"/>
           <field name="rate"/>
-            <field name="conversion_factor_default_rate_id"/>
-<!--            <field name="risk_premium_d_curves"/>-->
         </search>
       </field>
     </record>
@@ -21,10 +19,8 @@
             <field name="model">risk.premium.d.curves</field>
             <field name="arch" type="xml">
                 <tree>
-<!--                    <field name="risk_premium_d_curves"/>-->
                     <field name="period"/>
                     <field name="rate"/>
-                    <field name="conversion_factor_default_rate_id"/>
                 </tree>
             </field>
    </record>
@@ -37,13 +33,11 @@
 
             <sheet>
                 <group>
-<!--                    <field name="risk_premium_d_curves"/>-->
                     <field name="period"/>
                      <field name="rate"/>
-                    <field name="conversion_factor_default_rate_id"/>
                 </group>
                  <notebook>
-                        <page string="Model premium D" name="risk_model_premium_d">
+                        <page string="Model premium D Curves" name="risk_model_premium_d">
 
 
                             <div class="oe_clear"/>
@@ -68,15 +62,14 @@
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="risk-engine_premium_d_action">
-      <field name="name">Pricing Model Matrix – Premium D</field>
+      <field name="name">Pricing Model Matrix – Premium D Curves</field>
       <field name="res_model">risk.premium.d.curves</field>
       <field name="view_mode">tree,form,kanban</field>
-<!--        <field name="search_view_id" ref="risk-engine_premium_d_search_view"/>-->
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-              Create a new Pricing Model Matrix
+              Create a new Pricing Model Matrix premium D Curves
             </p><p>
-              You must define a Pricing Model Matrix.
+              You must define a Pricing Model Matrix premium D Curves.
             </p>
           </field>
     </record>

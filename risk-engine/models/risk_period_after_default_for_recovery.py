@@ -11,7 +11,7 @@ class PeriodAfterDefaultforRecoveries(models.Model):
     _description = 'Pricing model matrix period after default for recovery'
     _rec_name = 'period'
 
-    period = fields.Float('period', digits=(12, 6), required=True)
+    period = fields.Float(string='Period(Tenor)', digits=(5, 2), required=True)
     status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1')
     country_id = fields.Many2one('res.country', string='Country', required=True)
 

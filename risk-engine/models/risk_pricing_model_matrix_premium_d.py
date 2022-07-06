@@ -11,7 +11,6 @@ class RiskPricingModelMatrixPremiumD(models.Model):
     _description = 'No description at the moment'
     _rec_name = 'period'
 
-
-    conversion_factor_default_rate_id = fields.Many2one('risk.pricing.model.constants', string='Conversion_factor_default_rate' , required=True)
-    period = fields.Integer('period', required=True)
-    rate = fields.Float('rate', digits=(12, 6), required=True)
+    risk_pricing_model_constant = fields.One2many('risk.pricing.model.constants', 'premium_d', required=True)
+    period = fields.Integer(string='Period(Tenor)', required=True)
+    rate = fields.Float(string='Rate(%)', digits=(5, 2), required=True)

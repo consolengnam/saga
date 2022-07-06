@@ -10,11 +10,6 @@
         <search string="Search Risk Model premium F">
           <field name="period"/>
           <field name="rate"/>
-            <field name="conversion_factor_default_rate_id"/>
-            <filter name="status" />
-                    <group expand="0" string="Group By">
-                        <filter  name="status" domain="[]" context="{'group_by': 'status'}"/>
-                     </group>
         </search>
       </field>
     </record>
@@ -24,11 +19,8 @@
             <field name="model">risk.premium.f.curves</field>
             <field name="arch" type="xml">
                 <tree>
-<!--                    <field name="risk_premium_d_curves"/>-->
                     <field name="period"/>
                     <field name="rate"/>
-                    <field name="conversion_factor_default_rate_id"/>
-                    <field name="status" optional="show" widget="badge"/>
                 </tree>
             </field>
    </record>
@@ -38,18 +30,13 @@
       <field name="model">risk.premium.f.curves</field>
       <field name="arch" type="xml">
         <form>
-             <header>
-                <field name="status" widget="statusbar" statusbar_visible="1,2" readonly="1"/>
-            </header>
             <sheet>
                 <group>
-<!--                    <field name="risk_premium_d_curves"/>-->
                     <field name="period"/>
                      <field name="rate"/>
-                    <field name="conversion_factor_default_rate_id"/>
                 </group>
                  <notebook>
-                        <page string="Model premium F" name="risk_model_premium_f">
+                        <page string="Model premium F Curves" name="risk_model_premium_f">
 
 
                             <div class="oe_clear"/>
@@ -74,15 +61,14 @@
     <!-- actions opening views on models -->
 
     <record model="ir.actions.act_window" id="risk-engine_premium_f_action">
-      <field name="name">Pricing Model Matrix – Premium F</field>
+      <field name="name">Pricing Model Matrix – Premium F Curves</field>
       <field name="res_model">risk.premium.f.curves</field>
       <field name="view_mode">tree,form,kanban</field>
-<!--        <field name="search_view_id" ref="risk-engine_premium_d_search_view"/>-->
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
-              Create a new Pricing Model Matrix F
+              Create a new Pricing Model Matrix premium F Curve
             </p><p>
-              You must define a Pricing Model Matrix F.
+              You must define a Pricing Model Matrix premium F Curve
             </p>
           </field>
     </record>
