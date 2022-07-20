@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Lead  -->
+    <!-- Lead Form-->
+
+    <record id="pfi_form_view" model="ir.ui.view">
+        <field name="name">pfi.form.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="crm.view_partners_form_crm1"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_type']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//form/sheet/group[1]/group[1]" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//form/sheet/group[1]/group[2]" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath expr="//form/sheet/group[1]" position="before">
+                <group>
+                    <group string="Country/Region">
+                        <label for="street" string="Address"/>
+                        <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_street"/>
+                                <field name="agfcountry_id" placeholder="Country" class="o_address_street"/>
+                                <div class="o_row">
+                                    <field name="region" placeholder="Region" />
+                                    <field name="sub_region" placeholder="Sub-Region"/>
+                                </div>
+                            </div>
+                    </group>
+                    <group string="PFI Details">
+                        <field name="pfi_type"/>
+                        <field name="affiliation_level" />
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="phone" widget="phone"/>
+                        <field name="mobile" widget="phone"/>
+                    </group>
+                    <group>
+                        <field name="email" widget="email"/>
+                        <field name="website" widget="url"/>
+                    </group>
+                </group>
+                <group string="Tiering">
+                    <group>
+                        <field name="final_tier" String="Final Tier"/>
+                    </group>
+                    <group>
+                        <field name="p_lig"/>
+                        <field name="p_lpg"/>
+                        <field name="p_bfrg"/>
+                    </group>
+                </group>
+            </xpath>
+            <xpath  expr="//notebook/page[@name='internal_notes']" position="after">
+                <page string="Prospecting">
+                    <field name="prospecting_ids" readonly="1"/>
+                </page>
+                <page string="Structuring">
+                    <field name="structuring_ids" readonly="1"/>
+                </page>
+            </xpath>
+            <xpath  expr="//notebook/page[@name='sales_purchases']" position="attributes">
+                <attribute name="invisible">True</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- List of lead-->
+    <!-- override the automatically generated list view for lead
+    <record model="ir.ui.view" id="pfi_tree_view">
+        <field name="name">pfi.tree.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="crm.crm_lead_partner_kanban_view"/>
+    </record>
+    -->
+    <!--
+    <record id="view_create_pfi_simplified" model="ir.ui.view">
+        <field name="name">pfi.pfi.form.simple</field>
+        <field name="model">pfi.pfi</field>
+        <field name="arch" type="xml">
+            <form string="Create a PFI">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" string="PFI name" placeholder="e.g. African Guarantee Fund"/>
+                            <field name="agfcountry_id"/>
+                            <field name="region"/>
+                            <field name="sub_region"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Create" name="close_dialog" type="object" class="btn-primary"/>
+                        <button string="Create &amp; Edit" name="edit_dialog" type="object" class="btn-primary"/>
+                        <button string="Discard" class="btn-default" special="cancel"/>
+                    </footer>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="create_pfi_simplified" model="ir.actions.act_window">
+        <field name="name">Create a pfi</field>
+        <field name="res_model">pfi.pfi</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_create_pfi_simplified"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="pfi_kanban_view" model="ir.ui.view">
+            <field name="name">pfi.pfi.kanban</field>
+            <field name="model">pfi.pfi</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_small_column o_opportunity_kanban" on_create="pfi.create_pfi_simplified">
+                    <field name="name"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="o_dropdown_kanban dropdown">
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
+                                        <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
+                                        <li t-if="! record.active.value"><a name="action_set_active" type="object">Restore</a></li>
+                                        <li t-if="record.active.value"><a name="action_set_unactive" type="object">Archive</a></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <div>
+                                        <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_right">
+                                            <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    -->
+    <!-- Search
+    <record model="ir.ui.view" id="pfi_search_view">
+        <field name="name">pfi.search</field>
+        <field name="model">pfi.pfi</field>
+        <field name="arch" type="xml">
+            <search string="Search PFI">
+                <field name="name" string="Pfi" filter_domain="['|','|','|',('partner_id','ilike',self),('partner_name','ilike',self),('email_from','ilike',self),('name', 'ilike', self)]"/>
+                <field name="user_id"/>
+            </search>
+        </field>
+    </record>
+    -->
+    <!-- Lead window action -->
+    <!--
+            The following tag is an action definition for a "window action",
+            that is an action opening a view or a set of views
+        -->
+    <!--
+    <record model="ir.actions.act_window" id="pfi_list_action">
+        <field name="name">PFI</field>
+        <field name="res_model">pfi.pfi</field>
+         <field name="view_mode">form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'kanban', 'view_id': ref('pfi_kanban_view')}),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('pfi_tree_view')})]"/>
+            <field name="search_view_id" ref="pfi_search_view"/>
+    </record>
+    -->
+    <!-- top level menu: no parent -->
+    <!-- A first level in the left side menu is needed before using action= attribute -->
+    <!-- the following menuitem should appear *after* its parent openacademy_menu and *after* its
+             action course_list_action -->
+    <!-- Full id location: action="openacademy.course_list_action"  It is not required when it is the same module -->
+
+</odoo>
+

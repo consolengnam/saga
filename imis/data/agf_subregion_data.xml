@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="object0" model="agf.subregion">
+        <field name="name">Central Africa</field>
+        <field name="region">1</field>
+    </record>
+    <record id="object1" model="agf.subregion">
+        <field name="name">North Africa</field>
+        <field name="region">1</field>
+    </record>
+    <record id="object2" model="agf.subregion">
+        <field name="name">East Africa</field>
+        <field name="region">2</field>
+    </record>
+    <record id="object3" model="agf.subregion">
+        <field name="name">Southern Africa</field>
+        <field name="region">3</field>
+    </record>
+        <record id="object4" model="agf.subregion">
+        <field name="name">Zone 1</field>
+        <field name="region">4</field>
+    </record>
+    <record id="object5" model="agf.subregion">
+        <field name="name">Zone 2</field>
+        <field name="region">4</field>
+    </record>
+    <record id="object6" model="agf.subregion">
+        <field name="name">Zone 3</field>
+        <field name="region">4</field>
+    </record>
+</odoo>

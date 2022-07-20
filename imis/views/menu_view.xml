@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="crm.crm_menu_root" model="ir.ui.menu">
+    <field name="name">Guarantee Origination</field>
+  </record>
+</odoo>

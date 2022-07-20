@@ -1,0 +1,90 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="agf.documentation_list">
+        <field name="name">Guarantee Documentation Tree</field>
+        <field name="model">agf.documentation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="section_subfolder_ids"/>
+                <field name="section_content_ids"/>
+                <field name="stage"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="agf.documentation_action_window">
+      <field name="name">Guarantee Documentation</field>
+      <field name="res_model">agf.documentation</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+   <!-- form  -->
+    <record model="ir.ui.view" id="agf.documentation_form">
+        <field name="name">Guarantee documentation Form</field>
+        <field name="model">agf.documentation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" string="Document Name"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="timing" widget="selection" string="Timing"/>
+                            <field name="comment" widget="selection" string="Comment"/>
+                            <field name="stage" widget="selection" string="Stage"/>
+                        </group>
+                        <group>
+                            <field name="section_subfolder_ids" widget="selection" string="Section / Subfolder"/>
+                            <field name="section_content_ids" widget="selection" domain="[('section','=',section_subfolder_ids)]" string="Section Content"/>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="agf.documentation_list_sections">
+        <field name="name">Guarantee Documentation tree</field>
+        <field name="model">agf.documentation.sections</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="section"/>
+                <field name="section_contents"/>
+            </tree>
+        </field>
+    </record>
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="agf.documentation_section_action_window">
+      <field name="name">Guarantee Documentation Section /Folder</field>
+      <field name="res_model">agf.documentation.sections</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+   <!-- form  -->
+    <record model="ir.ui.view" id="agf.documentation_section_form">
+        <field name="name">agfdoc form</field>
+        <field name="model">agf.documentation.sections</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="section"/>
+                        </group>
+                        <group>
+                            <field name="section_contents"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+  </data>
+</odoo>

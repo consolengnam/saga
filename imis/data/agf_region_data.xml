@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="object0" model="agf.region">
+         <field name="name">CAN</field>
+    </record>
+    <record id="object1" model="agf.region">
+         <field name="name">EA</field>
+    </record>
+    <record id="object2" model="agf.region">
+         <field name="name">SA</field>
+    </record>
+    <record id="object3" model="agf.region">
+         <field name="name">WA</field>
+    </record>
+</odoo>

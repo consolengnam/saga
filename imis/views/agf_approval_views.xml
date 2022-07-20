@@ -1,0 +1,167 @@
+<odoo>
+  <data>
+
+    <!-- listing approval -->
+    <record model="ir.ui.view" id="guarantee_approval_list">
+      <field name="name">guarantee_approval_list</field>
+      <field name="model">agf.approval</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="structuring"/>
+          <field name="guarantee_party"/>
+          <field name="guarantee_product"/>
+          <field name="guarantee_tenor"/>
+          <field name="minutes_lgc"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="approval_action_window">
+      <field name="name">Approval</field>
+      <field name="res_model">agf.approval</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- explicit form -->
+
+    <record model="ir.ui.view" id="guarantee_approval_form">
+      <field name="name">guarantee_approval_form</field>
+      <field name="model">agf.approval</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <button name="open_vote" string="Vote"
+                                type="object" class="oe_highlight"
+                                attrs="{'invisible': [('stage', '=', 'LGC')]}"/>
+            <field name="stage" widget="statusbar" clickable="True"/>
+          </header>
+          <sheet>
+            <group>
+              <group>
+                <field name="structuring" string='Structuring' domain="[('stage_id','=',5)]"/>
+              </group>
+              <group></group>
+            </group>
+            <div class="oe_title">
+              <label for="name" class="oe_edit_only" string="Guarantee Approval"/>
+              <h1><field name="name" /></h1>
+            </div>
+            <group>
+              <field name="guarantee_party" string='Guarantee Party (PFI)'/>
+            </group>
+            <group>
+              <field name="country" string='Country' />
+            </group>
+            <group>
+              <group>
+                <field name="guarantee_product" string='Guarantee Product'/>
+              </group>
+              <group>
+                <field name="smi" string='SMI' attrs="{'invisible': [('guarantee_product','!=','LIG')]}"/>
+              </group>
+            </group>
+            <group>
+              <field name="currency" string='Currency of Exposure'/>
+            </group>
+            <group>
+              <field name="guarantee_amount" string='Guarantee Amount' widget='monetary'/>
+            </group>
+            <group>
+              <field name="guarantee_amount_usd" string='Guarantee Amount USD' widget='monetary'/>
+            </group>
+            <group>
+              <field name="guarantee_tenor" string='Guarantee Tenor' />
+            </group>
+            <group>
+              <field name="warf" string='WARF'/>
+            </group>
+            <group>
+              <field name="approval_files" string='Approval Files' widget="many2many_binary"/>
+            </group>
+            <group>
+              <field name="executive_summary" string='Executive Summary'/>
+            </group>
+            <div>
+              <h2>LOCAL GUARANTEE COMMITEE/CEO APPROVAL</h2>
+              <group>
+                <group>
+                  <field name="lgc_started_on" string='Date'/>
+                </group>
+                <group>
+                  <field name="lgc_final_status" string='Final Status'/>
+                </group>
+                <group>
+                  <field name="minutes_lgc" string='LGC Minutes File'/>
+                </group>
+              </group>
+            </div>
+
+            <div attrs="{'invisible':['|',('stage','not in',('GC','Board')),('guarantee_amount_usd','&lt;',1000000)]}">
+              <h2>GUARANTEE COMMITTEE</h2>
+              <group>
+                <group>
+                  <field name="gc_started_on" string='Date'/>
+                </group>
+                <group>
+                  <field name="gc_final_status" string='Final Status'/>
+                </group>
+                <field name="approver_gc_ids" string='Approber' options="{'no_create': True}"/>
+              </group>
+            </div>
+            <div attrs="{'invisible': ['|',('stage','!=','Board'),('guarantee_amount_usd','&lt;',1000000)]}">
+              <h2>BOARD COMMITTEE</h2>
+              <group>
+                <group>
+                  <field name="lgc_started_on" string='Date'/>
+                </group>
+                <group>
+                  <field name="lgc_final_status" string='Final Status'/>
+                </group>
+                <field name="approver_board_ids" string='Approber' options="{'no_create': True}"/>
+              </group>
+            </div>
+          </sheet>
+          <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers"/>
+              <field name="activity_ids" widget="mail_activity"/>
+              <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="guarantee_approval.action_server">
+      <field name="name">guarantee_approval server</field>
+      <field name="model_id" ref="model_guarantee_approval_guarantee_approval"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="guarantee_approval.menu_1" parent="guarantee_approval.menu_root"/>
+    <menuitem name="Menu 2" id="guarantee_approval.menu_2" parent="guarantee_approval.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="guarantee_approval.menu_1_list" parent="guarantee_approval.menu_1"
+              action="guarantee_approval.action_window"/>
+
+    <menuitem name="Server to list" id="guarantee_approval" parent="guarantee_approval.menu_2"
+              action="guarantee_approval.action_server"/>
+    -->
+  </data>
+</odoo>

@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="agf_action_plan_form" model="ir.ui.view">
+        <field name="name">Action plan Lower Section Form</field>
+        <field name="model">agf.template.actionplan</field>
+        <field name="arch" type="xml">
+            <form string="Action Plan Lower Section">
+                <sheet>
+                    <field name="questionnaire_id" string="Questionnaire"/>
+                    <group>
+                        <field name="q"/>
+                    </group>
+                    <group>
+                        <field name="topic"/>
+                    </group>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="corrective_action"/>
+                    </group>
+                    <group>
+                        <field name="timeline"/>
+                    </group>
+                    <group>
+                        <field name="duration"/>
+                    </group>
+                    <group>
+                        <field name="responsible_person"/>
+                    </group>
+                    <group>
+                        <field name="status"/>
+                    </group>
+                    <group>
+                      <group>
+                          <field name="further_action_required_yes"/>
+                      </group>
+                      <group>
+                          <field name="further_action_required_comment"/>
+                      </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="agf_action_plan_list" model="ir.ui.view">
+        <field name="name">Action Plan List</field>
+        <field name="model">agf.template.actionplan</field>
+        <field name="arch" type="xml">
+            <tree string="Action Plan List">
+                <field name="q" />
+                <field name="name"/>
+                <field name="corrective_action"/>
+                <field name="timeline"/>
+                <field name="duration"/>
+                <field name="status"/>
+                <field name="responsible_person"/>
+                <field name="further_action_required_yes"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="agf_action_plan_action" model="ir.actions.act_window">
+        <field name="name">Action Plan Lower Section</field>
+        <field name="res_model">agf.template.actionplan</field>
+        <field name="view_id" ref="agf_action_plan_list"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Lower Section for Action Plan
+            </p>
+        </field>
+    </record>
+
+    <record id="agf_action_plan_extra_form" model="ir.ui.view">
+        <field name="name">Action plan Upper Section Form</field>
+        <field name="model">agf.template.actionplan.extra</field>
+        <field name="arch" type="xml">
+            <form string="Action Plan Upper Section">
+                <sheet>
+                    <field name="questionnaire_id" string="Questionnaire" invisible="True"/>
+                    <group>
+                        <field name="q"/>
+                    </group>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="es_risk_capacity"/>
+                    </group>
+                    <group>
+                        <field name="es_risk_of_default"/>
+                    </group>
+                    <group>
+                        <field name="es_risk_of_reputation"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="agf_action_plan_extra_list" model="ir.ui.view">
+        <field name="name">Action Plan List</field>
+        <field name="model">agf.template.actionplan.extra</field>
+        <field name="arch" type="xml">
+            <tree string="Action Plan List">
+                <field name="q" />
+                <field name="name"/>
+                <field name="es_risk_capacity"/>
+                <field name="es_risk_of_default"/>
+                <field name="es_risk_of_reputation"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="agf_action_plan_extra_action" model="ir.actions.act_window">
+        <field name="name">Action Plan Upper Section</field>
+        <field name="res_model">agf.template.actionplan.extra</field>
+        <field name="view_id" ref="agf_action_plan_extra_list"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Upper Section for Action Plan
+            </p>
+        </field>
+    </record>
+</odoo>

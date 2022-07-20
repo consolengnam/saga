@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="agf_question_form" model="ir.ui.view">
+        <field name="name">Question Form</field>
+        <field name="model">agf.template.questions</field>
+        <field name="arch" type="xml">
+            <form string="Questions">
+                <sheet>
+                    <field name="questionnaire_id" string="Questionnaire" invisible="True"/>
+                    <group>
+                        <field name="name" string="Name"/>
+                    </group>
+                    <group>
+                        <field name="assessment_criteria"/>
+                    </group>
+                    <group>
+                        <field name="standards" string="Standards"/>
+                    </group>
+                    <group>
+                        <field name="question" string="Question"/>
+                    </group>
+                    <group>
+                        <field name="wta"/>
+                    </group>
+                    <group>
+                      <group>
+                          <field name="findings_yes_no" string="Findings"/>
+                      </group>
+                      <group>
+                          <field name="findings_comment" string="Comment"/>
+                      </group>
+                    </group>
+                    <group>
+                        <field name="gaps" string="Gaps"/>
+                    </group>
+                    <group>
+                      <group>
+                          <field name="action_required_yes" string="Action Required ?"/>
+                      </group>
+                      <group>
+                          <field name="action_required_comment" string="Comment" />
+                      </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="agf_question_list" model="ir.ui.view">
+        <field name="name">Question List</field>
+        <field name="model">agf.template.questions</field>
+        <field name="arch" type="xml">
+            <tree string="Questions List">
+                <field name="name" string="Name"/>
+                <field name="assessment_criteria"/>
+                <field name="standards" string="Standards"/>
+                <field name="question" string="Question"/>
+                <field name="wta"/>
+                <field name="findings_yes_no" string="Findings"/>
+                <field name="findings_comment" string="Comment"/>
+                <field name="gaps" string="Gaps"/>
+                <field name="action_required_yes" string="Action Required ?"/>
+                <field name="action_required_comment" string="Comment" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="agf_questions_action" model="ir.actions.act_window">
+        <field name="name">Questions</field>
+        <field name="res_model">agf.template.questions</field>
+        <field name="view_id" ref="agf_question_list"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Indirect or Direct template for internal questionnaire
+            </p>
+        </field>
+    </record>
+
+</odoo>

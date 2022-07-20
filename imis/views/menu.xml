@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="crm.crm_menu_root" model="ir.ui.menu">
+    <field name="name">Guarantee Origination</field>
+  </record>
+  <record id="crm.crm_menu_sales" model="ir.ui.menu">
+    <field name="name">Imis CRM</field>
+  </record>
+  <record id="crm.res_partner_menu_customer" model="ir.ui.menu">
+    <field name="name">PFI</field>
+    <field name="sequence">2</field>
+  </record>
+  <record id="crm.crm_menu_leads" model="ir.ui.menu">
+    <field name="name">Prospecting</field>
+    <field name="sequence">1</field>
+  </record>
+  <record id="crm.menu_crm_opportunities" model="ir.ui.menu">
+    <field name="name">Structuring</field>
+    <field name="sequence">2</field>
+  </record>
+  <!--Action Plan -->
+  <menuitem id="agf.action_plan" name="Action Plan (Lower)" action = "agf.agf_action_plan_action" parent="crm.crm_menu_sales" groups="base.group_no_one" sequence="14"/>
+  <menuitem id="agf.action_plan_extra" name="Action Plan (Upper)" action = "agf.agf_action_plan_extra_action" parent="crm.crm_menu_sales" groups="base.group_no_one" sequence="15"/>
+  <!--Structuring Approval -->
+  <menuitem name="Guarantee Approval" id="approval_menu" parent="crm.crm_menu_root" groups="base.group_user"/>
+  <menuitem name="Approval" id="approval_list" parent="approval_menu" action="approval_action_window" groups="base.group_user"/>
+  <!-- AGF ES Categorization Menu -->
+  <menuitem id="agf.agf_categorization_menu" name="ES Categorization" action = "agf.agf_categorization_action" parent="crm.crm_menu_sales" groups="base.group_user" sequence="11"/>
+  <!-- AGF Country Menu -->
+  <menuitem id="main_location_menu" groups="base.group_user" name="Country/Rate"/>
+  <menuitem id="location_menu" groups="base.group_user" name="Country" parent="main_location_menu"/>
+  <menuitem id="agfcountry_menu" groups="base.group_user" name="Country" parent="location_menu" action="agfcountry_list_action"/>
+  <!-- Structuring Documentation -->
+  <menuitem name="Guarantee Documentation" id="agf.documentation_menu" groups="base.group_user" parent="crm.crm_menu_root"/>
+  <menuitem name="List documents" id="agf.documentation_menudocs" parent="agf.documentation_menu" groups="base.group_user" action="agf.documentation_action_window"/>
+  <menuitem name="Section Subfolders" id="agf.documentation_menu_sections" parent="agf.documentation_menu" groups="base.group_user" action="agf.documentation_section_action_window"/>
+  <!-- AGF ES Questionnaire Menu -->
+  <menuitem id="agf.questionnaire_menu" name="Questionnaire" groups="base.group_user" action = "agf.agf_questionnaire_action" parent="crm.crm_menu_sales" sequence="12"/>
+  <menuitem id="menu_agf_category_fi_type" name="Category FI/SME" action="agf.agf_categoryfi_action" parent="crm.menu_crm_config_lead" groups="base.group_no_one"/>
+
+  <menuitem id="menu_crm_lead_stage_act" name="Issuance Stages" action="agf_issuance_stage_action" parent="crm.menu_crm_config_lead" groups="base.group_no_one"/>
+  <!-- Structuring Issuance Menu-->
+  <menuitem name="Guarantee Issuance" groups="base.group_user" id="issuance_menu" parent="crm.crm_menu_root"/>
+  <menuitem name="Issuance" id="issuance_list" groups="base.group_user" parent="issuance_menu" action="agf.issuance_action_window"/>
+  <!-- AGF PFI Menu -->
+  <menuitem name="PFI" groups="base.group_user" id="agf_menu_pfi" parent="crm.crm_menu_root" action=""/>
+  <!-- AGF Screening Menu -->
+  <menuitem id="agf.agf_screening_menu" name="ES Screening" groups="base.group_user" action="agf.agf_screening_action" parent="crm.crm_menu_sales" sequence="10"/>
+  <!-- AGF template questions Menu-->
+  <menuitem id="agf.template_questions" name="Questions" action = "agf.agf_questions_action" parent="crm.crm_menu_sales" groups="base.group_no_one" sequence="13"/>
+  <!-- AGF Currency Rate Menu -->
+  <menuitem id="menu_crm_agf_usdrate_act" name="USD Rate" sequence="0" action="agf.usdrate_action_window" parent="crm.menu_crm_config_lead" groups="base.group_no_one"/>
+  <!-- AGF Structuring Product Menu-->
+  <menuitem id="menu_crm_imis_product" name="Guarantee Product" sequence="2" action="crm_imis_product_action_window" parent="crm.menu_crm_config_lead" groups="base.group_no_one"/>
+</odoo>

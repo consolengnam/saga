@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <record model="ir.module.category" id="agf.imis_category">
+            <field name="name">IMIS</field>
+            <field name="description">IMIS Access Roles</field>
+            <field name="sequence">3</field>
+        </record>
+
+        <record id="group_imis_internship" model="res.groups">
+            <field name="name">Internship</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user')), (4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+
+        <record id="group_imis_pfi" model="res.groups">
+            <field name="name">PFI Creator</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+
+        <record id="group_imis_bdo" model="res.groups">
+            <field name="name">BDO</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user')),(4, ref('sales_team.group_sale_salesman'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+
+        <record id="group_imis_hbd" model="res.groups">
+            <field name="name">HBD</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+
+        <record id="group_imis_hor" model="res.groups">
+            <field name="name">HOR</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+
+        <record id="group_imis_risk" model="res.groups">
+            <field name="name">Risk</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+
+        <record id="group_imis_cro" model="res.groups">
+            <field name="name">CRO</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+
+        <record id="group_imis_ceo" model="res.groups">
+            <field name="name">CEO</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+
+        <record id="group_imis_legal" model="res.groups">
+            <field name="name">Legal</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+
+        <record id="group_imis_gc" model="res.groups">
+            <field name="name">GC Members</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+
+        <record id="group_imis_board" model="res.groups">
+            <field name="name">Board Member</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="category_id" ref="agf.imis_category"/>
+        </record>
+    </data>
+</odoo>

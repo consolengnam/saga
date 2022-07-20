@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="agf_approval_vote_view_form" model="ir.ui.view">
+        <field name="name">imis_approval_vote_form</field>
+        <field name="model">agf.approber</field>
+        <field name="arch" type="xml">
+            <form string="Approbation">
+                <group class="oe_title">
+                    <field name="approbation" widget="radio"/>
+                    <field name="review_note" />
+                </group>
+                <footer>
+                    <button name="action_vote_apply" string="Submit" type="object" class="btn btn-sm btn-primary"/>
+                    <button string="Cancel" class="btn btn-sm btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="agf_approval_vote_view_list" model="ir.ui.view">
+        <field name="name">imis_approval_vote_list</field>
+        <field name="model">agf.approber</field>
+        <field name="arch" type="xml">
+            <tree string="Approbation">
+                <field name="approver"/>
+                <field name="approbation"/>
+                <field name="review_note" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="agf_approval_vote_action" model="ir.actions.act_window">
+        <field name="name">Give Your Approbation</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">agf.approber</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="agf_approval_vote_view_form"/>
+        <field name="target">new</field>
+    </record>
+</odoo>

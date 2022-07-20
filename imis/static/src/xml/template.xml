@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="agf_menus_template_id" xml:space="preserve">
+    <t t-name="UserMenu.Actions">
+        <li><a href="#" data-menu="support">Support</a></li>
+        <li><a href="#" data-menu="settings">Preferences</a></li>
+        <li class="divider"/>
+        <li class="logout"><a href="#" data-menu="logout">Log out</a></li>
+    </t>
+</templates>

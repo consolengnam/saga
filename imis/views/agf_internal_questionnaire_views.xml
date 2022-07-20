@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="agf_questionnaire_form" model="ir.ui.view">
+        <field name="name">Internal DD Questionnaire</field>
+        <field name="model">agf.questionnaire</field>
+        <field name="arch" type="xml">
+            <form string="Internal DD Questionnaire">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="screening_id" string="Screening"/>
+                        </group>
+                        <group>
+                            <field name="questionnaire_type" string="Questionnaire type"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="name" string='Name of Borrower / Investee' readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="name_of_lender" string="Name of Lender"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="guarantee_identifier" string="Guarantee Identifier" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="institution_type" string="Institution type"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="executed_by" string="Executed By"/>
+                        </group>
+                        <group>
+                            <field name="es_date" string="Date"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="sector" string="Sector"/>
+                            <field name="sub_sector" string="Sub-sector"/>
+                        </group>
+                        <group>
+                            <field name="tenor" string="Tenor"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="product_type" string="Product type"/>
+                            <field name="category_fi_sme_id" string="Category" widget="selection"/>
+                            <field name="tiering" string="Tiering"/>
+                        </group>
+                        <group>
+                            <field name="country" string="Country"/>
+                        </group>
+                    </group>
+                    <group string="Questionnaire">
+                        <field name="questions_ids" nolabel="1"/>
+                    </group>
+                    <group string="Action plan #1">
+                        <field name="action_plan_ids" nolabel="1">
+                           <tree string="Action Plan List">
+                               <field name="q" />
+                               <field name="name"/>
+                               <field name="corrective_action"/>
+                               <field name="timeline"/>
+                               <field name="duration"/>
+                               <field name="responsible_person"/>
+                               <field name="further_action_required_yes"/>
+                           </tree>
+                        </field>
+                    </group>
+                    <group string="Action plan #2">
+                        <field name="action_plan_extra_ids" nolabel="1">
+                            <tree string="Action Plan List">
+                                <field name="q" />
+                                <field name="name"/>
+                                <field name="es_risk_capacity"/>
+                                <field name="es_risk_of_default"/>
+                                <field name="es_risk_of_reputation"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="agf_questionnaire_list" model="ir.ui.view">
+        <field name="name">Internal DD Questionnaire</field>
+        <field name="model">agf.questionnaire</field>
+        <field name="arch" type="xml">
+            <tree string="Internal Questionnaire">
+                <field name="name" string="Name"/>
+                <field name="screening_id" string="Screening"/>
+                <field name="questionnaire_type" string="Type of questionnaire"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="agf_questionnaire_action" model="ir.actions.act_window">
+        <field name="name">Internal DD Questionnaire</field>
+        <field name="res_model">agf.questionnaire</field>
+        <field name="view_id" ref="agf_questionnaire_list"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Indirect or Direct template for internal questionnaire
+            </p>
+        </field>
+    </record>
+
+    <record id="agf_categoryfi_form" model="ir.ui.view">
+        <field name="name">FI/SME Category</field>
+        <field name="model">agf.fi.category</field>
+        <field name="arch" type="xml">
+            <form string="FI/SME Category">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="category_type"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="agf_categoryfi_list" model="ir.ui.view">
+        <field name="name">FI/SME Category</field>
+        <field name="model">agf.fi.category</field>
+        <field name="arch" type="xml">
+            <tree string="FI/SME Category">
+                <field name="name" string="Name"/>
+                <field name="category_type" string="Category Type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="agf_categoryfi_action" model="ir.actions.act_window">
+        <field name="name">FI/SME Category</field>
+        <field name="res_model">agf.fi.category</field>
+        <field name="view_id" ref="agf_categoryfi_list"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Category for Financial Institution, Corporate and SME
+            </p>
+        </field>
+    </record>
+
+</odoo>

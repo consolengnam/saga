@@ -1,0 +1,143 @@
+<odoo>
+  <data>
+
+    <!-- listing approval -->
+    <record model="ir.ui.view" id="agf.guarantee_issuance_list">
+      <field name="name">guarantee_issuance_list</field>
+      <field name="model">agf.issuance</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="guarantee_product"/>
+          <field name="guarantee_amount"/>
+          <field name="currency"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="agf.issuance_action_window">
+      <field name="name">Issuance</field>
+      <field name="res_model">agf.issuance</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- explicit form -->
+
+    <record model="ir.ui.view" id="agf.guarantee_issuance_form">
+      <field name="name">guarantee_issuance_form</field>
+      <field name="model">agf.issuance</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+            <field name="stage_id" widget="statusbar" clickable="True"/>
+          </header>
+          <sheet>
+            <group>
+              <group><field name="approval_id"/></group>
+              <group></group>
+            </group>
+            <div class="oe_title">
+              <label for="name" class="oe_edit_only" string="Guarantee Issuance"/>
+              <h1><field name="name" /></h1>
+            </div>
+            <group>
+              <group>
+                <field name="guarantee_party" string='Guarantee Party (PFI)'/>
+              </group>
+              <group>
+                <field name="smi" string='SMI' attrs="{'invisible': [('guarantee_product','!=','LIG')]}"/>
+              </group>
+            </group>
+            <group>
+              <field name="country" string='Country' />
+            </group>
+            <group>
+              <field name="guarantee_product" string='Guarantee Product'/>
+            </group>
+            <group>
+              <field name="currency" string='Currency of Exposure'/>
+            </group>
+            <group>
+              <field name="guarantee_amount" string='Guarantee Amount (LC)' widget='monetary'/>
+            </group>
+            <group>
+              <field name="guarantee_amount" string='Guarantee Amount (USD)' widget='monetary'/>
+            </group>
+            <group>
+              <field name="guarantee_tenor" string='Guarantee Tenor'/>
+            </group>
+            <group>
+              <field name="draft_gaf" widget="many2many_binary" string='Draft Guarantee Agreement File'/>
+            </group>
+            <group>
+              <field name="final_gaf"/>
+            </group>
+            <group>
+              <field name="welcome_letter"/>
+            </group>
+          </sheet>
+          <div class="oe_chatter">
+              <field name="message_follower_ids" widget="mail_followers"/>
+              <field name="activity_ids" widget="mail_activity"/>
+              <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+          </div>
+        </form>
+      </field>
+    </record>
+
+    <record id="agf_issuance_stage_search" model="ir.ui.view">
+        <field name="name">Stage - Search</field>
+        <field name="model">agf.issuance.stage</field>
+        <field name="arch" type="xml">
+            <search string="Stage Search">
+                <field name="name"/>
+                <field name="sequence"/>
+                <field name="team_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="agf_issuance_stage_tree" model="ir.ui.view">
+        <field name="name">agf.issuance.stage.tree</field>
+        <field name="model">agf.issuance.stage</field>
+        <field name="arch" type="xml">
+            <tree string="Stages">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="team_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="agf_issuance_stage_form" model="ir.ui.view">
+        <field name="name">agf.issuance.stage.form</field>
+        <field name="model">agf.issuance.stage</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <form string="Stage">
+                <group>
+                    <field name="name"/>
+                    <field name="team_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="agf_issuance_stage_action" model="ir.actions.act_window">
+        <field name="name">Stages</field>
+        <field name="res_model">agf.issuance.stage</field>
+        <field name="view_id" ref="agf.agf_issuance_stage_tree"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to set a new stage in your opportunity pipeline.
+          </p><p>
+            Stages allow salespersons to easily track how a specific opportunity
+            is positioned in the sales cycle.
+          </p>
+        </field>
+    </record>
+
+
+  </data>
+</odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="agf_categorization_form" model="ir.ui.view">
+        <field name="name">Categorization Form</field>
+        <field name="model">agf.categorization</field>
+        <field name="arch" type="xml">
+            <form string="ES Categorization">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <group>
+                        <field name="guarantee_party" string="Guarantee Party" readonly="1"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="types_of_institution" string="Types of institution" readonly="1"/>
+                        </group>
+                        <group>
+                           <field name="es_country" string="Country" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="executed_by" string="Executed by" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="executed_date" string="Executed on" readonly="True"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="product_type" string="Product type" readonly="True"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="category" string="Category" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="es_category" string="E.S Category" readonly="True"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="es_due_dilligence" string="Due Dilligence" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="summary_of_tasks" invisible="True"/>
+                            <field name="summary_tasks" widget="many2many_checkboxes"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="comments" readonly="True"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="agf_categorization_list" model="ir.ui.view">
+        <field name="name">ES Categorization List</field>
+        <field name="model">agf.categorization</field>
+        <field name="arch" type="xml">
+            <tree string="ES Categorization">
+                <field name="name"/>
+                <field name="guarantee_party"/>
+                <field name="types_of_institution" string="Types of institution"/>
+                <field name="executed_by" string="Executed By" />
+                <field name="product_type"/>
+                <field name="es_country" string="Country" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="agf_categorization_action" model="ir.actions.act_window">
+        <field name="name">ES Categorization</field>
+        <field name="res_model">agf.categorization</field>
+        <field name="view_id" ref="agf_categorization_list"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Screening categorisation are linked to ES Screening
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

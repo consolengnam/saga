@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="agf_screening_form" model="ir.ui.view">
+        <field name="name">Screening Form</field>
+        <field name="model">agf.screening</field>
+        <field name="arch" type="xml">
+            <form string="ES Screening">
+                <sheet>
+                    <group>
+                        <span>This questionnaire aims to formalise the screening phase described in the Environmental &amp; Social (E&amp;S) Framework. This questionnaire must be completed by the Relationship Manager and submitted to the AGF Chief Risk Officer (in the event of an excluded activity) and to the Environmental &amp; Social Manager (if otherwise) prior to or with the RAAC.</span>
+                    </group>
+                    <group>
+                        <field name="name" string="Name of the Borrower"/>
+                    </group>
+                    <group>
+                        <field name="opportinuty_id" string="Opportunity"/>
+                    </group>
+                    <group>
+                        <field name="guarantee_party" string="Guarantee Party" readonly="1"/>
+                    </group>
+                    <group>
+                      <group>
+                          <field name="guarantee_identifier" string="Guarantee Identifier" readonly="1"/>
+                      </group>
+                      <group>
+                          <field name="co_guarantor" string="Co-Guarantor"/>
+                      </group>
+                    </group>
+                    <group>
+                      <group>
+                          <field name="types_of_institution" string="Types of institution"/>
+                      </group>
+                      <group>
+                          <field name="executed_by" string="Executed By" />
+                      </group>
+                    </group>
+                    <group>
+                      <group>
+                          <field name="es_country" string="Country" />
+                      </group>
+                      <group>
+                          <field name="es_date" string="Date" />
+                      </group>
+                    </group>
+                    <group string="Exclusion List">
+                        <ol>
+                            <li>Production or trade in any product or activity deemed illegal under host country laws or regulations or international conventions and agreements, or subject to international bans, such as pharmaceuticals, pesticides/herbicides, ozone depleting substances, PCB, wildlife or products regulated under CITES.<sup>1</sup></li>
+                            <li>Production or trade in weapons and munitions.<sup>2</sup></li>
+                            <li>Production or trade in alcoholic beverages (excluding beer and wine).<sup>2</sup></li>
+                            <li>Production or trade in tobacco.<sup>2</sup></li>
+                            <li>Gambling, casinos and equivalent enterprises.<sup>2</sup></li>
+                            <li>Production or trade in radioactive materials. This does not apply to the purchase of medical equipment, quality control (measurement) equipment and any equipment where IFC considers the radioactive source to be trivial and/or adequately shielded.</li>
+                            <li>Production or trade in unbonded asbestos fibres. This does not apply to purchase and use of bonded asbestos cement sheeting where the asbestos content is less than 20%.</li>
+                            <li>Production or activities involving harmful or exploitative forms of forced labour<sup>3</sup>/harmful child labour.<sup>4</sup></li>
+                            <li>Commercial logging operations for use in primary tropical moist forest.</li>
+                            <li>Production or trade in wood or other forestry products other than form sustainably managed forests.</li>
+                            <li>Production, trade, storage, or transport of significant volumes of hazardous chemicals, or commercial scale usage of hazardous chemicals. Hazardous chemicals include gasoline, kerosene, and other petroleum products.</li>
+                            <li>Production or activities that impinge on the lands owned, or claimed under adjudication, by Indigenous Peoples, without full documented consent of such peoples.</li>
+                        </ol>
+                    </group>
+                    <div>
+                      <span>Does the transaction or bank partners’ operations involve one or several activities included in AGF’s Exclusion List (above)?</span>
+                      <group>
+                          <field name="es_activities" widget="radio" string="Choice"/>
+                      </group>
+                    </div>
+                    <group>
+                        <span>If yes, specify which ones and provide an explanation. If the transaction has various activities (PFI, group, etc.), the share of its activities included in the list above must be specified.</span>
+                        <field name="es_activities_reason_yes" string="explain your choice"/>
+                    </group>
+                    <group>
+                        <span>If not, explain how the non-inclusion to this list was verified.</span>
+                        <field name="es_activities_reason_no" string="explain your choice"/>
+                    </group>
+                    <group>
+                        <div>
+                            <sup>1</sup> CITES: Convention on International Trade in Endangered Species of wild fauna and flora threatened with extinction (Washington, 1993).<br/>
+                            <sup>2</sup> This does not apply to project sponsors who are not substantially involved in these activities. ‘Not substantially involved’ means that the activity concerned is ancillary to a project sponsor’s primary operations.<br/>
+                            <sup>3</sup> ‘Forced labour’ means all work or service, not voluntarily performed, that is extracted from an individual under threat of force or penalty.<br/>
+                            <sup>4</sup> Harmful child labour means the employment of children that is economically exploitive, or is likely to be hazardous to, or interfere with, the child’s education, or to be harmful to the child’s health, or physical, mental, spiritual, moral, or social development.<br/>
+                        </div>
+                    </group>
+                    <notebook>
+                        <page string="Screening Categorization">
+                            <group>
+                                <field name="categorization_id" attrs="{'invisible': [('categorization_id','=',False)]}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="agf_screening_list" model="ir.ui.view">
+        <field name="name">ES Screening List</field>
+        <field name="model">agf.screening</field>
+        <field name="arch" type="xml">
+            <tree string="ES Screening List">
+                <field name="name" string="Name of the Borrower"/>
+                <field name="guarantee_party" string="Guarantee Party" readonly="1"/>
+                <field name="guarantee_identifier" string="Guarantee Identifier" readonly="1"/>
+                <field name="co_guarantor" string="Co-Guarantor"/>
+                <field name="types_of_institution" string="Types of institution"/>
+                <field name="executed_by" string="Executed By" />
+                <field name="es_country" string="Country" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="agf_screening_action" model="ir.actions.act_window">
+        <field name="name">ES Screening</field>
+        <field name="res_model">agf.screening</field>
+        <field name="view_id" ref="agf_screening_list"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new ES Screening activity.
+            </p>
+            <p>
+                Screening activity must be linked to Opportunity at RAAC stage
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

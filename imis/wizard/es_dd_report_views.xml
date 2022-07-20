@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+
+<odoo>
+    <record model="ir.ui.view" id="due_diligence_report_wizard">
+        <field name="name">ES Due Diligence Report</field>
+        <field name="model">agf.es.dd.report</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="ES Due Diligence Report">
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="version"/>
+                    </group>
+                    <group>
+                        <field name="report_type"/>
+                        <field name="questionnaire_id"/>
+                    </group>
+                </group>
+                <group string="Management Commitment" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="mc_gaps"/>
+                    <field name="mc_ai"/>
+                </group>
+                <group string="Management System - Policy" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="mspolicy_gaps"/>
+                    <field name="mspolicy_ai"/>
+                </group>
+                <group string="Management System - Procedures" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="msprocedure_gaps"/>
+                    <field name="msprocedure_ai"/>
+                </group>
+                <group string="Management System - Credit E.S Risk Review" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="mscrr_gaps"/>
+                    <field name="mscrr_ai"/>
+                </group>
+                <group string="Management System - Monitoring and Reporting" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="msmr_gaps"/>
+                    <field name="msmr_ai"/>
+                </group>
+                <group string="Capacity and Competency" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="cc_gaps"/>
+                    <field name="cc_ai"/>
+                </group>
+                <group string="Reputational Risk" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="rr_gaps"/>
+                    <field name="rr_ai"/>
+                </group>
+                <group string="Other Assessment indicator" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="other_ai"/>
+                </group>
+                <group string="Remarks" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="remarks"/>
+                </group>
+                <group string="Introduction" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <group>
+                        <field name="introduction_background"/>
+                    </group>
+                    <group>
+                        <field name="aims_and_objective"/>
+                    </group>
+                </group>
+                <group string="Description" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="description"/>
+                </group>
+                <group string="Conclusion" attrs="{'invisible': [('report_type', '=', 'IC Information Note')]}">
+                    <field name="conclusion"/>
+                </group>
+                <group attrs="{'invisible': [('report_type', '=', 'DD Report')]}" string="Attached documentation">
+                    <group>
+                        <field name="screening_questionnaire"/>
+                    </group>
+                    <group>
+                        <field name="screening_questionnaire_hr"/>
+                        <field name="screening_questionnaire_mr"/>
+                        <field name="screening_questionnaire_lr"/>
+                    </group>
+                </group>
+                <group attrs="{'invisible': [('report_type', '=', 'DD Report')]}">
+                    <group>
+                        <field name="ddreportsumary"/>
+                    </group>
+                    <group>
+                        <field name="ddreportsumary_hr"/>
+                        <field name="ddreportsumary_mr"/>
+                        <field name="ddreportsumary_lr"/>
+                    </group>
+                </group>
+                <group attrs="{'invisible': [('report_type', '=', 'DD Report')]}">
+                    <group>
+                        <field name="internalddquestionnalire"/>
+                    </group>
+                    <group>
+                        <field name="internalddquestionnalire_hr"/>
+                        <field name="internalddquestionnalire_mr"/>
+                        <field name="internalddquestionnalire_lr"/>
+                    </group>
+                </group>
+                <group attrs="{'invisible': [('report_type', '=', 'DD Report')]}">
+                    <group>
+                        <field name="es_actionplan"/>
+                    </group>
+                    <group>
+                        <field name="es_actionplan_hr"/>
+                        <field name="es_actionplan_mr"/>
+                        <field name="es_actionplan_lr"/>
+                    </group>
+                </group>
+                <group attrs="{'invisible': [('report_type', '=', 'DD Report')]}" string="Main Identified E.S Risks and Guaranteed Party proficiency level">
+                    <group><field name="main_identified_es_risk_1_text" /></group>
+                    <group><field name="main_identified_es_risk_1"/></group>
+                </group>
+                <group attrs="{'invisible': [('report_type', '=', 'DD Report')]}">
+                    <group><field name="main_identified_es_risk_2_text" /></group>
+                    <group><field name="main_identified_es_risk_2"/></group>
+                </group>
+                <group attrs="{'invisible': [('report_type', '=', 'DD Report')]}">
+                    <group><field name="main_identified_es_risk_3_text" /></group>
+                    <group><field name="main_identified_es_risk_3"/></group>
+                </group>
+                <group attrs="{'invisible': [('report_type', '=', 'DD Report')]}">
+                    <group><field name="main_identified_es_risk_4_text" /></group>
+                    <group><field name="main_identified_es_risk_4"/></group>
+                </group>
+                <group string="Guarantee Agreement" attrs="{'invisible': [('report_type', '=', 'DD Report')]}">
+                    <group><field name="standards_clauses"/></group>
+                    <group><field name="modification_standard_clauses"/></group>
+                </group>
+                <group attrs="{'invisible': [('report_type', '=', 'DD Report')]}" string="Recommendations by the Environmental and Social Manager or Risk Manager">
+                    <field name="favorable"/>
+                </group>
+                <group attrs="{'invisible': [('report_type', '=', 'DD Report')]}">
+                    <field name="additional_comments"/>
+                </group>
+                <footer>
+                    <button name="get_report" string="Get Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_due_diligence_report_wizard"
+                name="ES Due Dilligence Report Wizard"
+                res_model="agf.es.dd.report"
+                view_mode="form"
+                target="new"/>
+
+    <menuitem name="Generate Report" action="agf.action_due_diligence_report_wizard"
+              id="agf.menu_due_diligence_report_wizard"
+              parent="crm.crm_menu_sales" sequence="16"/>
+</odoo>

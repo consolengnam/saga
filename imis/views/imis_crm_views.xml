@@ -1,0 +1,436 @@
+<odoo>
+    <data>
+        <record id="imis_lead_form_view" model="ir.ui.view">
+            <field name="name">imis.lead.form.view</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header" position="replace">
+                    <header>
+                        <button name="%(crm.action_crm_lead2opportunity_partner)d" string="Start Structuring"
+                                type="action"
+                                help="Convert to Opportunity" class="oe_highlight"
+                                attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('active', '=', False)]}" groups="agf.group_imis_pfi, agf.group_imis_hor, agf.group_imis_bdo"/>
+                        <field name="lead_status" widget="statusbar" options="{'clickable': '1'}" attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('active', '=', False)]}"/>
+                        <field name="raac_validation" invisible="1"/>
+                        <field name="dd_validation" invisible="1"/>
+                        <button name="action_go_to_dropped" string="Mark as dropped" type="object"
+                                groups="agf.group_imis_pfi, agf.group_imis_hor, agf.group_imis_dbo"
+                                attrs="{'invisible': ['|','|',('stage_id','in',[1,2]), ('type', '=', 'lead'), ('active', '=', False)]}"/>
+                        <button name="action_notify_risk" string="Notify Risk" type="object"
+                                groups="agf.group_imis_pfi, agf.group_imis_hor, agf.group_imis_bdo"
+                                class="oe_highlight" attrs="{'invisible': ['|','|',('stage_id','not in',[3,4]), ('type', '=', 'lead'), ('active', '=', False)]}"/>
+                        <button name="action_go_to_raac" string="Go to RAAC" type="object"
+                                groups="agf.group_imis_pfi, agf.group_imis_hor, agf.group_imis_bdo"
+                                class="oe_highlight" attrs="{'invisible': ['|','|',('stage_id','not in',[1,2]), ('type', '=', 'lead'), ('active', '=', False)]}"/>
+                        <button name="action_go_to_dd" string="Go to DD" type="object"
+                                groups="agf.group_imis_hor, agf.group_imis_hbd"
+                                class="oe_highlight"
+                                attrs="{'invisible': ['|','|','|',('stage_id','!=',3),('raac_validation','!=','pass'), ('type', '=', 'lead'), ('active', '=', False)]}"/>
+                        <button name="action_go_to_approval" string="Go to Approval"
+                                groups="agf.group_imis_hor, agf.group_imis_hor" type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible': ['|','|','|',('stage_id','!=',4),('dd_validation','!=','pass'), ('type', '=', 'lead'), ('active', '=', False)]}"/>
+                        <button name="action_go_to_ayts" string="Go to AYTS" type="object"
+                                groups="agf.group_imis_hor, agf.group_imis_hor"
+                                class="oe_highlight" attrs="{'invisible': ['|','|',('stage_id','!=',5), ('type', '=', 'lead'), ('active', '=', False)]}"/>
+                        <button name="action_go_to_as" string="Go to Signed" type="object"
+                                groups="agf.group_imis_hor, agf.group_imis_hor"
+                                class="oe_highlight" attrs="{'invisible': ['|','|',('stage_id','!=',6), ('type', '=', 'lead'), ('active', '=', False)]}"/>
+                        <field name="stage_id" widget="statusbar" attrs="{'invisible': ['|', ('type', '=', 'lead'), ('active', '=', False)]}" domain="['|', ('team_id', '=', team_id), ('team_id', '=', False)]"/>
+                    </header>
+                </xpath>
+                <xpath expr="//form/sheet/div[2]" position="replace">
+                  <div class="oe_title">
+                        <h1><field name="name" placeholder="e.g. Describe the lead"/></h1>
+                  </div>
+                </xpath>
+                <xpath expr="//form/sheet/div[2]" position="after">
+                    <span class="label label-danger pull-right"
+                          attrs="{'invisible': ['|','|',('raac_validation','=','pass'),('raac_validation','=','N/A'),('stage_id','!=',3)]}">
+                        RAAC reviewed: Rejected by risk
+                    </span>
+                    <span class="label label-danger pull-right"
+                          attrs="{'invisible': ['|','|',('dd_validation', '=','pass'),('dd_validation','=','N/A'),('stage_id','!=',4)]}">
+                        Credit Paper: Rejected by risk
+                    </span>
+                    <span class="label label-success pull-right"
+                          attrs="{'invisible': ['|','|',('raac_validation', '=','fail'),('raac_validation','=','N/A'),('stage_id','!=',3)]}">
+                        RAAC reviewed: Approved by risk
+                    </span>
+                    <span class="label label-success pull-right"
+                          attrs="{'invisible': ['|','|',('dd_validation', '=','fail'),('dd_validation','=','N/A'),('stage_id','!=',4)]}">
+                        Credit Paper: Approved by risk
+                    </span>
+                </xpath>
+                <xpath expr="//form/sheet/group[1]" position="replace">
+                    <group attrs="{'invisible': [('type', '=', 'opportunity')]}">
+                        <field name="is_blacklisted" invisible="1"/>
+                        <field name="phone_blacklisted" invisible="1"/>
+                        <field name="email_state" invisible="1"/>
+                        <field name="phone_state" invisible="1"/>
+                        <group>
+                            <!-- Preload all the partner's information -->
+                            <field name="partner_id" string="Existing PFI"
+                                   context="{'default_name': contact_name, 'default_street': street, 'default_city': city, 'default_agfcountry_id': agfcountry_id, 'default_region':region, 'default_sub_region':sub_region, 'default_function': function, 'default_phone': phone, 'default_mobile': mobile, 'default_email': email_from, 'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website}"
+                                   groups="base.group_user"/>
+                            <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street"/>
+                                <field name="city" placeholder="City" class="o_address_street"/>
+                                <field name="agfcountry_id" placeholder="Country" class="o_address_street"/>
+                                <div class="o_row">
+                                    <field name="region" placeholder="Region"/>
+                                    <field name="sub_region" placeholder="Sub-Region"/>
+                                </div>
+                            </div>
+                            <field name="website" widget="url" placeholder="e.g. www.odoo.com"/>
+                        </group>
+                        <group>
+                            <label for="contact_name"/>
+                            <div class="o_row">
+                                <field name="contact_name"/>
+                                <field name="title" placeholder="Title" domain="[]" options="{&quot;no_open&quot;: True}"/>
+                            </div>
+                            <field name="email_from" widget="email"/>
+                            <field name="function"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="mobile"/>
+                        </group>
+                        <group>
+                            <field name="user_id" domain="[('share', '=', False)]" context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'sales_team.group_sale_salesman_all_leads'], 'team_id': team_id}"/>
+                            <field name="team_id" widget="selection" domain="[('use_leads','=',True)]"/>
+                            <field name="type" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="priority" widget="priority"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                        </group>
+                        <group>
+                            <field name="product_types" widget="many2many_checkboxes"/>
+                        </group>
+                        <group>
+                            <field name="user_id" domain="[('share', '=', False)]"
+                                   context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'sales_team.group_sale_salesman_all_leads'], 'team_id': team_id}"
+                                   widget="selection" string="Assigned To"/>
+                            <field name="team_id" widget="selection" domain="[('use_leads','=',True)]"/>
+                            <field name="response_deadline_date" string="Response Deadline"/>
+                            <field name="user_assigned_on" string="Assigned On"/>
+                            <field name="type" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="lead_type" string="PFI Type"/>
+                            <field name="lead_reco" string="Originator"/>
+                            <field name="lead_source" string="Sources"/>
+                        </group>
+                        <group>
+                            <label for="expected_guarantee_amount" string="Expected Guarantee Amount"/>
+                            <div class="o_row">
+                                <field name="expected_guarantee_amount"/>
+                                <field name="company_currency" options="{'no_create': True, 'no_open': True}"/>
+                            </div>
+                            <field name="date_open" string="Created on"/>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//form/sheet/group[1]" position="after">
+                    <div attrs="{'invisible': [('type', '=', 'lead')]}">
+                        <field name="is_blacklisted" invisible="1"/>
+                        <field name="partner_is_blacklisted" invisible="1"/>
+                        <field name="phone_blacklisted" invisible="1"/>
+                        <field name="mobile_blacklisted" invisible="1"/>
+                        <field name="email_state" invisible="1"/>
+                        <field name="phone_state" invisible="1"/>
+                        <h2 class="o_row">
+                            <label for="planned_revenue" string='Considered Amount USD(AGF):'/>
+                            <div class="o_row">
+                                <field name="company_currency" invisible="1"/>
+                                <field name="planned_revenue" widget='monetary' string='Considered Amount USD(AGF):' options="{'currency_field': 'company_currency'}"/>
+                            </div>
+                        </h2>
+                        <group>
+                            <group>
+                                <field name="agfcurrency"/>
+                                <field name="rate" string="Rate"/>
+                                <field name="considered_amount" string='Considered Amount LC(AGF)' widget="monetary"/>
+                                <field name="guarantee_product"/>
+                                <field name="smi" string="Borrower" attrs="{'invisible':[('guarantee_product','!=',1)]}"/>
+                            </group>
+                            <group>
+                                <field name="expected_guarantee_amount" widget="monetary" readonly='True'/>
+                                <field name="requested_amount" widget="monetary"/>
+                                <field name="product_types" widget="many2many_checkboxes"
+                                       string="Product Type(s) Requested during Prospecting" attrs="{'readonly': True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="probability" widget="integer" string="Probability"/>
+                            </group>
+                            <group>
+                                <field name="date_deadline"/>
+                            </group>
+                            <group>
+                                <field name="partner_id" string="PFI"
+                                       context="{'default_name': contact_name, 'default_street': street, 'default_city': city, 'default_agfcountry_id': agfcountry_id, 'default_region':region, 'default_sub_region':sub_region, 'default_function': function, 'default_phone': phone, 'default_mobile': mobile, 'default_email': email_from, 'default_user_id': user_id, 'default_team_id': team_id, 'default_website': website}"
+                                       groups="base.group_user"/>
+                                <field name="email_from" string="Email" widget="email"/>
+                                <field name="phone" widget="phone"/>
+                            </group>
+                            <group>
+                                <field name="agfcountry_id" string="Country"/>
+                                <field name="region" string="Region"/>
+                                <field name="sub_region" string="Sub Region"/>
+                            </group>
+                            <group>
+                                <field name="user_id"
+                                       context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'sales_team.group_sale_salesman_all_leads'], 'team_id': team_id}"
+                                       domain="[('share', '=', False)]"/>
+                                <field name="team_id" widget="selection"/>
+                            </group>
+                            <group>
+                                <field name="priority" widget="priority"/>
+                                <field name="tag_ids" widget="many2many_tags"
+                                       options="{'color_field': 'color', 'no_create_edit': True}"/>
+                                <field name="lost_reason" attrs="{'invisible': [('active', '=', True)]}"/>
+                                <field name="date_conversion" invisible="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="agreement_number" string="Agreement Number"/>
+                                <field name="types" string="Types"/>
+                                <field name="classification" string="Classification"/>
+                                <field name="lor_received_date"/>
+                                <field name="its_date"/>
+                                <field name="signed_date"/>
+                            </group>
+                            <group>
+                                <field name="timeline_signing" string='Timeline Signing'/>
+                                <field name="timeline_approval" string='Timeline Approval'/>
+                            </group>
+                        </group>
+                    </div>
+                </xpath>
+                <xpath expr="//form/sheet/notebook/page[1]" position="after">
+                    <page name='guarantee_documentation' string="Guarantee Documentation">
+                        <field name="agfdoc_ids" widget="many2many"/>
+                    </page>
+                    <page name="tiering" string="Tiering">
+                        <group>
+                            <group>
+                                <field name="final_tier" string="Final Tier"/>
+                            </group>
+                            <group>
+                                <field name="p_lig" string="LIG"/>
+                                <field name="p_lpg" string="LPG"/>
+                                <field name="p_bfrg" string="BFRG"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page name='risk_assessment' string="Risk Assessment">
+                        <group>
+                            <field name='country_risk' readonly='True'/>
+                        </group>
+                        <group>
+                            <field name='borrow_risk' readonly='True'/>
+                        </group>
+                        <group>
+                            <field name='lender_risk' readonly='True'/>
+                        </group>
+                        <group>
+                            <field name='transaction_risk' readonly='True'/>
+                        </group>
+                        <group>
+                            <field name='warf' readonly='True'/>
+                        </group>
+                        <group>
+                            <field name='guarantee_tenor' readonly='True'/>
+                        </group>
+                        <group>
+                            <field name='risk_currency' readonly='True'/>
+                        </group>
+                    </page>
+                    <page name='es_screening' string="ES Screening"
+                          attrs="{'invisible': [('stage_id','not in',[3,4])]}">
+                        <group>
+                            <field name='screening_ids' readonly='True'/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="imis_lead_kanban_view" model="ir.ui.view">
+            <field name="name">imis.lead.kanban.view</field>
+            <field name="model">crm.lead</field>
+            <field name="priority" eval="100"/>
+            <field name="inherit_id" ref="crm.view_crm_lead_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="replace">
+                    <kanban class="o_kanban_mobile" default_group_by="lead_status">
+                        <field name="lead_status" widget="statusbar"/>
+                        <field name="name"/>
+                        <field name="contact_name"/>
+                        <field name="priority"/>
+                        <field name="tag_ids"/>
+                        <field name="user_id"/>
+                        <field name="message_needaction_counter"/>
+                        <field name="activity_ids"/>
+                        <field name="activity_state"/>
+                        <templates>
+                            <t t-name="kanban-box">
+                                <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                                    <div>
+                                        <strong class="o_kanban_record_title">
+                                            <span>
+                                                <field name="name"/>
+                                            </span>
+                                        </strong>
+                                    </div>
+                                    <div>
+                                        <span class="o_kanban_record_subtitle">
+                                            <field name="contact_name"/>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <field name="tag_ids"/>
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <field name="priority" widget="priority"/>
+                                            <t t-if="record.message_needaction_counter.raw_value">
+                                                <span class="oe_kanban_mail_new" title="Unread Messages">
+                                                    <i class="fa fa-comments"/>
+                                                    <t t-raw="record.message_needaction_counter.raw_value"/>
+                                                </span>
+                                            </t>
+                                            <div class="o_kanban_inline_block">
+                                                <field name="activity_ids" widget="kanban_activity"/>
+                                            </div>
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)"
+                                                 t-att-title="record.user_id.value" width="24" height="24"
+                                                 class="oe_kanban_avatar pull-right"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="imis_opportunity_kanban_view" model="ir.ui.view">
+            <field name="name">imis.opportunity.kanban.view</field>
+            <field name="model">crm.lead</field>
+            <field name="priority" eval="1"/>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="replace">
+                    <kanban default_group_by="stage_id" class="o_kanban_small_column o_opportunity_kanban" on_create="quick_create" quick_create_view="crm.quick_create_opportunity_form"
+                    archivable="false" sample="1" records_draggable="false">
+                        <field name="stage_id" options='{"group_by_tooltip": {"requirements": "Description"}}'/>
+                        <field name="color"/>
+                        <field name="priority"/>
+                        <field name="expected_revenue"/>
+                        <field name="kanban_state"/>
+                        <field name="activity_date_deadline"/>
+                        <field name="user_email"/>
+                        <field name="user_id"/>
+                        <field name="partner_id"/>
+                        <field name="activity_summary"/>
+                        <field name="active"/>
+                        <field name="company_currency"/>
+                        <field name="activity_state" />
+                        <field name="activity_ids" />
+                        <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}' sum_field="expected_revenue" help="This bar allows to filter the opportunities based on scheduled activities."/>
+                        <templates>
+                            <t t-name="kanban-box">
+                                <div t-attf-class="#{!selection_mode ? kanban_color(record.color.raw_value) : ''} oe_kanban_global_click">
+                                    <div class="o_dropdown_kanban dropdown">
+
+                                        <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                            <span class="fa fa-ellipsis-v"/>
+                                        </a>
+                                        <div class="dropdown-menu" role="menu">
+                                            <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
+                                            <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                            <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                        </div>
+                                    </div>
+                                    <div class="oe_kanban_content">
+                                        <div class="o_kanban_record_title">
+                                            <strong><field name="name"/></strong>
+                                        </div>
+                                        <div class="o_kanban_record_subtitle">
+                                            <t t-if="record.expected_revenue.raw_value">
+                                                <field name="expected_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                                                <span t-if="record.recurring_revenue and record.recurring_revenue.raw_value"> + </span>
+                                            </t>
+                                            <t t-if="record.recurring_revenue and record.recurring_revenue.raw_value">
+                                                <field name="recurring_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                                                <field name="recurring_plan"/>
+                                            </t>
+                                        </div>
+                                        <div>
+                                            <span t-if="record.partner_id.value" t-esc="record.partner_id.value"></span>
+                                        </div>
+                                        <div>
+                                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                        </div>
+                                        <div class="o_kanban_record_bottom">
+                                            <div class="oe_kanban_bottom_left">
+                                                <field name="priority" widget="priority" groups="base.group_user"/>
+                                                <field name="activity_ids" widget="kanban_activity"/>
+                                            </div>
+                                            <div class="oe_kanban_bottom_right">
+                                                <field name="user_id" widget="many2one_avatar_user"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="oe_clear"/>
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                </xpath>
+            </field>
+        </record>
+
+<!--
+        <record id="crm_lead_tag_form" model="ir.ui.view">
+            <field name="name">crm.lead.tag.form</field>
+            <field name="model">crm.lead.tag</field>
+            <field name="arch" type="xml">
+                <form string="Lead Tags">
+                    <group>
+                        <field name="name"/>
+                        <field name="color" groups="base.group_no_one"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+-->
+        <record model="ir.ui.view" id="crm_imis_product_list">
+            <field name="name">Product list</field>
+            <field name="model">crm.imis.product</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="product_type_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- actions opening views on models -->
+        <record model="ir.actions.act_window" id="crm_imis_product_action_window">
+            <field name="name">Imis Product / Types</field>
+            <field name="res_model">crm.imis.product</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>
