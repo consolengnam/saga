@@ -98,18 +98,16 @@ class RiskModelsSimulation(models.Model):
         self.weighted_score_total_transaction = total
 
     def init_risk_score_and_weighted_score(self, risk_models_simulation_models_model_factor_value, populated):
-        print(populated)
         total = sum(item[2]['score'] for item in populated)
-        print(total)
         risk_models_simulation_models_model_factor_value["risk_score"] = total
         risk_models_simulation_models_model_factor_value["weighted_score"] = total * \
                                                                              risk_models_simulation_models_model_factor_value[
                                                                                  "factor_weight"] / 100
 
     def init_risk_score_and_weighted_score_write(self, risk_models_simulation_models_model_factor_value, populated):
-        print(populated)
+
         total = sum( item[2]['score'] for item in populated)
-        print(total)
+
         risk_models_simulation_models_model_factor_value.risk_score = total
         risk_models_simulation_models_model_factor_value.weighted_score= total * \
                                                                              risk_models_simulation_models_model_factor_value.factor_weight / 100
@@ -430,19 +428,16 @@ class RiskModelsSimulation(models.Model):
     @api.onchange('risk_model_ids')
     def _onchange_risk_model_ids(self):
         if self.risk_model_ids.ids:
-            print(self.risk_model_ids.ids)
             return self.init_multiple_risk_models_simulation_data(self.risk_model_ids.ids)
 
     @api.onchange('risk_model_country_ids')
     def _onchange_risk_model_country_ids(self):
         if self.risk_model_country_ids.ids:
-            print(self.risk_model_country_ids.ids)
             return self.init_multiple_risk_models_simulation_data(self.risk_model_country_ids.ids)
 
     @api.onchange('risk_model_lender_ids')
     def _onchange_risk_model_lender_ids(self):
         if self.risk_model_lender_ids.ids:
-            print(self.risk_model_lender_ids.ids)
             return self.init_multiple_risk_models_simulation_data(self.risk_model_lender_ids.ids)
 
 
@@ -494,7 +489,6 @@ class RiskModelsSimulationModelsModelSubFactor(models.Model):
 
     @api.depends('answer')
     def _compute_score(self):
-        print('---------Computing Margin----------')
         for rec in self:
             if rec.answer.point:
                 rec.score = rec.answer.point
@@ -549,7 +543,6 @@ class RiskModelsSimulationModelsModelSubFactorLender(models.Model):
 
     @api.depends('answer')
     def _compute_score(self):
-        print('---------Computing Margin----------')
         for rec in self:
             if rec.answer.point:
                 rec.score = rec.answer.point
@@ -604,7 +597,6 @@ class RiskModelsSimulationModelsModelSubFactorBorrower(models.Model):
 
     @api.depends('answer')
     def _compute_score(self):
-        print('---------Computing Margin----------')
         for rec in self:
             if rec.answer.point:
                 rec.score = rec.answer.point
@@ -659,7 +651,6 @@ class RiskModelsSimulationModelsModelSubFactorTransact(models.Model):
 
     @api.depends('answer')
     def _compute_score(self):
-        print('---------Computing Margin----------')
         for rec in self:
             if rec.answer.point:
                 rec.score = rec.answer.point
