@@ -62,5 +62,8 @@
     <menuitem name="Pricing Model Matrix – WARF Weight Matrix" id="risk-engine_warf_weight_matrix" parent="risk-model_simulation" action="risk-engine.risk-engine_warf_weight_matrix_action"/>
     <menuitem name="Pricing Model Matrix – Pricing Model Constants" id="risk-engine_pricing_model_constants" parent="risk-model_simulation" action="risk-engine.risk-engine_pricing_model_constants_action"/>
 
+
+     <menuitem name="Risk Model Simulation" id="risk-engine_risk_model_simulation" parent="risk-engine_management" action="risk-engine.risk-engine_simulation_action"/>
+
   </data>
 </odoo>

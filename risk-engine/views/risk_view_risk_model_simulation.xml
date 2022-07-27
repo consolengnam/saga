@@ -1,0 +1,338 @@
+<odoo>
+    <data>
+        <!-- explicit  view definition -->
+
+
+        <record id="risk_engine_model_simulation_search_view" model="ir.ui.view">
+            <field name="name">risk.models.simulation.search</field>
+            <field name="model">risk.models.simulation</field>
+            <field name="arch" type="xml">
+                <search string="Search Risk Models Simulation">
+                    <field name="model_simulation_name"/>
+                    <field name="model_simulation_description"/>
+                    <filter name="status"/>
+                    <group expand="0" string="Group By">
+                        <filter name="status" domain="[]" context="{'group_by': 'status'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="risk_engine_model_simulation_tree_view" model="ir.ui.view">
+            <field name="name">risk.models.simulation.tree</field>
+            <field name="model">risk.models.simulation</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="model_simulation_name"/>
+                    <field name="model_simulation_description"/>
+                    <field name="status" optional="show" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+
+        <record id='risk_model_sub_factor_answers_wizard_form' model='ir.ui.view'>
+            <field name='name'>Query wizard form view</field>
+            <field name='model'>risk.model.sub.factor.answers.wizard</field>
+            <field name='arch' type='xml'>
+                <form string="Query">
+                    <sheet>
+                        <group>
+                            <group string="Emetteur">
+
+                                <field name="answer"/>
+                                <field name="point"/>
+
+                            </group>
+                            <group string="Destinataire">
+
+                            </group>
+                        </group>
+                         <group>
+                            <group>
+
+                            </group>
+                            <group>
+
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+<!--                        <button string='Ok' type='object' name='add_agrements_mouvements_transmission'-->
+<!--                                class='btn-primary'/>-->
+<!--                        <button string='Cancel' class='btn-default' special='cancel'/>-->
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_risk_model_sub_factor_answers_wizard_form">
+            <field name="name">Query action</field>
+            <field name="res_model">risk.model.sub.factor.answers.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="risk_model_sub_factor_answers_wizard_form"/>
+        </record>
+
+
+        <record id="risk_engine_model_simulation_form_view" model="ir.ui.view">
+            <field name="name">risk.models.simulation.form</field>
+            <field name="model">risk.models.simulation</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <!--<button name="button_active"  string="Set to Active" type="object" data-hotkey="a"/>
+                        <button name="button_inactive"  string="Set to Inactive" type="object" data-hotkey="i"/>-->
+                        <field name="status" widget="statusbar" statusbar_visible="1,2" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <!-- <div class="oe_button_box" name="button_box">
+                             <button type="object"  name="action_view_invoice"
+                                 class="oe_stat_button"
+                                 icon="fa-pencil-square-o" attrs="{'invisible':['|', ('invoice_count', '=', 0), ('state', 'in', ('draft','sent','to approve'))]}">
+                                 <field name="invoice_count" widget="statinfo" string="Vendor Bills"/>
+                                 <field name='invoice_ids' invisible="1"/>
+                             </button>
+                         </div>
+                         <div class="oe_title">
+                             <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">Request for Quotation </span>
+                             <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">Purchase Order </span>
+                             <h1>
+                                 <field name="priority" widget="priority" class="mr-3"/>
+                                 <field name="name" readonly="1"/>
+                             </h1>
+                         </div>-->
+                        <group>
+                            <group>
+                                <field name="model_simulation_name"/>
+                                <field name="model_simulation_description"/>
+                            </group>
+                            <group>
+<!--                                <field name="type_risk"/>-->
+                                <field name="status"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Country Risk" name="risk_model_factors_country">
+
+                                 <div class="oe_clear"/>
+
+<!--                                <label for="country_risk_model_id"/>-->
+
+                                 <div class="oe_clear"/>
+
+<!--                                <h1><field  name="risk_model_country_ids" widget="many2many_tags"     domain="[('type_risk','=', 'country_risk_models')]"   class="oe_inline o_calendar_attendees"  placeholder="Select a Country Risk" /></h1>-->
+                                <h1><field class="o_text_overflow" name="country_risk_model_id"  placeholder="Select a Country Risk"  attrs="{'readonly': [('id', '!=', False)]}"  /></h1>
+                                <field name="risk_models_simulation_models_model_factor_ids"   >
+                                    <tree string="Country Risk Factor"  editable="bottom" create="false">
+                                        <field name="risk_model_factor_id"/>
+<!--                                        <field name="factor_name"/>-->
+                                        <field name="risk_score"/>
+                                        <field name="factor_weight"/>
+                                        <field name="weighted_score"/>
+<!--                                         <field name="weighted_score_total"/>-->
+                                    </tree>
+                                </field>
+
+                                <group>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <h1><field name="weighted_score_total" widget="monetary" nolabel="1"/></h1>
+                                    </group>
+                                </group>
+
+
+                                 <div class="oe_clear"/>
+
+                                <field name="risk_models_simulation_models_model_sub_factor_ids">
+                                    <tree string="Country Risk SubFactor" editable="bottom" create="false">
+                                        <field name="risk_model_factor_id"/>
+<!--                                        <field name="factor_name"/>-->
+<!--                                        <field name="sub_factor_name"/>-->
+                                        <field name="risk_model_sub_factor_id" />
+                                        <field name="sub_factor_weight"/>
+                                        <field name="answer" placeholder="Not Answered Yet"/>
+<!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
+                                        <field name="score"/>
+<!--                                        <field name="inverse_score"/>-->
+                                    </tree>
+                                </field>
+                                <div class="oe_clear"/>
+                            </page>
+                            <page string="Lender Risk" name="risk_model_factors_lender">
+
+                                 <div class="oe_clear"/>
+
+<!--                                <label for="lender_risk_model_id"/>-->
+
+                                 <div class="oe_clear"/>
+<!--                                 <h1><field  name="risk_model_lender_ids" widget="many2many_tags"     domain="[('type_risk','=', 'lender_risk_models')]"   class="oe_inline o_calendar_attendees"  placeholder="Select a Lender Risk" /></h1>-->
+                                 <h1><field class="o_text_overflow" name="lender_risk_model_id"   placeholder="Select a Lender Risk" attrs="{'readonly': [('id', '!=', False)]}" /></h1>
+
+                                  <field name="lender_risk_models_simulation_models_model_factor_ids" >
+                                    <tree string="Lender Risk Factor" editable="bottom" create="false">
+                                        <field name="risk_model_factor_id"/>
+<!--                                        <field name="factor_name"/>-->
+                                        <field name="risk_score"/>
+                                        <field name="factor_weight"/>
+                                        <field name="weighted_score"/>
+                                    </tree>
+                                </field>
+
+                                <group>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <h1><field name="weighted_score_total_lender" widget="monetary" nolabel="1"/></h1>
+                                    </group>
+                                </group>
+
+
+                                 <div class="oe_clear"/>
+
+                                <field name="lender_risk_models_simulation_models_model_sub_factor_ids">
+                                    <tree string="Lender Risk SubFactor" editable="bottom" create="false">
+                                        <field name="risk_model_factor_id"/>
+<!--                                        <field name="factor_name"/>-->
+<!--                                        <field name="sub_factor_name"/>-->
+                                        <field name="risk_model_sub_factor_id" />
+                                        <field name="sub_factor_weight"/>
+                                        <field name="answer" placeholder="Not Answered Yet"/>
+<!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
+                                        <field name="score"/>
+<!--                                        <field name="inverse_score"/>-->
+                                    </tree>
+                                </field>
+
+
+                            </page>
+
+                             <page string="Borrower Risk" name="risk_model_factors_borrower">
+
+                                 <div class="oe_clear"/>
+
+<!--                                <label for="borrower_risk_model_id"/>-->
+
+                                 <div class="oe_clear"/>
+                                 <h1><field class="o_text_overflow" name="borrower_risk_model_id" placeholder="Select a Borrower Risk" attrs="{'readonly': [('id', '!=', False)]}"/></h1>
+
+                                   <field name="borrower_risk_models_simulation_models_model_factor_ids" >
+                                    <tree string="Borrower Risk Factor" editable="bottom" create="false">
+                                        <field name="risk_model_factor_id"/>
+<!--                                        <field name="factor_name"/>-->
+                                        <field name="risk_score"/>
+                                        <field name="factor_weight"/>
+                                        <field name="weighted_score"/>
+                                    </tree>
+                                </field>
+
+                                 <group>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <h1><field name="weighted_score_total_borrower" widget="monetary" nolabel="1"/></h1>
+                                    </group>
+                                </group>
+
+                                 <div class="oe_clear"/>
+
+                                <field name="borrower_risk_models_simulation_models_model_sub_factor_ids">
+                                    <tree string="Borrower Risk SubFactor" editable="bottom" create="false">
+                                        <field name="risk_model_factor_id"/>
+<!--                                        <field name="factor_name"/>-->
+<!--                                        <field name="sub_factor_name"/>-->
+                                        <field name="risk_model_sub_factor_id" />
+                                        <field name="sub_factor_weight"/>
+                                        <field name="answer" placeholder="Not Answered Yet"/>
+<!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
+                                        <field name="score"/>
+<!--                                        <field name="inverse_score"/>-->
+                                    </tree>
+                                </field>
+
+
+                            </page>
+
+                             <page string="Transaction Risk" name="risk_model_factors_transaction">
+
+                                 <div class="oe_clear"/>
+
+<!--                                <label for="transaction_risk_model_id"/>-->
+
+                                 <div class="oe_clear"/>
+                                  <h1><field class="o_text_overflow" name="transaction_risk_model_id" placeholder="Select a Transactional Risk" attrs="{'readonly': [('id', '!=', False)]}"/></h1>
+
+                                   <field name="transaction_risk_models_simulation_models_model_factor_ids" >
+                                    <tree string="Transaction Risk Factor" editable="bottom" create="false">
+                                        <field name="risk_model_factor_id"/>
+<!--                                        <field name="factor_name"/>-->
+                                        <field name="risk_score"/>
+                                        <field name="factor_weight"/>
+                                        <field name="weighted_score"/>
+                                    </tree>
+                                </field>
+
+                                 <group>
+                                    <group class="oe_subtotal_footer oe_right">
+                                        <h1><field name="weighted_score_total_transaction" widget="monetary" nolabel="1"/></h1>
+                                    </group>
+                                </group>
+
+                                 <div class="oe_clear"/>
+
+                                <field name="transaction_risk_models_simulation_models_model_sub_factor_ids">
+                                    <tree string="Transaction Risk SubFactor" editable="bottom" create="false">
+                                        <field name="risk_model_factor_id"/>
+<!--                                        <field name="factor_name"/>-->
+<!--                                        <field name="sub_factor_name"/>-->
+                                        <field name="risk_model_sub_factor_id" />
+                                        <field name="sub_factor_weight"/>
+                                        <field name="answer" placeholder="Not Answered Yet"/>
+<!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
+                                        <field name="score"/>
+<!--                                        <field name="inverse_score"/>-->
+                                    </tree>
+                                </field>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <!-- <div class="oe_chatter">
+                         <field name="message_follower_ids"/>
+                         <field name="activity_ids"/>
+                         <field name="message_ids"/>
+                     </div>-->
+                </form>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+        <record id="risk-engine_simulation_action" model="ir.actions.act_window">
+            <field name="name">Risk Models Simulation</field>
+            <field name="res_model">risk.models.simulation</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[]</field>
+            <field name="search_view_id" ref="risk_engine_model_simulation_search_view"/>
+            <field name="context">{
+                 'default_type_risk':'simulation',
+                 'search_default_type_risk': 'simulation',
+                 'search_default_to_process':1,
+                }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Country Risk Models Simulation
+                </p>
+                <p>
+                    You must define a Country Risk Models Simulation.
+                </p>
+            </field>
+        </record>
+
+
+
+
+    </data>
+</odoo>

@@ -34,6 +34,7 @@
         'views/risk_view_risk-engine_pricing_model_constants.xml',
         'views/risk_view_risk-engine_recovery_rate.xml',
         'views/risk_view_risk-engine_period_after_default_for_recovery.xml',
+        'views/risk_view_risk_model_simulation.xml',
         'views/risk_menu.xml',
 
     ],
