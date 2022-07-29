@@ -116,7 +116,7 @@
                             </group>
                             <group>
 <!--                                <field name="type_risk"/>-->
-                                <field name="status"/>
+                                <field name="status" readonly="1"/>
                             </group>
                         </group>
                         <notebook>
@@ -297,6 +297,69 @@
                                 </field>
 
                             </page>
+
+
+                            <page string="Risk Model Pricing">
+
+                                 <div class="oe_clear"/>
+
+
+
+                                 <group  colspan="4"  col="3">
+                                    <group  string="Pricing Model Input" >
+                                         <field name="country_id"/>
+                                         <field name="product_id"/>
+                                         <field name="period_id"/>
+                                         <field name="coverage_ratio"/>
+                                         <field name="facility_currency"/>
+                                         <field name="facility_amount"/>
+                                     </group>
+                                     <group string=" Risk Rating"   colspan="2"  col="3"  >
+
+
+                                                  <group  string="Risk Score" col="1"  >
+                                                      <field name="weighted_score_total" readonly="1" />
+                                                     <field name="weighted_score_total_lender" readonly="1" />
+                                                     <field name="weighted_score_total_borrower" readonly="1" />
+                                                     <field name="weighted_score_total_transaction" readonly="1" />
+                                                        <h2>  Weighted-Average Score  </h2>
+                                                  </group>
+
+                                                 <group string="Risk Weights"  col="1"  >
+                                                   <span>   <field name="weighted_product" nolabel="1"  readonly="1" /> (%) </span>
+                                                   <span>  <field name="weighted_product_lender" nolabel="1"  readonly="1" />  (%) </span>
+                                                    <span> <field name="weighted_product_borrower" nolabel="1" readonly="1" />  (%) </span>
+                                                    <span> <field name="weighted_product_transaction" nolabel="1" readonly="1" />  (%) </span>
+                                                     <h2>  <field name="sum_weighted_product" nolabel="1" readonly="1" />   (%)</h2>
+
+                                                 </group>
+                                                 <group string="Weighted Score"  col="1" >
+                                                     <field name="weighted_product_score" nolabel="1"  readonly="1" />
+                                                     <field name="weighted_product_score_lender" nolabel="1" readonly="1" />
+                                                     <field name="weighted_product_score_borrower" nolabel="1" readonly="1" />
+                                                     <field name="weighted_product_score_transaction" nolabel="1" readonly="1" />
+                                                      <h2>  <field name="sum_weighted_product_score" nolabel="1" readonly="1" />  </h2>
+
+                                                 </group>
+
+
+                                    </group>
+                                     <group  string="Pricing Model Constant"  >
+                                         <field name="premium_d" readonly="1" />
+                                         <field name="premium_f" readonly="1" />
+                                         <field name="conversion_factor_default_rate" readonly="1" />
+                                         <field name="recovery_rate" readonly="1" />
+                                         <field name="period_after_default_for_recovery" readonly="1" />
+
+                                    </group>
+                                </group>
+
+
+                                 <div class="oe_clear"/>
+
+                            </page>
+
+
                         </notebook>
                     </sheet>
                     <!-- <div class="oe_chatter">
