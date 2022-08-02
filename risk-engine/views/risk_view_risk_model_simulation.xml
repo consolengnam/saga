@@ -104,10 +104,10 @@
                          <div class="oe_title">
                              <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">Request for Quotation </span>
                              <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">Purchase Order </span>
-                             <h1>
+                             <h2>
                                  <field name="priority" widget="priority" class="mr-3"/>
                                  <field name="name" readonly="1"/>
-                             </h1>
+                             </h2>
                          </div>-->
                         <group>
                             <group>
@@ -119,6 +119,9 @@
                                 <field name="status" readonly="1"/>
                             </group>
                         </group>
+                        <div>
+                            <p>Each tab below represents a risk type e.g. Country Risk and under it are the already defined risk model(s). Select the risk model you want to simulate and provide answers to the questions i.e. Sub-Factors. </p>
+                        </div>
                         <notebook>
                             <page string="Country Risk" name="risk_model_factors_country">
 
@@ -128,8 +131,8 @@
 
                                  <div class="oe_clear"/>
 
-<!--                                <h1><field  name="risk_model_country_ids" widget="many2many_tags"     domain="[('type_risk','=', 'country_risk_models')]"   class="oe_inline o_calendar_attendees"  placeholder="Select a Country Risk" /></h1>-->
-                                <h1><field class="o_text_overflow" name="country_risk_model_id"  placeholder="Select a Country Risk"  attrs="{'readonly': [('id', '!=', False)]}"  /></h1>
+<!--                                <h2><field  name="risk_model_country_ids" widget="many2many_tags"     domain="[('type_risk','=', 'country_risk_models')]"   class="oe_inline o_calendar_attendees"  placeholder="Select a Country Risk" /></h2>-->
+                                <h2><field class="o_text_overflow" name="country_risk_model_id"  placeholder="Select a Country Risk"  attrs="{'readonly': [('id', '!=', False)]}"  /></h2>
                                 <field name="risk_models_simulation_models_model_factor_ids"   >
                                     <tree string="Country Risk Factor"  editable="bottom" create="false">
                                         <field name="risk_model_factor_id"/>
@@ -143,7 +146,7 @@
 
                                 <group>
                                     <group class="oe_subtotal_footer oe_right">
-                                        <h1><field name="weighted_score_total" widget="monetary" nolabel="1"/></h1>
+                                            <h2><field name="weighted_score_total" widget="monetary" nolabel="1"/></h2>
                                     </group>
                                 </group>
 
@@ -172,8 +175,8 @@
 <!--                                <label for="lender_risk_model_id"/>-->
 
                                  <div class="oe_clear"/>
-<!--                                 <h1><field  name="risk_model_lender_ids" widget="many2many_tags"     domain="[('type_risk','=', 'lender_risk_models')]"   class="oe_inline o_calendar_attendees"  placeholder="Select a Lender Risk" /></h1>-->
-                                 <h1><field class="o_text_overflow" name="lender_risk_model_id"   placeholder="Select a Lender Risk" attrs="{'readonly': [('id', '!=', False)]}" /></h1>
+<!--                                 <h2><field  name="risk_model_lender_ids" widget="many2many_tags"     domain="[('type_risk','=', 'lender_risk_models')]"   class="oe_inline o_calendar_attendees"  placeholder="Select a Lender Risk" /></h2>-->
+                                 <h2><field class="o_text_overflow" name="lender_risk_model_id"   placeholder="Select a Lender Risk" attrs="{'readonly': [('id', '!=', False)]}" /></h2>
 
                                   <field name="lender_risk_models_simulation_models_model_factor_ids" >
                                     <tree string="Lender Risk Factor" editable="bottom" create="false">
@@ -187,7 +190,7 @@
 
                                 <group>
                                     <group class="oe_subtotal_footer oe_right">
-                                        <h1><field name="weighted_score_total_lender" widget="monetary" nolabel="1"/></h1>
+                                        <h2><field name="weighted_score_total_lender" widget="monetary" nolabel="1"/></h2>
                                     </group>
                                 </group>
 
@@ -218,7 +221,7 @@
 <!--                                <label for="borrower_risk_model_id"/>-->
 
                                  <div class="oe_clear"/>
-                                 <h1><field class="o_text_overflow" name="borrower_risk_model_id" placeholder="Select a Borrower Risk" attrs="{'readonly': [('id', '!=', False)]}"/></h1>
+                                 <h2><field class="o_text_overflow" name="borrower_risk_model_id" placeholder="Select a Borrower Risk" attrs="{'readonly': [('id', '!=', False)]}"/></h2>
 
                                    <field name="borrower_risk_models_simulation_models_model_factor_ids" >
                                     <tree string="Borrower Risk Factor" editable="bottom" create="false">
@@ -232,7 +235,7 @@
 
                                  <group>
                                     <group class="oe_subtotal_footer oe_right">
-                                        <h1><field name="weighted_score_total_borrower" widget="monetary" nolabel="1"/></h1>
+                                        <h2><field name="weighted_score_total_borrower" widget="monetary" nolabel="1"/></h2>
                                     </group>
                                 </group>
 
@@ -262,7 +265,7 @@
 <!--                                <label for="transaction_risk_model_id"/>-->
 
                                  <div class="oe_clear"/>
-                                  <h1><field class="o_text_overflow" name="transaction_risk_model_id" placeholder="Select a Transactional Risk" attrs="{'readonly': [('id', '!=', False)]}"/></h1>
+                                  <h2><field class="o_text_overflow" name="transaction_risk_model_id" placeholder="Select a Transactional Risk" attrs="{'readonly': [('id', '!=', False)]}"/></h2>
 
                                    <field name="transaction_risk_models_simulation_models_model_factor_ids" >
                                     <tree string="Transaction Risk Factor" editable="bottom" create="false">
@@ -276,7 +279,7 @@
 
                                  <group>
                                     <group class="oe_subtotal_footer oe_right">
-                                        <h1><field name="weighted_score_total_transaction" widget="monetary" nolabel="1"/></h1>
+                                        <h2><field name="weighted_score_total_transaction" widget="monetary" nolabel="1"/></h2>
                                     </group>
                                 </group>
 

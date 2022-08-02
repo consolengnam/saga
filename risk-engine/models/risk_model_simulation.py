@@ -266,7 +266,6 @@ class RiskModelsSimulation(models.Model):
                                                                                  "factor_weight"] / 100
 
     def init_risk_score_and_weighted_score_write(self, risk_models_simulation_models_model_factor_value, populated):
-
         total = sum( item[2]['score'] for item in populated)
 
         risk_models_simulation_models_model_factor_value.risk_score = total

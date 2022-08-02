@@ -20,7 +20,12 @@ class RiskModels(models.Model):
         ('country_risk_models', 'Country Risk Models'), ('lender_risk_models', 'Lender Risk Models'),
         ('borrower_risk_models', 'Borrower Risk Models'), ('transaction_risk_models', 'Transaction Risk Model')],
         string='Type', required=True, default='country_risk_models')
+    risk_model_number_of_factors = fields.Integer(string='Number of Factors', compute='_compute_number_of_factor')
+    risk_model_number_of_questions = fields.Integer(string='Number of Questions', related='risk_model_factors.risk_model_number_of_questions')
 
+    def _compute_number_of_factor(self):
+        for rec in self:
+            self.risk_model_number_of_factors= len(self.risk_model_factors)
 
 class RiskModelTypes(models.Model):
     _name = 'risk.models.types'

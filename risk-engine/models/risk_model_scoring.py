@@ -63,4 +63,9 @@ class RiskModelFactor(models.Model):
     Weight = fields.Float(store=True)
     risk_model_id = fields.Many2one('risk.models', 'model_name', required=True)
     risk_model_sub_factors = fields.One2many('risk.model.sub.factor', 'risk_model_factor_id', required=True)
+    risk_model_number_of_questions = fields.Integer(string='Number of Questions', compute='_compute_number_of_questions', required=False)
+
+    def _compute_number_of_questions(self):
+        for rec in self:
+            self.risk_model_number_of_questions = len(self.risk_model_sub_factors)
 

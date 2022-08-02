@@ -27,6 +27,9 @@
                 <tree>
                     <field name="model_name"/>
                     <field name="model_description"/>
+                    <field name="model_description"/>
+                    <field name="risk_model_number_of_factors"/>
+                    <field name="risk_model_number_of_questions"/>
                     <field name="status" optional="show" widget="badge"/>
                 </tree>
             </field>
