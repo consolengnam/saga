@@ -27,11 +27,20 @@ class RiskModels(models.Model):
         string='Type', required=True, default='country_risk_models')
     risk_model_number_of_factors = fields.Integer(string='Number of Factors', compute='_compute_number_of_factor')
     risk_model_number_of_questions = fields.Integer(string='Number of Questions',
-                                                    related='risk_model_factors.risk_model_number_of_questions')
+                                                    compute='_compute_total_number_of_questions_per_model')
 
     def _compute_number_of_factor(self):
         for rec in self:
             rec.risk_model_number_of_factors = len(rec.risk_model_factors)
+
+    def _compute_total_number_of_questions_per_model(self):
+        for rec in self:
+            somme = 0
+            print('rec', rec)
+            for line in rec.risk_model_factors:
+                somme += line.risk_model_number_of_questions
+                print("line", line.risk_model_number_of_questions )
+            rec.risk_model_number_of_questions = somme
 
 class RiskModelTypes(models.Model):
     _name = 'risk.models.types'
