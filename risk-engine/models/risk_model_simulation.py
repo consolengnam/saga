@@ -31,6 +31,10 @@ class RiskModelsSimulation(models.Model):
     model_simulation_description = fields.Text(string='Model Simulation Description', required=False)
     status = fields.Selection([('1', 'In progress'), ('2', 'Ended')], required=True, default='1')
 
+    pricing_result = fields.Float()
+    net_loss = fields.Float()
+    expected_guarantee_fee = fields.Float()
+
     def _get_risk_models(self):
         print("-------------bonjour------------------")
         print(self._context)
@@ -50,7 +54,7 @@ class RiskModelsSimulation(models.Model):
     transaction_risk_model_id = fields.Many2one('risk.models', string='Transaction Risk',
                                                 domain="[('type_risk', '=', 'transaction_risk_models')]",
                                                 required=True)
-
+    amortization_schedule_id = fields.Many2one('risk.amortization.schedule', string='Amortization Schedule', required=False)
     # type_risk = fields.Char(string='Type ', related='country_risk_model_id.type_risk')
 
     # country_risk_models_factors = fields.Many2one('risk.model.factor', string='Country Risk', required=False)
