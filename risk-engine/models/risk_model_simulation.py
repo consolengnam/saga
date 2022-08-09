@@ -13,6 +13,10 @@ class RiskModelsSimulation(models.Model):
     _name = 'risk.models.simulation'
     _description = 'This applies to simulation of country risk, borrower risk, lender risk and transaction risk'
     _rec_name = 'model_simulation_name'
+    _sql_constraints = [
+        ('model_simulation_name_uniq', 'UNIQUE(model_simulation_name)',
+         'Duplicated Risk Simulation name. Please Change the Risk Simulation Name')
+    ]
 
 
     def _default_model_simulation_name(self):
