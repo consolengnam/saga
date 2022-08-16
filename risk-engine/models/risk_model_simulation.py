@@ -18,16 +18,14 @@ class RiskModelsSimulation(models.Model):
          'Duplicated Risk Simulation name. Please Change the Risk Simulation Name')
     ]
 
-
     def _default_model_simulation_name(self):
         now = datetime.now()
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-        default_model_simulation_name = 'Simulation-'+ str(self._uid) +'-'+  date_time
+        default_model_simulation_name = 'Simulation-' + str(self._uid) + '-' + date_time
         return default_model_simulation_name
 
-
-
-    model_simulation_name = fields.Char(string='Model Simulation Name', required=True,  default=_default_model_simulation_name)
+    model_simulation_name = fields.Char(string='Model Simulation Name', required=True,
+                                        default=_default_model_simulation_name)
     model_simulation_description = fields.Text(string='Model Simulation Description', required=False)
     status = fields.Selection([('1', 'In progress'), ('2', 'Ended')], required=True, default='1')
 
@@ -54,8 +52,7 @@ class RiskModelsSimulation(models.Model):
     transaction_risk_model_id = fields.Many2one('risk.models', string='Transaction Risk',
                                                 domain="[('type_risk', '=', 'transaction_risk_models')]",
                                                 required=True)
-    amortization_schedule_id = fields.Many2one('risk.amortization.schedule', string='Amortization Schedule', required=False)
-    # type_risk = fields.Char(string='Type ', related='country_risk_model_id.type_risk')
+    # amortization_schedule_id = fields.Many2one('risk.amortization.schedule', string='Amortization Schedule', required=False)
 
     # country_risk_models_factors = fields.Many2one('risk.model.factor', string='Country Risk', required=False)
     # lender_risk_models_factors = fields.Many2one('risk.model.factor', string='Lender Risk', required=False)
@@ -71,7 +68,7 @@ class RiskModelsSimulation(models.Model):
     lender_risk_models_simulation_models_model_factor_ids = fields.One2many(
         'risk.models.simulation.models.model.factor.lender',
         'risk_models_simulation_id', required=False,
-        )
+    )
     lender_risk_models_simulation_models_model_sub_factor_ids = fields.One2many(
         'risk.models.simulation.models.model.sub.factor.lender', 'risk_models_simulation_id', required=False)
 
@@ -89,24 +86,30 @@ class RiskModelsSimulation(models.Model):
     transaction_risk_models_simulation_models_model_sub_factor_ids = fields.One2many(
         'risk.models.simulation.models.model.sub.factor.transact', 'risk_models_simulation_id', required=False)
 
-    weighted_score_total = fields.Float(compute='_compute_weighted_score_total' , string='Country Risk ', inverse='_inverse_weighted_score_total')
-    weighted_score_total_lender = fields.Float(compute='_compute_weighted_score_total_lender' , string='Lender Risk ',  inverse='_inverse_weighted_score_total_lender')
-    weighted_score_total_borrower = fields.Float(compute='_compute_weighted_score_total_borrower' , string='Borrower Risk ',  inverse='_inverse_weighted_score_total_borrower')
-    weighted_score_total_transaction = fields.Float(compute='_compute_weighted_score_total_transaction' , string='Transaction Risk ',  inverse='_inverse_weighted_score_total_transaction')
+    weighted_score_total = fields.Float(compute='_compute_weighted_score_total', string='Country Risk ',
+                                        inverse='_inverse_weighted_score_total')
+    weighted_score_total_lender = fields.Float(compute='_compute_weighted_score_total_lender', string='Lender Risk ',
+                                               inverse='_inverse_weighted_score_total_lender')
+    weighted_score_total_borrower = fields.Float(compute='_compute_weighted_score_total_borrower',
+                                                 string='Borrower Risk ',
+                                                 inverse='_inverse_weighted_score_total_borrower')
+    weighted_score_total_transaction = fields.Float(compute='_compute_weighted_score_total_transaction',
+                                                    string='Transaction Risk ',
+                                                    inverse='_inverse_weighted_score_total_transaction')
 
     product_id = fields.Many2one('risk.warf.weight.matrices', string='Product ', required=False)
 
-    weighted_product= fields.Float(compute='_compute_weighted_product',
-                                        inverse='_inverse_weighted_product')
+    weighted_product = fields.Float(compute='_compute_weighted_product',
+                                    inverse='_inverse_weighted_product')
     weighted_product_lender = fields.Float(compute='_compute_weighted_product',
-                                               inverse='_inverse_weighted_product')
+                                           inverse='_inverse_weighted_product')
     weighted_product_borrower = fields.Float(compute='_compute_weighted_product',
-                                                 inverse='_inverse_weighted_product')
+                                             inverse='_inverse_weighted_product')
     weighted_product_transaction = fields.Float(compute='_compute_weighted_product',
-                                                    inverse='_inverse_weighted_product')
+                                                inverse='_inverse_weighted_product')
 
     sum_weighted_product = fields.Float(compute='_compute_sum_weighted_product',
-                                                    inverse='_inverse_sum_weighted_product')
+                                        inverse='_inverse_sum_weighted_product')
 
     @api.depends('product_id')
     def _compute_weighted_product(self):
@@ -124,33 +127,31 @@ class RiskModelsSimulation(models.Model):
     def _compute_sum_weighted_product(self):
         for rec in self:
             if rec.product_id:
-                rec.sum_weighted_product = rec.weighted_product + rec.weighted_product_lender +  rec.weighted_product_borrower + rec.weighted_product_transaction
+                rec.sum_weighted_product = rec.weighted_product + rec.weighted_product_lender + rec.weighted_product_borrower + rec.weighted_product_transaction
 
     def _inverse_sum_weighted_product(self):
         pass
 
-
-
     weighted_product_score = fields.Float(compute='_compute_weighted_product_score',
-                                    inverse='_inverse_weighted_product_score')
+                                          inverse='_inverse_weighted_product_score')
     weighted_product_score_lender = fields.Float(compute='_compute_weighted_product_score',
-                                           inverse='_inverse_weighted_product_score')
+                                                 inverse='_inverse_weighted_product_score')
     weighted_product_score_borrower = fields.Float(compute='_compute_weighted_product_score',
-                                             inverse='_inverse_weighted_product_score')
+                                                   inverse='_inverse_weighted_product_score')
     weighted_product_score_transaction = fields.Float(compute='_compute_weighted_product_score',
-                                                inverse='_inverse_weighted_product_score')
+                                                      inverse='_inverse_weighted_product_score')
 
     sum_weighted_product_score = fields.Float(compute='_compute_sum_weighted_product_score',
-                                        inverse='_inverse_sum_weighted_product_score')
+                                              inverse='_inverse_sum_weighted_product_score')
 
     @api.depends('product_id')
     def _compute_weighted_product_score(self):
         for rec in self:
             if rec.product_id:
-                if rec.weighted_score_total : rec.weighted_product_score = rec.product_id.country_weight*rec.weighted_score_total/100
-                if rec.weighted_score_total_lender : rec.weighted_product_score_lender = rec.product_id.lender_weight*rec.weighted_score_total_lender/100
-                if rec.weighted_score_total_borrower: rec.weighted_product_score_borrower = rec.product_id.borrower_weight*rec.weighted_score_total_borrower/100
-                if rec.weighted_score_total_transaction:   rec.weighted_product_score_transaction = rec.product_id.transaction_weight*rec.weighted_score_total_transaction/100
+                if rec.weighted_score_total: rec.weighted_product_score = rec.product_id.country_weight * rec.weighted_score_total / 100
+                if rec.weighted_score_total_lender: rec.weighted_product_score_lender = rec.product_id.lender_weight * rec.weighted_score_total_lender / 100
+                if rec.weighted_score_total_borrower: rec.weighted_product_score_borrower = rec.product_id.borrower_weight * rec.weighted_score_total_borrower / 100
+                if rec.weighted_score_total_transaction:   rec.weighted_product_score_transaction = rec.product_id.transaction_weight * rec.weighted_score_total_transaction / 100
 
     def _inverse_weighted_product_score(self):
         pass
@@ -159,18 +160,17 @@ class RiskModelsSimulation(models.Model):
     def _compute_sum_weighted_product_score(self):
         for rec in self:
             if rec.product_id:
-                rec.sum_weighted_product_score = rec.weighted_product_score + rec.weighted_product_score_lender +rec.weighted_product_score_borrower + rec.weighted_product_score_transaction
+                rec.sum_weighted_product_score = rec.weighted_product_score + rec.weighted_product_score_lender + rec.weighted_product_score_borrower + rec.weighted_product_score_transaction
 
     def _inverse_sum_weighted_product_score(self):
         pass
 
-
-
-
     period_id = fields.Many2one('risk.premium.f.curves', string='Period(Tenor)', required=False)
 
-    premium_f= fields.Float(string='Premium F (%)', digits=(5, 2), required=False, compute='_compute_period', inverse='_inverse_period',  Store=True)
-    premium_d = fields.Float(string='Premium D (%)', digits=(5, 2), required=False, compute='_compute_period', inverse='_inverse_period', Store=True)
+    premium_f = fields.Float(string='Premium F (%)', digits=(5, 2), required=False, compute='_compute_period',
+                             inverse='_inverse_period', Store=True)
+    premium_d = fields.Float(string='Premium D (%)', digits=(5, 2), required=False, compute='_compute_period',
+                             inverse='_inverse_period', Store=True)
 
     @api.depends('period_id')
     def _compute_period(self):
@@ -178,7 +178,7 @@ class RiskModelsSimulation(models.Model):
             if rec.period_id.period:
                 rec.premium_f = rec.period_id.rate
                 premium_d_env = self.env['risk.premium.d.curves']
-                premium_d_results = premium_d_env.search([('period', '=',rec.period_id.period)])
+                premium_d_results = premium_d_env.search([('period', '=', rec.period_id.period)])
                 for record in premium_d_results:
                     if record:
                         rec.premium_d = record.rate
@@ -186,9 +186,128 @@ class RiskModelsSimulation(models.Model):
     def _inverse_period(self):
         pass
 
-    conversion_factor_default_rate = fields.Float(string='Conversion Factor Default Rate (%)', digits=(5, 2), required=False, compute='_compute_conversion_factor_default_rate',    inverse='_inverse_conversion_factor_default_rate', Store=True)
+        # ----------------------------------------------------------------------------------------------------------
+        #                            Amortization Schedule
+        # ---------------------------------------------------------------------------------------------------------
 
-    @api.depends('country_risk_model_id', 'lender_risk_model_id', 'borrower_risk_model_id', 'transaction_risk_model_id')
+    amortization_schedule_ids = fields.One2many('risk.amortization.schedule', 'amortization_schedule_id',
+                                                required=False)
+
+    @api.onchange('period_id')
+    def _period_id(self):
+        if self.period_id:
+            print('Onchange period good', self.period_id.id)
+            return self.init_amortization_schedule_data(self.period_id.id)
+
+    #-------------------------- A supprimer plutard ------------------------------------------------------------------------
+
+    amortization_principal_amount = fields.Float(compute='_compute_principal_amount', string='Principal Amount')
+    amortization_period = fields.Integer(compute='_compute_amortization_period', store=True)
+    amortization_principal_repayment = fields.Float()
+    amortization_probability_of_default = fields.Float()
+
+    def _compute_amortization_period(self):
+        print('---period-----')
+        for rec in self:
+            period_choose = rec.period_id.id
+            print(period_choose)
+            step = 1
+            while (step <= period_choose + 1):
+                rec.amortization_period = step
+                print(step)
+                step += 1
+            # rec.amortization_period = rec.period
+            # print(rec.amortization_period)
+
+    def _compute_principal_amount(self):
+        print('------principal amount------')
+        for rec in self:
+            period = rec.period_id.id
+            common_diff = rec.facility_amount / period
+            step = 1
+            print('Period\tPrincipal Amount \t Principal Repayment \t Probability of Default')
+            while (step <= period + 1):
+                if step == 1:
+                    rec.amortization_principal_amount = rec.facility_amount
+                    rec.amortization_principal_repayment = 0
+                else:
+                    previous_principal_amount = rec.amortization_principal_amount
+                    rec.amortization_principal_amount -= common_diff
+                    rec.amortization_principal_repayment = previous_principal_amount - rec.amortization_principal_amount
+                print(step, '\t\t', rec.amortization_principal_amount, '\t\t\t\t', rec.amortization_principal_repayment)
+                step += 1
+    #------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    def write_schedule(self, values):
+        '''This action is used to update Simulation transaction in the database.'''
+        print('In write schedule')
+        if self.amortization_schedule_ids:
+            print('schedule ids', self.amortization_schedule_ids)
+
+    # riskModelsSimulation = super(RiskModelsSimulation, self).write(vals)
+    # return riskModelsSimulation
+
+    @api.model
+    def create_schedule(self, vals):
+
+        '''This action is used to create Simulation transaction in the database.'''
+
+        if "amortization_schedule_ids" in vals.keys():
+            print('create schedule in...')
+
+
+    def init_amortization_schedule_data(self, period_id):
+        '''This function is use to initialize datas of Amortization schedule table'''
+        print('In init amortization schedule data')
+        ligne_amortization_schedule_ids = []
+        ligne_risk_models_simulation_models_model_sub_factor_ids = []
+
+        for rec in self:
+            rec.write_schedule({'amortization_schedule_ids': [(5, 0, 0)]})
+            #  rec.write({'risk_models_simulation_models_model_sub_factor_ids': [(5, 0, 0)]})
+
+        if period_id:
+            amortization_schedule = self.env['risk.amortization.schedule']
+            step = 1
+            while (step <= self.period_id.id + 1):
+                if step == 1:
+                    value = {
+                        'risk_amortization_period': 0,
+                        'risk_amortization_principal_amount': 0,
+                        'risk_amortization_principal_repayment': 0
+                    }
+                    ligne_amortization_schedule_ids.append((0, 0, value))
+                else:
+                    value = {
+                        'risk_amortization_period': 0,
+                        'risk_amortization_principal_amount': 0,
+                        'risk_amortization_principal_repayment': 0
+                    }
+                    ligne_amortization_schedule_ids.append((0, 0, value))
+                step += 1
+        print(len(ligne_amortization_schedule_ids))
+        return {'value': {
+            'ligne_amortization_schedule_ids': ligne_amortization_schedule_ids}}
+
+    #------------------- For compute fields     ---------------------------------------
+    risk_amortization_period = fields.Integer(string='Period')
+    risk_amortization_principal_amount = fields.Float(string='Principal Amount')
+    risk_amortization_principal_repayment = fields.Float(string='Principal Repayment')
+    risk_amortization_probability_of_default = fields.Float()
+    risk_amortization_expected_default = fields.Float()
+    risk_amortization_expected_claim = fields.Float()
+    risk_amortization_recoveries = fields.Float()
+    risk_amortization_net_loss = fields.Float()
+    risk_amortization_utilization_fee = fields.Float()
+    risk_amortization_expected_guarantee_fee = fields.Float()
+    #----------------------------------------------------------------------------------------
+
+    conversion_factor_default_rate = fields.Float(string='Conversion Factor Default Rate (%)', digits=(5, 2),
+                                                  required=False, compute='_compute_conversion_factor_default_rate',
+                                                  inverse='_inverse_conversion_factor_default_rate', Store=True)
+
+    @api.depends('country_risk_model_id', 'lender_risk_model_id', 'borrower_risk_model_id',
+                 'transaction_risk_model_id')
     def _compute_conversion_factor_default_rate(self):
         for rec in self:
             conversion_factor_default_rate_env = self.env['risk.pricing.model.constants']
@@ -202,17 +321,24 @@ class RiskModelsSimulation(models.Model):
 
     country_id = fields.Many2one('res.country', string='Country ', required=False)
 
-    recovery_rate = fields.Float(string='Recovery Rate (%)', digits=(5, 2), required=False, compute='_compute_recovery_rate_period_after_default_for_recovery',inverse='_inverse_recovery_rate_period_after_default_for_recovery', Store=True)
-    period_after_default_for_recovery = fields.Float(string='Period After Default For Recovery', digits=(5, 2), required=False, compute='_compute_recovery_rate_period_after_default_for_recovery',  inverse='_inverse_recovery_rate_period_after_default_for_recovery', Store=True)
+    recovery_rate = fields.Float(string='Recovery Rate (%)', digits=(5, 2), required=False,
+                                 compute='_compute_recovery_rate_period_after_default_for_recovery',
+                                 inverse='_inverse_recovery_rate_period_after_default_for_recovery', Store=True)
+    period_after_default_for_recovery = fields.Float(string='Period After Default For Recovery', digits=(5, 2),
+                                                     required=False,
+                                                     compute='_compute_recovery_rate_period_after_default_for_recovery',
+                                                     inverse='_inverse_recovery_rate_period_after_default_for_recovery',
+                                                     Store=True)
 
     @api.depends('country_id')
     def _compute_recovery_rate_period_after_default_for_recovery(self):
         for rec in self:
-            if rec.country_id :
+            if rec.country_id:
                 risk_recovery_rate_env = self.env['risk.recovery.rate']
                 risk_period_after_default_for_recovery_env = self.env['risk.period.after.default.for.recovery']
-                risk_recovery_rate_results = risk_recovery_rate_env.search([('country_id', '=',rec.country_id.id)])
-                risk_period_after_default_for_recovery_results = risk_period_after_default_for_recovery_env.search([('country_id', '=', rec.country_id.id)])
+                risk_recovery_rate_results = risk_recovery_rate_env.search([('country_id', '=', rec.country_id.id)])
+                risk_period_after_default_for_recovery_results = risk_period_after_default_for_recovery_env.search(
+                    [('country_id', '=', rec.country_id.id)])
 
                 for risk_recovery_rate_result in risk_recovery_rate_results:
                     if risk_recovery_rate_result:
@@ -226,12 +352,8 @@ class RiskModelsSimulation(models.Model):
     facility_currency = fields.Many2one('res.currency', string='Facility Currency ', required=False)
     facility_amount = fields.Float(string='Facility Amount', digits=(5, 2), required=False, Store=True)
 
-
-
     def _inverse_recovery_rate_period_after_default_for_recovery(self):
         pass
-
-
 
     @api.depends('country_risk_model_id')
     def _compute_weighted_score_total(self):
@@ -240,7 +362,6 @@ class RiskModelsSimulation(models.Model):
 
     def _inverse_weighted_score_total(self):
         pass
-
 
     @api.depends('lender_risk_model_id')
     def _compute_weighted_score_total_lender(self):
@@ -274,11 +395,11 @@ class RiskModelsSimulation(models.Model):
                                                                                  "factor_weight"] / 100
 
     def init_risk_score_and_weighted_score_write(self, risk_models_simulation_models_model_factor_value, populated):
-        total = sum( item[2]['score'] for item in populated)
+        total = sum(item[2]['score'] for item in populated)
 
         risk_models_simulation_models_model_factor_value.risk_score = total
-        risk_models_simulation_models_model_factor_value.weighted_score= total * \
-                                                                             risk_models_simulation_models_model_factor_value.factor_weight / 100
+        risk_models_simulation_models_model_factor_value.weighted_score = total * \
+                                                                          risk_models_simulation_models_model_factor_value.factor_weight / 100
 
     # def init_risk_score_and_weighted_score_write(self, risk_models_simulation_models_model_factor_value, populated):
     #     print(populated)
@@ -304,7 +425,8 @@ class RiskModelsSimulation(models.Model):
                     populated = list(filter(
                         lambda c: c[2]["risk_model_factor_id"] == risk_models_simulation_models_model_factor_value[
                             'risk_model_factor_id'], risk_models_simulation_models_model_sub_factor_ids))
-                    self.init_risk_score_and_weighted_score(risk_models_simulation_models_model_factor_value, populated)
+                    self.init_risk_score_and_weighted_score(risk_models_simulation_models_model_factor_value,
+                                                            populated)
 
         if "lender_risk_models_simulation_models_model_factor_ids" in vals.keys():
             risk_models_simulation_models_model_factor_ids = vals[
@@ -317,7 +439,8 @@ class RiskModelsSimulation(models.Model):
                     populated = list(filter(
                         lambda c: c[2]["risk_model_factor_id"] == risk_models_simulation_models_model_factor_value[
                             'risk_model_factor_id'], risk_models_simulation_models_model_sub_factor_ids))
-                    self.init_risk_score_and_weighted_score(risk_models_simulation_models_model_factor_value, populated)
+                    self.init_risk_score_and_weighted_score(risk_models_simulation_models_model_factor_value,
+                                                            populated)
 
         if "borrower_risk_models_simulation_models_model_factor_ids" in vals.keys():
             risk_models_simulation_models_model_factor_ids = vals[
@@ -330,7 +453,8 @@ class RiskModelsSimulation(models.Model):
                     populated = list(filter(
                         lambda c: c[2]["risk_model_factor_id"] == risk_models_simulation_models_model_factor_value[
                             'risk_model_factor_id'], risk_models_simulation_models_model_sub_factor_ids))
-                    self.init_risk_score_and_weighted_score(risk_models_simulation_models_model_factor_value, populated)
+                    self.init_risk_score_and_weighted_score(risk_models_simulation_models_model_factor_value,
+                                                            populated)
 
         if "transaction_risk_models_simulation_models_model_factor_ids" in vals.keys():
             risk_models_simulation_models_model_factor_ids = vals[
@@ -343,37 +467,41 @@ class RiskModelsSimulation(models.Model):
                     populated = list(filter(
                         lambda c: c[2]["risk_model_factor_id"] == risk_models_simulation_models_model_factor_value[
                             'risk_model_factor_id'], risk_models_simulation_models_model_sub_factor_ids))
-                    self.init_risk_score_and_weighted_score(risk_models_simulation_models_model_factor_value, populated)
+                    self.init_risk_score_and_weighted_score(risk_models_simulation_models_model_factor_value,
+                                                            populated)
 
         riskModelsSimulation = super(RiskModelsSimulation, self).create(vals)
         return riskModelsSimulation
 
     def init_risk_model_factor_id_key(self, risk_models_simulation_models_model_sub_factor_ids, subfactor_model):
-        for risk_models_simulation_models_model_sub_factor_id in risk_models_simulation_models_model_sub_factor_ids :
+        for risk_models_simulation_models_model_sub_factor_id in risk_models_simulation_models_model_sub_factor_ids:
             result = self.env[subfactor_model].browse(risk_models_simulation_models_model_sub_factor_id[1])
-            if not risk_models_simulation_models_model_sub_factor_id[2] :
+            if not risk_models_simulation_models_model_sub_factor_id[2]:
                 risk_models_simulation_models_model_sub_factor_id[2] = {}
 
-            risk_models_simulation_models_model_sub_factor_id[2]["risk_model_factor_id"] = result.risk_model_factor_id.id
-            if not "score" in risk_models_simulation_models_model_sub_factor_id[2].keys() :
+            risk_models_simulation_models_model_sub_factor_id[2][
+                "risk_model_factor_id"] = result.risk_model_factor_id.id
+            if not "score" in risk_models_simulation_models_model_sub_factor_id[2].keys():
                 risk_models_simulation_models_model_sub_factor_id[2]["score"] = result.answer.point
-
-
 
     def write(self, vals):
         '''This action is used to update Simulation transaction in the database.'''
 
         if self.risk_models_simulation_models_model_factor_ids:
-             for risk_models_simulation_models_model_factor_id in self.risk_models_simulation_models_model_factor_ids:
+            print('write:',self.risk_models_simulation_models_model_factor_ids)
+            for risk_models_simulation_models_model_factor_id in self.risk_models_simulation_models_model_factor_ids:
                 risk_models_simulation_models_model_factor_value = risk_models_simulation_models_model_factor_id
                 if "risk_models_simulation_models_model_sub_factor_ids" in vals.keys():
                     risk_models_simulation_models_model_sub_factor_ids = vals[
                         'risk_models_simulation_models_model_sub_factor_ids']
-                    self.init_risk_model_factor_id_key(risk_models_simulation_models_model_sub_factor_ids, 'risk.models.simulation.models.model.sub.factor')
+                    self.init_risk_model_factor_id_key(risk_models_simulation_models_model_sub_factor_ids,
+                                                       'risk.models.simulation.models.model.sub.factor')
                     populated = list(filter(
-                        lambda c: c[2] and (c[2]["risk_model_factor_id"] == risk_models_simulation_models_model_factor_value.risk_model_factor_id.id),
+                        lambda c: c[2] and (c[2][
+                                                "risk_model_factor_id"] == risk_models_simulation_models_model_factor_value.risk_model_factor_id.id),
                         risk_models_simulation_models_model_sub_factor_ids))
-                    self.init_risk_score_and_weighted_score_write(risk_models_simulation_models_model_factor_value, populated)
+                    self.init_risk_score_and_weighted_score_write(risk_models_simulation_models_model_factor_value,
+                                                                  populated)
 
         if self.lender_risk_models_simulation_models_model_factor_ids:
             for risk_models_simulation_models_model_factor_id in self.lender_risk_models_simulation_models_model_factor_ids:
@@ -451,7 +579,8 @@ class RiskModelsSimulation(models.Model):
                     }
 
                 ligne_risk_models_simulation_models_model_factor_ids.append((0, 0, value))
-                risk_model_sub_factor_results = risk_model_sub_factor.search([('risk_model_factor_id', '=', rec.id)])
+                risk_model_sub_factor_results = risk_model_sub_factor.search(
+                    [('risk_model_factor_id', '=', rec.id)])
                 for rec in risk_model_sub_factor_results:
                     if rec:
                         value = {
@@ -499,7 +628,8 @@ class RiskModelsSimulation(models.Model):
                     }
 
                 ligne_risk_models_simulation_models_model_factor_ids.append((0, 0, value))
-                risk_model_sub_factor_results = risk_model_sub_factor.search([('risk_model_factor_id', '=', rec.id)])
+                risk_model_sub_factor_results = risk_model_sub_factor.search(
+                    [('risk_model_factor_id', '=', rec.id)])
                 for rec in risk_model_sub_factor_results:
                     if rec:
                         value = {
@@ -621,18 +751,16 @@ class RiskModelsSimulationModelsModelFactor(models.Model):
     risk_score = fields.Float(string='Risk Score', required=False)
     # weighted_score = fields.Float(string='Weighted Score', required=False,  compute="_compute_weighted_score")
     weighted_score = fields.Float(string='Weighted Score', required=False)
-    #weighted_score_total = fields.Float(string='Weighted Score', required=False)
+    # weighted_score_total = fields.Float(string='Weighted Score', required=False)
 
     # @api.depends('weighted_score', 'risk_models_simulation_id.country_risk_model_id')
     # def _compute_weighted_score_total(self):
     #     total = sum(item.weighted_score for item in self)
     #     self.weighted_score_total = total
 
-
     # @api.depends('risk_score')
     # def _compute_weighted_score(self):
     #    print("bonjour")
-
 
 
 class RiskModelsSimulationModelsModelSubFactor(models.Model):
@@ -641,16 +769,19 @@ class RiskModelsSimulationModelsModelSubFactor(models.Model):
 
     risk_models_simulation_id = fields.Many2one('risk.models.simulation', string='Simulation', required=False)
     risk_models_id = fields.Many2one('risk.models', string='Simulation Models', required=False)
-    risk_model_sub_factor_id = fields.Many2one('risk.model.sub.factor', string='Simulation sub factor', required=False)
+    risk_model_sub_factor_id = fields.Many2one('risk.model.sub.factor', string='Simulation sub factor',
+                                               required=False)
     risk_model_factor_id = fields.Many2one('risk.model.factor', string='Simulation  factor', required=False)
     # factor_name = fields.Char(string='Factor name', related='risk_model_sub_factor_id.risk_model_factor_id.factor_name', Store=False)
     sub_factor_name = fields.Char(string='Sub factor name', related='risk_model_sub_factor_id.subfactor_name',
                                   Store=True)
-    sub_factor_weight = fields.Float(string='Sub factor weight', related='risk_model_sub_factor_id.weight', Store=True)
+    sub_factor_weight = fields.Float(string='Sub factor weight', related='risk_model_sub_factor_id.weight',
+                                     Store=True)
     # answer = fields.Char(string='Answer', required=False)
     answer = fields.Many2one('risk.model.sub.factor.answers', string='Answer', required=False,
                              domain="[('risk_model_subfactor_id', '=', risk_model_sub_factor_id)]")
-    score = fields.Float(string='Score', required=False, compute='_compute_score', inverse='_inverse_score', Store=True)
+    score = fields.Float(string='Score', required=False, compute='_compute_score', inverse='_inverse_score',
+                         Store=True)
 
     # score = fields.Float(string='Score', required=False, related='answer.point', inverse='_inverse_score', Store=True)
     # inverse_score = fields.Float(string='Score', required=False)
@@ -695,16 +826,19 @@ class RiskModelsSimulationModelsModelSubFactorLender(models.Model):
 
     risk_models_simulation_id = fields.Many2one('risk.models.simulation', string='Simulation', required=False)
     risk_models_id = fields.Many2one('risk.models', string='Simulation Models', required=False)
-    risk_model_sub_factor_id = fields.Many2one('risk.model.sub.factor', string='Simulation sub factor', required=False)
+    risk_model_sub_factor_id = fields.Many2one('risk.model.sub.factor', string='Simulation sub factor',
+                                               required=False)
     risk_model_factor_id = fields.Many2one('risk.model.factor', string='Simulation  factor', required=False)
     # factor_name = fields.Char(string='Factor name', related='risk_model_sub_factor_id.risk_model_factor_id.factor_name', Store=False)
     sub_factor_name = fields.Char(string='Sub factor name', related='risk_model_sub_factor_id.subfactor_name',
                                   Store=True)
-    sub_factor_weight = fields.Float(string='Sub factor weight', related='risk_model_sub_factor_id.weight', Store=True)
+    sub_factor_weight = fields.Float(string='Sub factor weight', related='risk_model_sub_factor_id.weight',
+                                     Store=True)
     # answer = fields.Char(string='Answer', required=False)
     answer = fields.Many2one('risk.model.sub.factor.answers', string='Answer', required=False,
                              domain="[('risk_model_subfactor_id', '=', risk_model_sub_factor_id)]")
-    score = fields.Float(string='Score', required=False, compute='_compute_score', inverse='_inverse_score', Store=True)
+    score = fields.Float(string='Score', required=False, compute='_compute_score', inverse='_inverse_score',
+                         Store=True)
 
     # score = fields.Float(string='Score', required=False, related='answer.point', inverse='_inverse_score', Store=True)
     # inverse_score = fields.Float(string='Score', required=False)
@@ -749,16 +883,19 @@ class RiskModelsSimulationModelsModelSubFactorBorrower(models.Model):
 
     risk_models_simulation_id = fields.Many2one('risk.models.simulation', string='Simulation', required=False)
     risk_models_id = fields.Many2one('risk.models', string='Simulation Models', required=False)
-    risk_model_sub_factor_id = fields.Many2one('risk.model.sub.factor', string='Simulation sub factor', required=False)
+    risk_model_sub_factor_id = fields.Many2one('risk.model.sub.factor', string='Simulation sub factor',
+                                               required=False)
     risk_model_factor_id = fields.Many2one('risk.model.factor', string='Simulation  factor', required=False)
     # factor_name = fields.Char(string='Factor name', related='risk_model_sub_factor_id.risk_model_factor_id.factor_name', Store=False)
     sub_factor_name = fields.Char(string='Sub factor name', related='risk_model_sub_factor_id.subfactor_name',
                                   Store=True)
-    sub_factor_weight = fields.Float(string='Sub factor weight', related='risk_model_sub_factor_id.weight', Store=True)
+    sub_factor_weight = fields.Float(string='Sub factor weight', related='risk_model_sub_factor_id.weight',
+                                     Store=True)
     # answer = fields.Char(string='Answer', required=False)
     answer = fields.Many2one('risk.model.sub.factor.answers', string='Answer', required=False,
                              domain="[('risk_model_subfactor_id', '=', risk_model_sub_factor_id)]")
-    score = fields.Float(string='Score', required=False, compute='_compute_score', inverse='_inverse_score', Store=True)
+    score = fields.Float(string='Score', required=False, compute='_compute_score', inverse='_inverse_score',
+                         Store=True)
 
     # score = fields.Float(string='Score', required=False, related='answer.point', inverse='_inverse_score', Store=True)
     # inverse_score = fields.Float(string='Score', required=False)
@@ -803,16 +940,19 @@ class RiskModelsSimulationModelsModelSubFactorTransact(models.Model):
 
     risk_models_simulation_id = fields.Many2one('risk.models.simulation', string='Simulation', required=False)
     risk_models_id = fields.Many2one('risk.models', string='Simulation Models', required=False)
-    risk_model_sub_factor_id = fields.Many2one('risk.model.sub.factor', string='Simulation sub factor', required=False)
+    risk_model_sub_factor_id = fields.Many2one('risk.model.sub.factor', string='Simulation sub factor',
+                                               required=False)
     risk_model_factor_id = fields.Many2one('risk.model.factor', string='Simulation  factor', required=False)
     # factor_name = fields.Char(string='Factor name', related='risk_model_sub_factor_id.risk_model_factor_id.factor_name', Store=False)
     sub_factor_name = fields.Char(string='Sub factor name', related='risk_model_sub_factor_id.subfactor_name',
                                   Store=True)
-    sub_factor_weight = fields.Float(string='Sub factor weight', related='risk_model_sub_factor_id.weight', Store=True)
+    sub_factor_weight = fields.Float(string='Sub factor weight', related='risk_model_sub_factor_id.weight',
+                                     Store=True)
     # answer = fields.Char(string='Answer', required=False)
     answer = fields.Many2one('risk.model.sub.factor.answers', string='Answer', required=False,
                              domain="[('risk_model_subfactor_id', '=', risk_model_sub_factor_id)]")
-    score = fields.Float(string='Score', required=False, compute='_compute_score', inverse='_inverse_score', Store=True)
+    score = fields.Float(string='Score', required=False, compute='_compute_score', inverse='_inverse_score',
+                         Store=True)
 
     # score = fields.Float(string='Score', required=False, related='answer.point', inverse='_inverse_score', Store=True)
     # inverse_score = fields.Float(string='Score', required=False)

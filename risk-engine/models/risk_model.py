@@ -36,10 +36,10 @@ class RiskModels(models.Model):
     def _compute_total_number_of_questions_per_model(self):
         for rec in self:
             somme = 0
-            print('rec', rec)
+            #print('rec', rec)
             for line in rec.risk_model_factors:
                 somme += line.risk_model_number_of_questions
-                print("line", line.risk_model_number_of_questions )
+                #print("line", line.risk_model_number_of_questions )
             rec.risk_model_number_of_questions = somme
 
 class RiskModelTypes(models.Model):
