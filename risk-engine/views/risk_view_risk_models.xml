@@ -27,6 +27,9 @@
                 <tree>
                     <field name="model_name"/>
                     <field name="model_description"/>
+                    <field name="model_description"/>
+                    <field name="risk_model_number_of_factors"/>
+                    <field name="risk_model_number_of_questions"/>
                     <field name="status" optional="show" widget="badge"/>
                 </tree>
             </field>
@@ -77,7 +80,8 @@
                                     <tree string="Model Factors">
                                         <field name="factor_name"/>
                                         <field name="factor_description"/>
-                                        <field name="Weight"/>
+                                        <field name="Weight" sum="Weight"/>
+<!--                                        <field name="factor_total_weight" invisible="1"/>-->
                                     </tree>
                                     <form string="Model Factors">
                                         <group>

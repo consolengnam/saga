@@ -33,9 +33,6 @@
         </record>
 
 
-
-
-
         <record id='risk_model_sub_factor_answers_wizard_form' model='ir.ui.view'>
             <field name='name'>Query wizard form view</field>
             <field name='model'>risk.model.sub.factor.answers.wizard</field>
@@ -53,7 +50,7 @@
 
                             </group>
                         </group>
-                         <group>
+                        <group>
                             <group>
 
                             </group>
@@ -63,14 +60,13 @@
                         </group>
                     </sheet>
                     <footer>
-<!--                        <button string='Ok' type='object' name='add_agrements_mouvements_transmission'-->
-<!--                                class='btn-primary'/>-->
-<!--                        <button string='Cancel' class='btn-default' special='cancel'/>-->
+                        <!--                        <button string='Ok' type='object' name='add_agrements_mouvements_transmission'-->
+                        <!--                                class='btn-primary'/>-->
+                        <!--                        <button string='Cancel' class='btn-default' special='cancel'/>-->
                     </footer>
                 </form>
             </field>
         </record>
-
 
 
         <record model="ir.actions.act_window" id="action_risk_model_sub_factor_answers_wizard_form">
@@ -104,10 +100,10 @@
                          <div class="oe_title">
                              <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">Request for Quotation </span>
                              <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">Purchase Order </span>
-                             <h1>
+                             <h2>
                                  <field name="priority" widget="priority" class="mr-3"/>
                                  <field name="name" readonly="1"/>
-                             </h1>
+                             </h2>
                          </div>-->
                         <group>
                             <group>
@@ -115,70 +111,86 @@
                                 <field name="model_simulation_description"/>
                             </group>
                             <group>
-<!--                                <field name="type_risk"/>-->
+                                <!--                                <field name="type_risk"/>-->
                                 <field name="status" readonly="1"/>
                             </group>
                         </group>
+                        <div>
+                            <p>Each tab below represents a risk type e.g. Country Risk and under it are the already
+                                defined risk model(s). Select the risk model you want to simulate and provide answers to
+                                the questions i.e. Sub-Factors.
+                            </p>
+                        </div>
                         <notebook>
                             <page string="Country Risk" name="risk_model_factors_country">
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
-<!--                                <label for="country_risk_model_id"/>-->
+                                <!--                                <label for="country_risk_model_id"/>-->
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
-<!--                                <h1><field  name="risk_model_country_ids" widget="many2many_tags"     domain="[('type_risk','=', 'country_risk_models')]"   class="oe_inline o_calendar_attendees"  placeholder="Select a Country Risk" /></h1>-->
-                                <h1><field class="o_text_overflow" name="country_risk_model_id"  placeholder="Select a Country Risk"  attrs="{'readonly': [('id', '!=', False)]}"  /></h1>
-                                <field name="risk_models_simulation_models_model_factor_ids"   >
-                                    <tree string="Country Risk Factor"  editable="bottom" create="false">
+                                <!--                                <h2><field  name="risk_model_country_ids" widget="many2many_tags"     domain="[('type_risk','=', 'country_risk_models')]"   class="oe_inline o_calendar_attendees"  placeholder="Select a Country Risk" /></h2>-->
+                                <h2>
+                                    <field class="o_text_overflow" name="country_risk_model_id"
+                                           placeholder="Select a Country Risk"
+                                           attrs="{'readonly': [('id', '!=', False)]}"/>
+                                </h2>
+                                <field name="risk_models_simulation_models_model_factor_ids">
+                                    <tree string="Country Risk Factor" editable="bottom" create="false">
                                         <field name="risk_model_factor_id"/>
-<!--                                        <field name="factor_name"/>-->
+                                        <!--                                        <field name="factor_name"/>-->
                                         <field name="risk_score"/>
                                         <field name="factor_weight"/>
                                         <field name="weighted_score"/>
-<!--                                         <field name="weighted_score_total"/>-->
+                                        <!--                                         <field name="weighted_score_total"/>-->
                                     </tree>
                                 </field>
 
                                 <group>
                                     <group class="oe_subtotal_footer oe_right">
-                                        <h1><field name="weighted_score_total" widget="monetary" nolabel="1"/></h1>
+                                        <h2>
+                                            <field name="weighted_score_total" widget="monetary" nolabel="1"/>
+                                        </h2>
                                     </group>
                                 </group>
 
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
                                 <field name="risk_models_simulation_models_model_sub_factor_ids">
                                     <tree string="Country Risk SubFactor" editable="bottom" create="false">
                                         <field name="risk_model_factor_id"/>
-<!--                                        <field name="factor_name"/>-->
-<!--                                        <field name="sub_factor_name"/>-->
-                                        <field name="risk_model_sub_factor_id" />
+                                        <!--                                        <field name="factor_name"/>-->
+                                        <!--                                        <field name="sub_factor_name"/>-->
+                                        <field name="risk_model_sub_factor_id"/>
                                         <field name="sub_factor_weight"/>
                                         <field name="answer" placeholder="Not Answered Yet"/>
-<!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
+                                        <!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
                                         <field name="score"/>
-<!--                                        <field name="inverse_score"/>-->
+                                        <!--                                        <field name="inverse_score"/>-->
                                     </tree>
                                 </field>
                                 <div class="oe_clear"/>
                             </page>
                             <page string="Lender Risk" name="risk_model_factors_lender">
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
-<!--                                <label for="lender_risk_model_id"/>-->
+                                <!--                                <label for="lender_risk_model_id"/>-->
 
-                                 <div class="oe_clear"/>
-<!--                                 <h1><field  name="risk_model_lender_ids" widget="many2many_tags"     domain="[('type_risk','=', 'lender_risk_models')]"   class="oe_inline o_calendar_attendees"  placeholder="Select a Lender Risk" /></h1>-->
-                                 <h1><field class="o_text_overflow" name="lender_risk_model_id"   placeholder="Select a Lender Risk" attrs="{'readonly': [('id', '!=', False)]}" /></h1>
+                                <div class="oe_clear"/>
+                                <!--                                 <h2><field  name="risk_model_lender_ids" widget="many2many_tags"     domain="[('type_risk','=', 'lender_risk_models')]"   class="oe_inline o_calendar_attendees"  placeholder="Select a Lender Risk" /></h2>-->
+                                <h2>
+                                    <field class="o_text_overflow" name="lender_risk_model_id"
+                                           placeholder="Select a Lender Risk"
+                                           attrs="{'readonly': [('id', '!=', False)]}"/>
+                                </h2>
 
-                                  <field name="lender_risk_models_simulation_models_model_factor_ids" >
+                                <field name="lender_risk_models_simulation_models_model_factor_ids">
                                     <tree string="Lender Risk Factor" editable="bottom" create="false">
                                         <field name="risk_model_factor_id"/>
-<!--                                        <field name="factor_name"/>-->
+                                        <!--                                        <field name="factor_name"/>-->
                                         <field name="risk_score"/>
                                         <field name="factor_weight"/>
                                         <field name="weighted_score"/>
@@ -187,112 +199,127 @@
 
                                 <group>
                                     <group class="oe_subtotal_footer oe_right">
-                                        <h1><field name="weighted_score_total_lender" widget="monetary" nolabel="1"/></h1>
+                                        <h2>
+                                            <field name="weighted_score_total_lender" widget="monetary" nolabel="1"/>
+                                        </h2>
                                     </group>
                                 </group>
 
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
                                 <field name="lender_risk_models_simulation_models_model_sub_factor_ids">
                                     <tree string="Lender Risk SubFactor" editable="bottom" create="false">
                                         <field name="risk_model_factor_id"/>
-<!--                                        <field name="factor_name"/>-->
-<!--                                        <field name="sub_factor_name"/>-->
-                                        <field name="risk_model_sub_factor_id" />
+                                        <!--                                        <field name="factor_name"/>-->
+                                        <!--                                        <field name="sub_factor_name"/>-->
+                                        <field name="risk_model_sub_factor_id"/>
                                         <field name="sub_factor_weight"/>
                                         <field name="answer" placeholder="Not Answered Yet"/>
-<!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
+                                        <!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
                                         <field name="score"/>
-<!--                                        <field name="inverse_score"/>-->
+                                        <!--                                        <field name="inverse_score"/>-->
                                     </tree>
                                 </field>
 
 
                             </page>
 
-                             <page string="Borrower Risk" name="risk_model_factors_borrower">
+                            <page string="Borrower Risk" name="risk_model_factors_borrower">
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
-<!--                                <label for="borrower_risk_model_id"/>-->
+                                <!--                                <label for="borrower_risk_model_id"/>-->
 
-                                 <div class="oe_clear"/>
-                                 <h1><field class="o_text_overflow" name="borrower_risk_model_id" placeholder="Select a Borrower Risk" attrs="{'readonly': [('id', '!=', False)]}"/></h1>
+                                <div class="oe_clear"/>
+                                <h2>
+                                    <field class="o_text_overflow" name="borrower_risk_model_id"
+                                           placeholder="Select a Borrower Risk"
+                                           attrs="{'readonly': [('id', '!=', False)]}"/>
+                                </h2>
 
-                                   <field name="borrower_risk_models_simulation_models_model_factor_ids" >
+                                <field name="borrower_risk_models_simulation_models_model_factor_ids">
                                     <tree string="Borrower Risk Factor" editable="bottom" create="false">
                                         <field name="risk_model_factor_id"/>
-<!--                                        <field name="factor_name"/>-->
+                                        <!--                                        <field name="factor_name"/>-->
                                         <field name="risk_score"/>
                                         <field name="factor_weight"/>
                                         <field name="weighted_score"/>
                                     </tree>
                                 </field>
 
-                                 <group>
+                                <group>
                                     <group class="oe_subtotal_footer oe_right">
-                                        <h1><field name="weighted_score_total_borrower" widget="monetary" nolabel="1"/></h1>
+                                        <h2>
+                                            <field name="weighted_score_total_borrower" widget="monetary" nolabel="1"/>
+                                        </h2>
                                     </group>
                                 </group>
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
                                 <field name="borrower_risk_models_simulation_models_model_sub_factor_ids">
                                     <tree string="Borrower Risk SubFactor" editable="bottom" create="false">
                                         <field name="risk_model_factor_id"/>
-<!--                                        <field name="factor_name"/>-->
-<!--                                        <field name="sub_factor_name"/>-->
-                                        <field name="risk_model_sub_factor_id" />
+                                        <!--                                        <field name="factor_name"/>-->
+                                        <!--                                        <field name="sub_factor_name"/>-->
+                                        <field name="risk_model_sub_factor_id"/>
                                         <field name="sub_factor_weight"/>
                                         <field name="answer" placeholder="Not Answered Yet"/>
-<!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
+                                        <!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
                                         <field name="score"/>
-<!--                                        <field name="inverse_score"/>-->
+                                        <!--                                        <field name="inverse_score"/>-->
                                     </tree>
                                 </field>
 
 
                             </page>
 
-                             <page string="Transaction Risk" name="risk_model_factors_transaction">
+                            <page string="Transaction Risk" name="risk_model_factors_transaction">
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
-<!--                                <label for="transaction_risk_model_id"/>-->
+                                <!--                                <label for="transaction_risk_model_id"/>-->
 
-                                 <div class="oe_clear"/>
-                                  <h1><field class="o_text_overflow" name="transaction_risk_model_id" placeholder="Select a Transactional Risk" attrs="{'readonly': [('id', '!=', False)]}"/></h1>
+                                <div class="oe_clear"/>
+                                <h2>
+                                    <field class="o_text_overflow" name="transaction_risk_model_id"
+                                           placeholder="Select a Transactional Risk"
+                                           attrs="{'readonly': [('id', '!=', False)]}"/>
+                                </h2>
 
-                                   <field name="transaction_risk_models_simulation_models_model_factor_ids" >
+                                <field name="transaction_risk_models_simulation_models_model_factor_ids">
                                     <tree string="Transaction Risk Factor" editable="bottom" create="false">
                                         <field name="risk_model_factor_id"/>
-<!--                                        <field name="factor_name"/>-->
+                                        <!--                                        <field name="factor_name"/>-->
                                         <field name="risk_score"/>
                                         <field name="factor_weight"/>
                                         <field name="weighted_score"/>
                                     </tree>
                                 </field>
 
-                                 <group>
+                                <group>
                                     <group class="oe_subtotal_footer oe_right">
-                                        <h1><field name="weighted_score_total_transaction" widget="monetary" nolabel="1"/></h1>
+                                        <h2>
+                                            <field name="weighted_score_total_transaction" widget="monetary"
+                                                   nolabel="1"/>
+                                        </h2>
                                     </group>
                                 </group>
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
                                 <field name="transaction_risk_models_simulation_models_model_sub_factor_ids">
                                     <tree string="Transaction Risk SubFactor" editable="bottom" create="false">
                                         <field name="risk_model_factor_id"/>
-<!--                                        <field name="factor_name"/>-->
-<!--                                        <field name="sub_factor_name"/>-->
-                                        <field name="risk_model_sub_factor_id" />
+                                        <!--                                        <field name="factor_name"/>-->
+                                        <!--                                        <field name="sub_factor_name"/>-->
+                                        <field name="risk_model_sub_factor_id"/>
                                         <field name="sub_factor_weight"/>
                                         <field name="answer" placeholder="Not Answered Yet"/>
-<!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
+                                        <!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
                                         <field name="score"/>
-<!--                                        <field name="inverse_score"/>-->
+                                        <!--                                        <field name="inverse_score"/>-->
                                     </tree>
                                 </field>
 
@@ -301,55 +328,70 @@
 
                             <page string="Risk Model Pricing">
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
 
+                                <group colspan="4" col="3">
+                                    <group string="Pricing Model Input">
+                                        <field name="country_id"/>
+                                        <field name="product_id"/>
+                                        <field name="period_id"/>
+                                        <field name="coverage_ratio"/>
+                                        <field name="facility_currency"/>
+                                        <field name="facility_amount"/>
+                                    </group>
+                                    <group string=" Risk Rating" colspan="2" col="3">
 
-                                 <group  colspan="4"  col="3">
-                                    <group  string="Pricing Model Input" >
-                                         <field name="country_id"/>
-                                         <field name="product_id"/>
-                                         <field name="period_id"/>
-                                         <field name="coverage_ratio"/>
-                                         <field name="facility_currency"/>
-                                         <field name="facility_amount"/>
-                                     </group>
-                                     <group string=" Risk Rating"   colspan="2"  col="3"  >
 
+                                        <group string="Risk Score" col="1">
+                                            <field name="weighted_score_total" readonly="1"/>
+                                            <field name="weighted_score_total_lender" readonly="1"/>
+                                            <field name="weighted_score_total_borrower" readonly="1"/>
+                                            <field name="weighted_score_total_transaction" readonly="1"/>
+                                            <h2>Weighted-Average Score</h2>
+                                        </group>
 
-                                                  <group  string="Risk Score" col="1"  >
-                                                      <field name="weighted_score_total" readonly="1" />
-                                                     <field name="weighted_score_total_lender" readonly="1" />
-                                                     <field name="weighted_score_total_borrower" readonly="1" />
-                                                     <field name="weighted_score_total_transaction" readonly="1" />
-                                                        <h2>  Weighted-Average Score  </h2>
-                                                  </group>
+                                        <group string="Risk Weights" col="1">
+                                            <span>
+                                                <field name="weighted_product" nolabel="1" readonly="1"/>
+                                                (%)
+                                            </span>
+                                            <span>
+                                                <field name="weighted_product_lender" nolabel="1" readonly="1"/>
+                                                (%)
+                                            </span>
+                                            <span>
+                                                <field name="weighted_product_borrower" nolabel="1" readonly="1"/>
+                                                (%)
+                                            </span>
+                                            <span>
+                                                <field name="weighted_product_transaction" nolabel="1" readonly="1"/>
+                                                (%)
+                                            </span>
+                                            <h2>
+                                                <field name="sum_weighted_product" nolabel="1" readonly="1"/>
+                                                (%)
+                                            </h2>
 
-                                                 <group string="Risk Weights"  col="1"  >
-                                                   <span>   <field name="weighted_product" nolabel="1"  readonly="1" /> (%) </span>
-                                                   <span>  <field name="weighted_product_lender" nolabel="1"  readonly="1" />  (%) </span>
-                                                    <span> <field name="weighted_product_borrower" nolabel="1" readonly="1" />  (%) </span>
-                                                    <span> <field name="weighted_product_transaction" nolabel="1" readonly="1" />  (%) </span>
-                                                     <h2>  <field name="sum_weighted_product" nolabel="1" readonly="1" />   (%)</h2>
+                                        </group>
+                                        <group string="Weighted Score" col="1">
+                                            <field name="weighted_product_score" nolabel="1" readonly="1"/>
+                                            <field name="weighted_product_score_lender" nolabel="1" readonly="1"/>
+                                            <field name="weighted_product_score_borrower" nolabel="1" readonly="1"/>
+                                            <field name="weighted_product_score_transaction" nolabel="1" readonly="1"/>
+                                            <h2>
+                                                <field name="sum_weighted_product_score" nolabel="1" readonly="1"/>
+                                            </h2>
 
-                                                 </group>
-                                                 <group string="Weighted Score"  col="1" >
-                                                     <field name="weighted_product_score" nolabel="1"  readonly="1" />
-                                                     <field name="weighted_product_score_lender" nolabel="1" readonly="1" />
-                                                     <field name="weighted_product_score_borrower" nolabel="1" readonly="1" />
-                                                     <field name="weighted_product_score_transaction" nolabel="1" readonly="1" />
-                                                      <h2>  <field name="sum_weighted_product_score" nolabel="1" readonly="1" />  </h2>
-
-                                                 </group>
-
+                                        </group>
 
                                     </group>
-                                     <group  string="Pricing Model Constant"  >
-                                         <field name="premium_d" readonly="1" />
-                                         <field name="premium_f" readonly="1" />
-                                         <field name="conversion_factor_default_rate" readonly="1" />
-                                         <field name="recovery_rate" readonly="1" />
-                                         <field name="period_after_default_for_recovery" readonly="1" />
+                                    <group string="Pricing Model Constant">
+                                        <field name="premium_d" readonly="1"/>
+                                        <field name="premium_f" readonly="1"/>
+                                        <field name="conversion_factor_default_rate" readonly="1"/>
+                                        <field name="recovery_rate" readonly="1"/>
+                                        <field name="period_after_default_for_recovery" readonly="1"/>
 
                                     </group>
 
@@ -363,9 +405,40 @@
 
                                      </group>
                                 </group>
+                                 <group string="Amortization Schedule" col="1">
+                                            <field name="amortization_schedule_ids" nolabel="1" readonly="0">
+                                                <tree string="Amortization" editable="bottom" create="true">
+                                                    <field name="risk_amortization_period"/>
+                                                    <field name="risk_amortization_principal_amount"/>
+                                                    <field name="risk_amortization_principal_repayment"/>
+                                                    <field name="risk_amortization_probability_of_default"/>
+                                                    <field name="risk_amortization_expected_default"/>
+                                                    <field name="risk_amortization_expected_claim"/>
+                                                    <field name="risk_amortization_recoveries"/>
+                                                    <field name="risk_amortization_net_loss"/>
+                                                    <field name="risk_amortization_utilization_fee"/>
+                                                    <field name="risk_amortization_expected_guarantee_fee"/>
+                                                </tree>
+                                            </field>
+                                    </group>
+                                <group string="Pricing Result" col="1">
+                                    <span>
+                                        <field name="pricing_result" nolabel="1" readonly="1"/>%
+                                        <p>Utilization Fee Required for Fees to Cover Claims</p>
+                                    </span>
+                                    <span>
+                                        <field name="net_loss" nolabel="1" readonly="1"/>
+                                        <p>Present Value of Net Loss</p>
+                                    </span>
+                                    <span>
+                                        <field name="expected_guarantee_fee" nolabel="1" readonly="1"/>
+                                        <p>Basis of Present Value of Expected Guarantee Fees</p>
+                                    </span>
+
+                                </group>
 
 
-                                 <div class="oe_clear"/>
+                                <div class="oe_clear"/>
 
                                  <group  string="Amortization Schedule" >
                                      <group colspan="2">
@@ -412,10 +485,11 @@
             <field name="domain">[]</field>
             <field name="search_view_id" ref="risk_engine_model_simulation_search_view"/>
             <field name="context">{
-                 'default_type_risk':'simulation',
-                 'search_default_type_risk': 'simulation',
-                 'search_default_to_process':1,
-                }</field>
+                'default_type_risk':'simulation',
+                'search_default_type_risk': 'simulation',
+                'search_default_to_process':1,
+                }
+            </field>
             <field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">
                     Create a new Country Risk Models Simulation
@@ -425,8 +499,6 @@
                 </p>
             </field>
         </record>
-
-
 
 
     </data>
