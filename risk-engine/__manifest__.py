@@ -36,6 +36,8 @@
         'views/risk_view_risk-engine_period_after_default_for_recovery.xml',
         'views/risk_view_risk_model_simulation.xml',
         'views/risk_menu.xml',
+        'data/risk_agency_default_rates.xml',
+        'data/risk_free_vectors.xml',
 
     ],
     # only loaded in demonstration mode

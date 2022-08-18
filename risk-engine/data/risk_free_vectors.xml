@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors1">
+
+        <field name="period">1</field>
+
+        <field name="treasury_rate">0.001200</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors2">
+
+        <field name="period">2</field>
+
+        <field name="treasury_rate">0.001500</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors3">
+
+        <field name="period">3</field>
+
+        <field name="treasury_rate">0.002100</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors4">
+
+        <field name="period">4</field>
+
+        <field name="treasury_rate">0.002700</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors5">
+
+        <field name="period">5</field>
+
+        <field name="treasury_rate">0.003200</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors6">
+
+        <field name="period">6</field>
+
+        <field name="treasury_rate">0.003700</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors7">
+
+        <field name="period">7</field>
+
+        <field name="treasury_rate">0.004675</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors8">
+
+        <field name="period">8</field>
+
+        <field name="treasury_rate">0.005650</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors9">
+
+        <field name="period">9</field>
+
+        <field name="treasury_rate">0.006625</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors10">
+
+        <field name="period">10</field>
+
+        <field name="treasury_rate">0.007600</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors11">
+
+        <field name="period">11</field>
+
+        <field name="treasury_rate">0.008825</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors12">
+
+        <field name="period">12</field>
+
+        <field name="treasury_rate">0.010050</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors13">
+
+        <field name="period">13</field>
+
+        <field name="treasury_rate">0.011275</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors14">
+
+        <field name="period">14</field>
+
+        <field name="treasury_rate">0.012500</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors15">
+
+        <field name="period">15</field>
+
+        <field name="treasury_rate">0.013517</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors16">
+
+        <field name="period">16</field>
+
+        <field name="treasury_rate">0.014533</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors17">
+
+        <field name="period">17</field>
+
+        <field name="treasury_rate">0.015550</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors18">
+
+        <field name="period">18</field>
+
+        <field name="treasury_rate">0.016567</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors19">
+
+        <field name="period">19</field>
+
+        <field name="treasury_rate">0.017583</field>
+    </record>
+    <record model="risk.free.vectors" id="risk-engine.risk_free_vectors20">
+
+        <field name="period">20</field>
+
+        <field name="treasury_rate">0.018600</field>
+    </record>
+
+</odoo>

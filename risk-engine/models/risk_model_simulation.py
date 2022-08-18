@@ -135,6 +135,9 @@ class RiskModelsSimulation(models.Model):
     sum_weighted_product_score = fields.Float(compute='_compute_sum_weighted_product_score',
                                         inverse='_inverse_sum_weighted_product_score')
 
+
+
+
     @api.depends('product_id')
     def _compute_weighted_product_score(self):
         for rec in self:
@@ -160,6 +163,145 @@ class RiskModelsSimulation(models.Model):
 
 
     period_id = fields.Many2one('risk.premium.f.curves', string='Period(Tenor)', required=False)
+
+    @api.onchange('period_id', 'facility_amount', 'sum_weighted_product_score', 'conversion_factor_default_rate', 'coverage_ratio' , 'premium_d' , 'premium_f')
+    def _onchange_period_id(self):
+        if self.period_id:
+            return self.init_risk_models_armotization_schedule_data(self.period_id.period, self.facility_amount, self.sum_weighted_product_score, self.conversion_factor_default_rate, self.coverage_ratio , self.recovery_rate, self.period_after_default_for_recovery,self.premium_d , self.premium_f)
+
+    def init_risk_models_armotization_schedule_data(self, period, facility_amount, sum_weighted_product_score, conversion_factor_default_rate, coverage_ratio, recovery_rate, period_after_default_for_recovery, premium_d, premium_f ) :
+        '''This action is for initialisation of amortization schedule data'''
+
+        ligne_risk_models_amortization_schedule_ids = []
+
+        for rec in self:
+            rec.write({'risk_models_amortization_schedule_ids': [(5, 0, 0)]})
+
+        if period:
+
+            tenor = period
+
+            principal_amount = 0
+            principal_repayment = 0
+            agency_default_rate_per_each_period = 0
+            expected_default = 0
+            previous_principal_amount = 0
+            period_t = 1
+            period_Tr = period_after_default_for_recovery
+            recoveries_per_each_period=0
+            expected_claim_per_each_period_list = []
+            pv_netloss = 0
+            pv_expected_guarantees_fees = 0
+
+            common_diff = 0
+            if facility_amount:
+                common_diff = facility_amount / tenor
+                principal_amount = facility_amount
+            valuesList = []
+            treasury_rateList = []
+            if sum_weighted_product_score or sum_weighted_product_score==0 :
+                sum_weighted_product_score_int = round(sum_weighted_product_score)
+                risk_agency_default_rates_env = self.env['risk.agency.default.rates']
+                risk_agency_default_rates_results = risk_agency_default_rates_env.search([('rating', '=', sum_weighted_product_score_int)])
+                for rec in risk_agency_default_rates_results:
+                    valuesList.append(rec.value)
+
+                risk_free_vectors_env = self.env['risk.free.vectors']
+                risk_free_vectors_results = risk_free_vectors_env.search([])
+                for rec in risk_free_vectors_results:
+                    treasury_rateList.append(rec.treasury_rate)
+
+
+
+            for p in range(period+1):
+
+                if len(valuesList) > p :
+                   agency_default_rate_per_each_period = valuesList[p]
+                else :
+                    agency_default_rate_per_each_period = 0
+                Probability_of_default_per_each_period = agency_default_rate_per_each_period * (conversion_factor_default_rate / 100)
+                expected_default = Probability_of_default_per_each_period*principal_repayment
+                expected_claim_per_each_period = coverage_ratio*expected_default
+                expected_claim_per_each_period_list.append(expected_claim_per_each_period)
+
+                if period_t > period_Tr :
+                    t = period_t - period_Tr
+                    t_int = round(t)
+                    expected_claim_at_t = expected_claim_per_each_period_list[t_int]
+                    recoveries_per_each_period= (recovery_rate/100)*expected_claim_at_t
+                else :
+                    recoveries_per_each_period = 0
+
+                net_loss = expected_claim_per_each_period - recoveries_per_each_period
+
+                if previous_principal_amount :
+                    total_principal_amount = previous_principal_amount+principal_amount
+                else :
+                    total_principal_amount =  principal_amount
+
+                if period_t == 1 :
+                    utilization_fee = coverage_ratio*total_principal_amount
+                else :
+                    utilization_fee = coverage_ratio * (total_principal_amount/2)
+
+                expected_guarantee_fee = (1-Probability_of_default_per_each_period)*utilization_fee
+
+
+                if len(treasury_rateList) > p:
+                    interest_rate_d = treasury_rateList[p] + premium_d/100
+                else:
+                    interest_rate_d = 0
+
+                discount_factor_d = 1/(1+interest_rate_d)**(period_t/2)
+
+                if tenor==0 :
+                    pv_netloss = 0
+                elif period_t <= tenor :
+                    pv_netloss +=  (net_loss*discount_factor_d)
+                else :
+                    pv_netloss +=  0
+
+
+                if len(treasury_rateList) > p:
+                    interest_rate_f = treasury_rateList[p] + premium_f / 100
+                else:
+                    interest_rate_f = 0
+
+                discount_factor_f = 1 / (1 + interest_rate_f) ** (period_t / 2)
+
+                if tenor == 0:
+                    pv_expected_guarantees_fees = 0
+                elif period_t <= tenor:
+                    pv_expected_guarantees_fees += (expected_guarantee_fee * discount_factor_f)
+                else:
+                    pv_expected_guarantees_fees += 0
+
+
+                value = {
+                    'period': p+1,
+                    'principal_amount': principal_amount,
+                    'principal_repayment':principal_repayment,
+                    'probability_of_default': Probability_of_default_per_each_period,
+                    'expected_default': expected_default,
+                    'expected_claim': expected_claim_per_each_period,
+                    'recoveries': recoveries_per_each_period,
+                    'net_loss': net_loss,
+                    'utilization_fee': utilization_fee,
+                    'expected_guarantee_fee': expected_guarantee_fee,
+                }
+                previous_principal_amount = principal_amount
+                principal_amount = principal_amount - common_diff
+                principal_repayment = common_diff
+                period_t = period_t + 1
+
+                ligne_risk_models_amortization_schedule_ids.append((0, 0, value))
+                present_value_of_net_loss = pv_netloss
+                basis_of_present_value_of_expected_guarantee_fees = pv_expected_guarantees_fees
+                utilization_fee_required_for_fees_to_cover_claims = (present_value_of_net_loss/basis_of_present_value_of_expected_guarantee_fees)*100
+
+        return {'value': {'risk_models_amortization_schedule_ids': ligne_risk_models_amortization_schedule_ids, 'present_value_of_net_loss': present_value_of_net_loss , 'basis_of_present_value_of_expected_guarantee_fees': basis_of_present_value_of_expected_guarantee_fees , 'utilization_fee_required_for_fees_to_cover_claims': utilization_fee_required_for_fees_to_cover_claims}}
+
+
 
     premium_f= fields.Float(string='Premium F (%)', digits=(5, 2), required=False, compute='_compute_period', inverse='_inverse_period',  Store=True)
     premium_d = fields.Float(string='Premium D (%)', digits=(5, 2), required=False, compute='_compute_period', inverse='_inverse_period', Store=True)
@@ -281,6 +423,14 @@ class RiskModelsSimulation(models.Model):
     #     risk_models_simulation_models_model_factor_value["weighted_score"] = total * \
     #                                                                          risk_models_simulation_models_model_factor_value[
     #                                                                              "factor_weight"] / 100
+
+    risk_models_amortization_schedule_ids = fields.One2many('risk.models.amortization.schedule',
+                                                                     'risk_models_simulation_id', required=False
+                                                                     )
+
+    present_value_of_net_loss = fields.Float(string='Present Value of Net Loss', digits=(5, 2), required=False, Store=True, default=0)
+    basis_of_present_value_of_expected_guarantee_fees = fields.Float(string='Basis of Present Value of Expected Guarantee Fees ', digits=(5, 2), required=False, Store=True, default=0)
+    utilization_fee_required_for_fees_to_cover_claims = fields.Float(string='Utilization Fee Required for Fees to Cover Claims (%)', digits=(5, 2), required=False, Store=True, default=0)
 
     @api.model
     def create(self, vals):
@@ -821,3 +971,23 @@ class RiskModelsSimulationModelsModelSubFactorTransact(models.Model):
         # print('---------Computing Margin----------')
         # for rec in self:
         #     rec.inverse_score = rec.score
+
+
+class RiskModelsAmortizationSchedule(models.Model):
+    '''This class is for simulation of Risk Amortization Schedule '''
+
+    _name = 'risk.models.amortization.schedule'
+    _description = 'This applies to  risk amortization'
+    _rec_name = 'period'
+
+    risk_models_simulation_id = fields.Many2one('risk.models.simulation', string='Simulation', required=False)
+    period=fields.Integer(string='Period', required=True)
+    principal_amount=fields.Float(string='Principal Amount' , required=True, default=0, digits=(12,6))
+    principal_repayment = fields.Float(string='Principal Repayment', required=True , default=0 , digits=(12,6))
+    probability_of_default = fields.Float(string='Probability of Default', required=True , default=0 , digits=(12,6))
+    expected_default = fields.Float(string='Expected Default', required=True , default=0 , digits=(12,6))
+    expected_claim = fields.Float(string='Expected Claim', required=True , default=0 , digits=(12,6))
+    recoveries = fields.Float(string='Recoveries', required=True, default=0 , digits=(12,6))
+    net_loss = fields.Float(string='Net Loss', required=True, default=0 , digits=(12,6))
+    utilization_fee = fields.Float(string='Utilization Fee', required=True, default=0 , digits=(12,6))
+    expected_guarantee_fee = fields.Float(string='Expected Guarantee Fee', required=True, default=0 , digits=(12,6))

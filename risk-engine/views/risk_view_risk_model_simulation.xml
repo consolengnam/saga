@@ -352,8 +352,40 @@
                                          <field name="period_after_default_for_recovery" readonly="1" />
 
                                     </group>
+
+                                      <group  string="Pricing Result"  >
+                                            <group><field name="utilization_fee_required_for_fees_to_cover_claims" readonly="1" /> </group>
+                                           <group><field name="present_value_of_net_loss" readonly="1" /> </group>
+                                           <group> <field name="basis_of_present_value_of_expected_guarantee_fees" readonly="1" /> </group>
+                                           <field name="utilization_fee_required_for_fees_to_cover_claims" invisible="1" />
+                                          <field name="present_value_of_net_loss" invisible="1" />
+                                          <field name="basis_of_present_value_of_expected_guarantee_fees" invisible="1" />
+
+                                     </group>
                                 </group>
 
+
+                                 <div class="oe_clear"/>
+
+                                 <group  string="Amortization Schedule" >
+                                     <group colspan="2">
+                                       <field name="risk_models_amortization_schedule_ids" nolabel="1" >
+                                        <tree string="Amortization Schedule" editable="bottom" create="false" delete="false">
+                                            <field name="period"/>
+                                            <field name="principal_amount"/>
+                                            <field name="principal_repayment"/>
+                                            <field name="probability_of_default"/>
+                                            <field name="expected_default"/>
+                                            <field name="expected_claim"/>
+                                            <field name="recoveries"/>
+                                            <field name="net_loss"/>
+                                            <field name="utilization_fee"/>
+                                            <field name="expected_guarantee_fee"/>
+                                        </tree>
+                                        </field>
+                                     </group>
+
+                                 </group>
 
                                  <div class="oe_clear"/>
 

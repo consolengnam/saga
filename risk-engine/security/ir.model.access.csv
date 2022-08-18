@@ -12,6 +12,13 @@ access_risk_recovery_rate1,risk.recovery.rate1,model_risk_recovery_rate,,1,1,1,1
 access_risk_warf_weight_matrices1,risk.warf.weight.matrices1,model_risk_warf_weight_matrices,,1,1,1,1
 access_risk_guarantee_products1,risk.guarantee.products1,model_risk_guarantee_products,,1,1,1,1
 
+access_risk_models_amortization_schedule1,risk.models.amortization.schedule1,model_risk_models_amortization_schedule,,1,1,1,1
+
+access_risk_agency_default_rates1,risk.agency.default.rates1,model_risk_agency_default_rates,,1,1,1,1
+access_risk_free_vectors1,risk.free.vectors1,model_risk_free_vectors,,1,1,1,1
+
+
+
 
 access_risk_models_simulation1,risk.models.simulation1,model_risk_models_simulation,,1,1,1,1
 
