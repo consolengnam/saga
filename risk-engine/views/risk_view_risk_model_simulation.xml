@@ -405,37 +405,7 @@
 
                                      </group>
                                 </group>
-                                 <group string="Amortization Schedule" col="1">
-                                            <field name="amortization_schedule_ids" nolabel="1" readonly="0">
-                                                <tree string="Amortization" editable="bottom" create="true">
-                                                    <field name="risk_amortization_period"/>
-                                                    <field name="risk_amortization_principal_amount"/>
-                                                    <field name="risk_amortization_principal_repayment"/>
-                                                    <field name="risk_amortization_probability_of_default"/>
-                                                    <field name="risk_amortization_expected_default"/>
-                                                    <field name="risk_amortization_expected_claim"/>
-                                                    <field name="risk_amortization_recoveries"/>
-                                                    <field name="risk_amortization_net_loss"/>
-                                                    <field name="risk_amortization_utilization_fee"/>
-                                                    <field name="risk_amortization_expected_guarantee_fee"/>
-                                                </tree>
-                                            </field>
-                                    </group>
-                                <group string="Pricing Result" col="1">
-                                    <span>
-                                        <field name="pricing_result" nolabel="1" readonly="1"/>%
-                                        <p>Utilization Fee Required for Fees to Cover Claims</p>
-                                    </span>
-                                    <span>
-                                        <field name="net_loss" nolabel="1" readonly="1"/>
-                                        <p>Present Value of Net Loss</p>
-                                    </span>
-                                    <span>
-                                        <field name="expected_guarantee_fee" nolabel="1" readonly="1"/>
-                                        <p>Basis of Present Value of Expected Guarantee Fees</p>
-                                    </span>
 
-                                </group>
 
 
                                 <div class="oe_clear"/>

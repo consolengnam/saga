@@ -21,7 +21,6 @@ access_risk_free_vectors1,risk.free.vectors1,model_risk_free_vectors,,1,1,1,1
 
 
 access_risk_models_simulation1,risk.models.simulation1,model_risk_models_simulation,,1,1,1,1
-access_risk_amortization_schedule1,risk.amortization.schedule1,model_risk_amortization_schedule,,1,1,1,1
 
 access_risk_models_simulation_models_model_factor1,risk.models.simulation.models.model.factor1,model_risk_models_simulation_models_model_factor,,1,1,1,0
 access_risk_models_simulation_models_model_sub_factor1,risk.models.simulation.models.model.sub.factor1,model_risk_models_simulation_models_model_sub_factor,,1,1,1,0

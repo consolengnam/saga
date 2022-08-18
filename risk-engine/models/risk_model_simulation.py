@@ -297,7 +297,10 @@ class RiskModelsSimulation(models.Model):
                 ligne_risk_models_amortization_schedule_ids.append((0, 0, value))
                 present_value_of_net_loss = pv_netloss
                 basis_of_present_value_of_expected_guarantee_fees = pv_expected_guarantees_fees
-                utilization_fee_required_for_fees_to_cover_claims = (present_value_of_net_loss/basis_of_present_value_of_expected_guarantee_fees)*100
+                if basis_of_present_value_of_expected_guarantee_fees != 0:
+                     utilization_fee_required_for_fees_to_cover_claims = (present_value_of_net_loss/basis_of_present_value_of_expected_guarantee_fees)*100
+                else :
+                     utilization_fee_required_for_fees_to_cover_claims = 0
 
         return {'value': {'risk_models_amortization_schedule_ids': ligne_risk_models_amortization_schedule_ids, 'present_value_of_net_loss': present_value_of_net_loss , 'basis_of_present_value_of_expected_guarantee_fees': basis_of_present_value_of_expected_guarantee_fees , 'utilization_fee_required_for_fees_to_cover_claims': utilization_fee_required_for_fees_to_cover_claims}}
 
