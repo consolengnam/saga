@@ -381,6 +381,7 @@
                                             <field name="weighted_product_score_transaction" nolabel="1" readonly="1"/>
                                             <h2>
                                                 <field name="sum_weighted_product_score" nolabel="1" readonly="1"/>
+                                                 <field name="sum_weighted_product_score" nolabel="1" invisible="1"/>
                                             </h2>
 
                                         </group>
@@ -388,10 +389,15 @@
                                     </group>
                                     <group string="Pricing Model Constant">
                                         <field name="premium_d" readonly="1"/>
+                                        <field name="premium_d" invisible="1"/>
                                         <field name="premium_f" readonly="1"/>
+                                         <field name="premium_f" invisible="1"/>
                                         <field name="conversion_factor_default_rate" readonly="1"/>
+                                         <field name="conversion_factor_default_rate" invisible="1"/>
                                         <field name="recovery_rate" readonly="1"/>
+                                         <field name="recovery_rate" invisible="1"/>
                                         <field name="period_after_default_for_recovery" readonly="1"/>
+                                         <field name="period_after_default_for_recovery" invisible="1"/>
 
                                     </group>
 
@@ -414,16 +420,28 @@
                                      <group colspan="2">
                                        <field name="risk_models_amortization_schedule_ids" nolabel="1" >
                                         <tree string="Amortization Schedule" editable="bottom" create="false" delete="false">
-                                            <field name="period"/>
-                                            <field name="principal_amount"/>
-                                            <field name="principal_repayment"/>
-                                            <field name="probability_of_default"/>
-                                            <field name="expected_default"/>
-                                            <field name="expected_claim"/>
-                                            <field name="recoveries"/>
-                                            <field name="net_loss"/>
-                                            <field name="utilization_fee"/>
-                                            <field name="expected_guarantee_fee"/>
+                                            <field name="period" readonly="1"/>
+                                            <field name="principal_amount" readonly="1"/>
+                                            <field name="principal_repayment" readonly="1"/>
+                                            <field name="probability_of_default" readonly="1"/>
+                                            <field name="expected_default" readonly="1"/>
+                                            <field name="expected_claim" readonly="1"/>
+                                            <field name="recoveries" readonly="1"/>
+                                            <field name="net_loss" readonly="1"/>
+                                            <field name="utilization_fee" readonly="1"/>
+                                            <field name="expected_guarantee_fee" readonly="1"/>
+
+                                            <field name="period" invisible="1"/>
+                                            <field name="principal_amount" invisible="1"/>
+                                            <field name="principal_repayment" invisible="1"/>
+                                            <field name="probability_of_default" invisible="1"/>
+                                            <field name="expected_default" invisible="1"/>
+                                            <field name="expected_claim" invisible="1"/>
+                                            <field name="recoveries" invisible="1"/>
+                                            <field name="net_loss" invisible="1"/>
+                                            <field name="utilization_fee" invisible="1"/>
+                                            <field name="expected_guarantee_fee" invisible="1"/>
+
                                         </tree>
                                         </field>
                                      </group>

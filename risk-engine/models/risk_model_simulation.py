@@ -13,6 +13,7 @@ class RiskModelsSimulation(models.Model):
     _name = 'risk.models.simulation'
     _description = 'This applies to simulation of country risk, borrower risk, lender risk and transaction risk'
     _rec_name = 'model_simulation_name'
+    _order = 'id desc'
 
 
     def _default_model_simulation_name(self):
@@ -164,7 +165,7 @@ class RiskModelsSimulation(models.Model):
 
     period_id = fields.Many2one('risk.premium.f.curves', string='Period(Tenor)', required=False)
 
-    @api.onchange('period_id', 'facility_amount', 'sum_weighted_product_score', 'conversion_factor_default_rate', 'coverage_ratio' , 'premium_d' , 'premium_f')
+    @api.onchange('period_id', 'facility_amount', 'sum_weighted_product_score', 'conversion_factor_default_rate', 'coverage_ratio', 'recovery_rate' , 'period_after_default_for_recovery' , 'premium_d' , 'premium_f')
     def _onchange_period_id(self):
         if self.period_id:
             return self.init_risk_models_armotization_schedule_data(self.period_id.period, self.facility_amount, self.sum_weighted_product_score, self.conversion_factor_default_rate, self.coverage_ratio , self.recovery_rate, self.period_after_default_for_recovery,self.premium_d , self.premium_f)
@@ -227,8 +228,9 @@ class RiskModelsSimulation(models.Model):
                 if period_t > period_Tr :
                     t = period_t - period_Tr
                     t_int = round(t)
-                    expected_claim_at_t = expected_claim_per_each_period_list[t_int]
-                    recoveries_per_each_period= (recovery_rate/100)*expected_claim_at_t
+                    if len(expected_claim_per_each_period_list) > t_int:
+                        expected_claim_at_t = expected_claim_per_each_period_list[t_int]
+                        recoveries_per_each_period= (recovery_rate/100)*expected_claim_at_t
                 else :
                     recoveries_per_each_period = 0
 
@@ -431,9 +433,9 @@ class RiskModelsSimulation(models.Model):
                                                                      'risk_models_simulation_id', required=False
                                                                      )
 
-    present_value_of_net_loss = fields.Float(string='Present Value of Net Loss', digits=(5, 2), required=False, Store=True, default=0)
-    basis_of_present_value_of_expected_guarantee_fees = fields.Float(string='Basis of Present Value of Expected Guarantee Fees ', digits=(5, 2), required=False, Store=True, default=0)
-    utilization_fee_required_for_fees_to_cover_claims = fields.Float(string='Utilization Fee Required for Fees to Cover Claims (%)', digits=(5, 2), required=False, Store=True, default=0)
+    present_value_of_net_loss = fields.Float(string='Present Value of Net Loss', digits=(12,6), required=False, Store=True, default=0)
+    basis_of_present_value_of_expected_guarantee_fees = fields.Float(string='Basis of Present Value of Expected Guarantee Fees ', digits=(12,6), required=False, Store=True, default=0)
+    utilization_fee_required_for_fees_to_cover_claims = fields.Float(string='Utilization Fee Required for Fees to Cover Claims (%)',digits=(12,6), required=False, Store=True, default=0)
 
     @api.model
     def create(self, vals):
