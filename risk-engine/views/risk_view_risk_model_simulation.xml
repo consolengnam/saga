@@ -138,12 +138,16 @@
                                 </h2>
                                 <field name="risk_models_simulation_models_model_factor_ids">
                                     <tree string="Country Risk Factor" editable="bottom" create="false">
-                                        <field name="risk_model_factor_id"/>
-                                        <!--                                        <field name="factor_name"/>-->
-                                        <field name="risk_score"/>
-                                        <field name="factor_weight"/>
-                                        <field name="weighted_score"/>
-                                        <!--                                         <field name="weighted_score_total"/>-->
+                                        <field name="risk_model_factor_id"  readonly="1"/>
+                                        <field name="risk_score"  readonly="1"/>
+                                        <field name="factor_weight"  readonly="1"/>
+                                        <field name="weighted_score"  readonly="1"/>
+
+                                        <field name="risk_model_factor_id"  invisible="1"/>
+                                        <field name="risk_score"  invisible="1"/>
+                                        <field name="factor_weight"  invisible="1"/>
+                                        <field name="weighted_score"  invisible="1"/>
+
                                     </tree>
                                 </field>
 
@@ -160,15 +164,16 @@
 
                                 <field name="risk_models_simulation_models_model_sub_factor_ids">
                                     <tree string="Country Risk SubFactor" editable="bottom" create="false">
-                                        <field name="risk_model_factor_id"/>
-                                        <!--                                        <field name="factor_name"/>-->
-                                        <!--                                        <field name="sub_factor_name"/>-->
-                                        <field name="risk_model_sub_factor_id"/>
-                                        <field name="sub_factor_weight"/>
+                                        <field name="risk_model_factor_id" readonly="1"/>
+                                        <field name="risk_model_sub_factor_id" readonly="1"/>
+                                        <field name="sub_factor_weight" readonly="1"/>
                                         <field name="answer" placeholder="Not Answered Yet"/>
-                                        <!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
-                                        <field name="score"/>
-                                        <!--                                        <field name="inverse_score"/>-->
+                                        <field name="score" readonly="1"/>
+
+                                        <field name="risk_model_factor_id" invisible="1"/>
+                                        <field name="risk_model_sub_factor_id" invisible="1"/>
+                                        <field name="sub_factor_weight" invisible="1"/>
+                                        <field name="score" invisible="1"/>
                                     </tree>
                                 </field>
                                 <div class="oe_clear"/>
@@ -187,13 +192,19 @@
                                            attrs="{'readonly': [('id', '!=', False)]}"/>
                                 </h2>
 
+
+
                                 <field name="lender_risk_models_simulation_models_model_factor_ids">
                                     <tree string="Lender Risk Factor" editable="bottom" create="false">
-                                        <field name="risk_model_factor_id"/>
-                                        <!--                                        <field name="factor_name"/>-->
-                                        <field name="risk_score"/>
-                                        <field name="factor_weight"/>
-                                        <field name="weighted_score"/>
+                                        <field name="risk_model_factor_id"  readonly="1"/>
+                                        <field name="risk_score"  readonly="1"/>
+                                        <field name="factor_weight"  readonly="1"/>
+                                        <field name="weighted_score"  readonly="1"/>
+
+                                        <field name="risk_model_factor_id"  invisible="1"/>
+                                        <field name="risk_score"  invisible="1"/>
+                                        <field name="factor_weight"  invisible="1"/>
+                                        <field name="weighted_score"  invisible="1"/>
                                     </tree>
                                 </field>
 
@@ -208,17 +219,19 @@
 
                                 <div class="oe_clear"/>
 
+
                                 <field name="lender_risk_models_simulation_models_model_sub_factor_ids">
                                     <tree string="Lender Risk SubFactor" editable="bottom" create="false">
-                                        <field name="risk_model_factor_id"/>
-                                        <!--                                        <field name="factor_name"/>-->
-                                        <!--                                        <field name="sub_factor_name"/>-->
-                                        <field name="risk_model_sub_factor_id"/>
-                                        <field name="sub_factor_weight"/>
+                                        <field name="risk_model_factor_id" readonly="1"/>
+                                        <field name="risk_model_sub_factor_id" readonly="1"/>
+                                        <field name="sub_factor_weight" readonly="1"/>
                                         <field name="answer" placeholder="Not Answered Yet"/>
-                                        <!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
-                                        <field name="score"/>
-                                        <!--                                        <field name="inverse_score"/>-->
+                                        <field name="score" readonly="1"/>
+
+                                        <field name="risk_model_factor_id" invisible="1"/>
+                                        <field name="risk_model_sub_factor_id" invisible="1"/>
+                                        <field name="sub_factor_weight" invisible="1"/>
+                                        <field name="score" invisible="1"/>
                                     </tree>
                                 </field>
 
@@ -240,11 +253,15 @@
 
                                 <field name="borrower_risk_models_simulation_models_model_factor_ids">
                                     <tree string="Borrower Risk Factor" editable="bottom" create="false">
-                                        <field name="risk_model_factor_id"/>
-                                        <!--                                        <field name="factor_name"/>-->
-                                        <field name="risk_score"/>
-                                        <field name="factor_weight"/>
-                                        <field name="weighted_score"/>
+                                        <field name="risk_model_factor_id"  readonly="1"/>
+                                        <field name="risk_score"  readonly="1"/>
+                                        <field name="factor_weight"  readonly="1"/>
+                                        <field name="weighted_score"  readonly="1"/>
+
+                                        <field name="risk_model_factor_id"  invisible="1"/>
+                                        <field name="risk_score"  invisible="1"/>
+                                        <field name="factor_weight"  invisible="1"/>
+                                        <field name="weighted_score"  invisible="1"/>
                                     </tree>
                                 </field>
 
@@ -260,15 +277,16 @@
 
                                 <field name="borrower_risk_models_simulation_models_model_sub_factor_ids">
                                     <tree string="Borrower Risk SubFactor" editable="bottom" create="false">
-                                        <field name="risk_model_factor_id"/>
-                                        <!--                                        <field name="factor_name"/>-->
-                                        <!--                                        <field name="sub_factor_name"/>-->
-                                        <field name="risk_model_sub_factor_id"/>
-                                        <field name="sub_factor_weight"/>
+                                       <field name="risk_model_factor_id" readonly="1"/>
+                                        <field name="risk_model_sub_factor_id" readonly="1"/>
+                                        <field name="sub_factor_weight" readonly="1"/>
                                         <field name="answer" placeholder="Not Answered Yet"/>
-                                        <!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
-                                        <field name="score"/>
-                                        <!--                                        <field name="inverse_score"/>-->
+                                        <field name="score" readonly="1"/>
+
+                                        <field name="risk_model_factor_id" invisible="1"/>
+                                        <field name="risk_model_sub_factor_id" invisible="1"/>
+                                        <field name="sub_factor_weight" invisible="1"/>
+                                        <field name="score" invisible="1"/>
                                     </tree>
                                 </field>
 
@@ -290,11 +308,15 @@
 
                                 <field name="transaction_risk_models_simulation_models_model_factor_ids">
                                     <tree string="Transaction Risk Factor" editable="bottom" create="false">
-                                        <field name="risk_model_factor_id"/>
-                                        <!--                                        <field name="factor_name"/>-->
-                                        <field name="risk_score"/>
-                                        <field name="factor_weight"/>
-                                        <field name="weighted_score"/>
+                                         <field name="risk_model_factor_id"  readonly="1"/>
+                                        <field name="risk_score"  readonly="1"/>
+                                        <field name="factor_weight"  readonly="1"/>
+                                        <field name="weighted_score"  readonly="1"/>
+
+                                        <field name="risk_model_factor_id"  invisible="1"/>
+                                        <field name="risk_score"  invisible="1"/>
+                                        <field name="factor_weight"  invisible="1"/>
+                                        <field name="weighted_score"  invisible="1"/>
                                     </tree>
                                 </field>
 
@@ -311,15 +333,16 @@
 
                                 <field name="transaction_risk_models_simulation_models_model_sub_factor_ids">
                                     <tree string="Transaction Risk SubFactor" editable="bottom" create="false">
-                                        <field name="risk_model_factor_id"/>
-                                        <!--                                        <field name="factor_name"/>-->
-                                        <!--                                        <field name="sub_factor_name"/>-->
-                                        <field name="risk_model_sub_factor_id"/>
-                                        <field name="sub_factor_weight"/>
+                                       <field name="risk_model_factor_id" readonly="1"/>
+                                        <field name="risk_model_sub_factor_id" readonly="1"/>
+                                        <field name="sub_factor_weight" readonly="1"/>
                                         <field name="answer" placeholder="Not Answered Yet"/>
-                                        <!--                                         <button name="%(action_risk_model_sub_factor_answers_wizard_form)d" string="Submit" class="fa fa-paper-plane-o"   type="action"></button>-->
-                                        <field name="score"/>
-                                        <!--                                        <field name="inverse_score"/>-->
+                                        <field name="score" readonly="1"/>
+
+                                        <field name="risk_model_factor_id" invisible="1"/>
+                                        <field name="risk_model_sub_factor_id" invisible="1"/>
+                                        <field name="sub_factor_weight" invisible="1"/>
+                                        <field name="score" invisible="1"/>
                                     </tree>
                                 </field>
 
