@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+
+    <record id="module_category_risk_engine" model="ir.module.category">
+        <field name="name">RISK ENGINE</field>
+        <field name="sequence">100</field>
+        <field name="visible">0</field>
+    </record>
+    <record id="BD-HOR" model="res.groups">
+        <field name="name">BD-HOR</field>
+        <field name="comment">Business Development Head of Risk</field>
+         <field name="category_id" ref="module_category_risk_engine"/>
+    </record>
+     <record id="BD-RMA" model="res.groups">
+        <field name="name">BD-RMA</field>
+        <field name="comment">Business Development Risk Management Analyst</field>
+         <field name="category_id" ref="module_category_risk_engine"/>
+    </record>
+    <record id="BD-HOR" model="res.groups">
+        <field name="name">BD-HOR</field>
+        <field name="comment">Business Development Head of Risk</field>
+         <field name="category_id" ref="module_category_risk_engine"/>
+    </record>
+    <record id="RM-CRA" model="res.groups">
+        <field name="name">RM-CRA</field>
+        <field name="comment">Risk management Credit Risk Analysis</field>
+         <field name="category_id" ref="module_category_risk_engine"/>
+    </record>
+    <record id="RM-SCRA" model="res.groups">
+        <field name="name">RM-SCRA</field>
+        <field name="comment">Risk management Senior Credit Risk Analysis</field>
+         <field name="category_id" ref="module_category_risk_engine"/>
+    </record>
+    <record id="BD-Head" model="res.groups">
+        <field name="name">BD-Head</field>
+        <field name="comment">Head of Business Development</field>
+         <field name="category_id" ref="module_category_risk_engine"/>
+    </record>
+    <record id="RM-CRO" model="res.groups">
+        <field name="name">RM-CRO</field>
+        <field name="comment">Risk management Chief Risk Officer</field>
+         <field name="category_id" ref="module_category_risk_engine"/>
+    </record>
+
+
+
+  <data noupdate="0">
+
+
+
+
+
+    </data>
+
+</odoo>
+
+

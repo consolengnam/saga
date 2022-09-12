@@ -1,0 +1,225 @@
+<odoo>
+    <data>
+        <!-- explicit  view definition -->
+
+
+        <record id="risk-engine_model_workflow_search_view" model="ir.ui.view">
+            <field name="name">risk.model.workflow.search</field>
+            <field name="model">risk.model.workflow</field>
+            <field name="arch" type="xml">
+                <search string="Search Risk Models">
+                    <field name="model_application_number"/>
+                    <field name="model_workflow_description"/>
+                    <filter name="status"/>
+                    <group expand="0" string="Group By">
+                        <filter name="status" domain="[]" context="{'group_by': 'status'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="risk-engine_model_workflow_tree_view" model="ir.ui.view">
+            <field name="name">risk.model.workflow.tree</field>
+            <field name="model">risk.model.workflow</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="model_application_number"/>
+                    <field name="process"/>
+                    <field name="create_uid" string="Initiated By"/>
+                    <field name="create_date" string="Initiated On"/>
+                    <field name="stage_id"/>
+                    <field name="owner_role"/>
+                    <field name="tracking_status"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="risk-engine_model_workflow_form_view" model="ir.ui.view">
+            <field name="name">risk.model.workflow.form</field>
+            <field name="model">risk.model.workflow</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                       <!-- <button name="%(action_risk_movement_submit)d" string="Submit"
+                                class="fa fa-paper-plane-o" type="action"
+                                attrs="{'invisible': [('check_position','!=', True)]}"></button>
+                        <button name="%(action_risk_movement_cancel)d" string="Reset"
+                                class="fa fa-reply" type="action"
+                                attrs="{'invisible': [('check_cancel_position','!=', True)]}"></button>-->
+
+                        <field name="check_position" invisible="1"/>
+                        <field name="check_cancel_position" invisible="1"/>
+                        <field name="check_return_position" invisible="1"/>
+                        <field name="risk_workflow_id" invisible="1"/>
+
+
+                        <button name="%(action_risk_movement_submit)d" string="Submit"
+                                class="fa fa-paper-plane-o" type="action"
+                                attrs="{'invisible': [('check_position','!=', True)]}"
+                                ></button>
+                        <button name="%(action_risk_movement_cancel)d" string="Reset"
+                                class="fa fa-ban" type="action" attrs="{'invisible': [('check_cancel_position','!=', True)]}"
+                                ></button>
+                        <button name="%(action_risk_movement_return)d" string="Return"
+                                class="fa fa-reply" type="action"
+                                attrs="{'invisible': [('check_return_position','!=', True)]}"
+                                ></button>
+
+
+                        <!--                        <field name="status" widget="statusbar" statusbar_visible="1,2" readonly="1"/>-->
+                        <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}"/>
+                    </header>
+                    <sheet>
+
+                        <group>
+                            <group>
+                                <field name="model_application_number" attrs="{'invisible': [ ('id', '=', False)], 'readonly': True}"/>
+                                <field name="model_workflow_description"/>
+                            </group>
+
+                        </group>
+                        <notebook>
+                            <page string="Other Information">
+
+                                <group>
+
+                                </group>
+                                <div class="oe_clear"/>
+                            </page>
+
+                        </notebook>
+
+                         <group string="Action Log">
+                                <field name="movement_ids" nolabel="1"   context="{'tree_view_ref':'view_movement_tree_view'}"  />
+                                <!-- <field name="create_uid" string="Username"/>
+                               <field name="fullname" string="Fullname"/>
+                               <field name="create_date" string="Date"/>-->
+                        </group>
+                    </sheet>
+
+
+
+                    <div class="oe_chatter">
+
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- actions opening views on models -->
+        <record id="risk-engine_model_workflow_action" model="ir.actions.act_window">
+            <field name="name">Credit Risk Assessment</field>
+            <field name="res_model">risk.model.workflow</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[ '&amp;',('type_workflow', '=', '01') ,('type_workflow', '=', '01') ]
+            </field>
+            <field name="search_view_id" ref="risk-engine_model_workflow_search_view"/>
+            <field name="context">{
+                'default_type_workflow':'01',
+                'search_default_type_workflow': '01',
+                'search_default_to_process':1,
+                'tree_view_ref': 'risk-engine_model_workflow_tree_view',
+                'form_view_ref': 'risk-engine_model_workflow_form_view'
+
+                }
+            </field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Credit Risk Assessment.
+                </p>
+                <p>
+                    You must define a Credit Risk Assessment.
+                </p>
+            </field>
+        </record>
+
+        <!-- <record id="risk-engine_lender_action" model="ir.actions.act_window">
+             <field name="name">Lender Risk Models</field>
+             <field name="res_model">risk.model.workflow</field>
+             <field name="view_mode">tree,kanban,form</field>
+             <field name="domain">[ '&amp;',('type_workflow', '=', 'lender_risk_models') ,('type_workflow', '=', 'lender_risk_models') ]
+             </field>
+             <field name="search_view_id" ref="risk-engine_model_workflow_search_view"/>
+             <field name="context">{
+                 'default_type_workflow':'lender_risk_models',
+                 'search_default_type_workflow': 'lender_risk_models',
+                 'search_default_to_process':1,
+                 'tree_view_ref': 'risk-engine_model_workflow_tree_view',
+                 'form_view_ref': 'risk-engine_model_workflow_form_view'
+
+                 }
+             </field>
+             <field name="help" type="html">
+                 <p class="o_view_nocontent_smiling_face">
+                     Create a new Lender Risk Models
+                 </p>
+                 <p>
+                     You must define a Lender Risk Models.
+                 </p>
+             </field>
+         </record>
+
+         <record id="risk-engine_borrower_action" model="ir.actions.act_window">
+             <field name="name">Borrower Risk Models</field>
+             <field name="res_model">risk.model.workflow</field>
+             <field name="view_mode">tree,kanban,form</field>
+             <field name="domain">[ '&amp;',('type_workflow', '=', 'borrower_risk_models') ,('type_workflow', '=', 'borrower_risk_models') ]
+             </field>
+             <field name="search_view_id" ref="risk-engine_model_workflow_search_view"/>
+             <field name="context">{
+                 'default_type_workflow':'borrower_risk_models',
+                 'search_default_type_workflow': 'borrower_risk_models',
+                 'search_default_to_process':1,
+                 'tree_view_ref': 'risk-engine_model_workflow_tree_view',
+                 'form_view_ref': 'risk-engine_model_workflow_form_view'
+
+                 }
+             </field>
+             <field name="help" type="html">
+                 <p class="o_view_nocontent_smiling_face">
+                     Create a new Borrower Risk Models
+                 </p>
+                 <p>
+                     You must define a Borrower Risk Models.
+                 </p>
+             </field>
+         </record>
+
+
+         <record id="risk-engine_transaction_action" model="ir.actions.act_window">
+             <field name="name">Tansaction Risk Models</field>
+             <field name="res_model">risk.model.workflow</field>
+             <field name="view_mode">tree,kanban,form</field>
+             <field name="domain">[ '&amp;',('type_workflow', '=', 'transaction_risk_models') ,('type_workflow', '=', 'transaction_risk_models') ]
+             </field>
+             <field name="search_view_id" ref="risk-engine_model_workflow_search_view"/>
+             <field name="context">{
+                 'default_type_workflow':'transaction_risk_models',
+                 'search_default_type_workflow': 'transaction_risk_models',
+                 'search_default_to_process':1,
+                 'tree_view_ref': 'risk-engine_model_workflow_tree_view',
+                 'form_view_ref': 'risk-engine_model_workflow_form_view'
+
+                 }
+             </field>
+             <field name="help" type="html">
+                 <p class="o_view_nocontent_smiling_face">
+                     Create a new Tansaction Risk Models
+                 </p>
+                 <p>
+                     You must define a Tansaction Risk Models.
+                 </p>
+             </field>
+         </record>-->
+
+
+    </data>
+</odoo>

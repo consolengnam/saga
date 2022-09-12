@@ -39,6 +39,31 @@ access_risk_models_simulation_models_model_sub_factor_borrower1,risk.models.simu
 access_risk_models_simulation_models_model_factor_transact1,risk.models.simulation.models.model.factor.transact1,model_risk_models_simulation_models_model_factor_transact,,1,1,1,0
 access_risk_models_simulation_models_model_sub_factor_transact1,risk.models.simulation.models.model.sub.factor.transact1,model_risk_models_simulation_models_model_sub_factor_transact,,1,1,1,0
 
+access_risk_model_workflow1,risk.model.workflow1,model_risk_model_workflow,BD-HOR,1,1,1,1
+access_risk_model_workflow2,risk.model.workflow2,model_risk_model_workflow,BD-RMA,1,1,0,0
+access_risk_model_workflow3,risk.model.workflow3,model_risk_model_workflow,RM-CRA,1,1,0,0
+access_risk_model_workflow4,risk.model.workflow4,model_risk_model_workflow,RM-SCRA,1,1,0,0
+access_risk_model_workflow5,risk.model.workflow5,model_risk_model_workflow,BD-Head,1,1,0,0
+access_risk_model_workflow6,risk.model.workflow6,model_risk_model_workflow,RM-CRO,1,1,0,0
+
+access_risk_stage1,risk.stage1,model_risk_stage,,1,1,1,1
+
+
+
+access_risk_movement1,risk_movement1,model_risk_movement,,1,1,1,1
+access_risk_movement_cancelled1,risk_movement_cancelled1,model_risk_movement_cancelled,,1,1,1,1
+access_risk_movement_wizard1,risk_movement_wizard1,model_risk_movement_wizard,,1,1,1,1
+
+access_risk_workflow_approval_structure1,risk_workflow_approval_structure1,model_risk_workflow_approval_structure,,1,1,1,1
+
+access_risk_workflow1,risk_workflow1,model_risk_workflow,,1,1,1,1
+
+access_risk_workflow_action_list1,risk_workflow_action_list1,model_risk_workflow_action_list,,1,1,1,1
+
+
+access_message_wizard1,risk_message_wizard1,model_message_wizard,,1,1,1,1
+
+access_risk_counter1,risk_counter1,model_risk_counter,,1,1,1,1
 
 
 

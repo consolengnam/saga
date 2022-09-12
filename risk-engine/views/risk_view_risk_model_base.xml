@@ -1,0 +1,319 @@
+<?xml version="1.0"?>
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+
+
+      <!-- Risk Workflow approval structure -->
+
+    <record model="ir.ui.view" id="risk_workflow_approval_structure_search_view">
+      <field name="name">risk.workflow.approval.structure.search</field>
+      <field name="model">risk.workflow.approval.structure</field>
+      <field name="arch" type="xml">
+        <search string="Search Risk Workflow approval structure">
+                     <field name="risk_workflow_id"/>
+                     <field name="risk_current_stage_id"/>
+                    <field name="action_name"/>
+        </search>
+      </field>
+    </record>
+
+    <record id="risk_workflow_approval_structure_tree_view" model="ir.ui.view">
+            <field name="name">risk.workflow.approval.structure.tree</field>
+            <field name="model">risk.workflow.approval.structure</field>
+
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="risk_workflow_id"/>
+                    <field name="department_id"/>
+                    <field name="job_id"  />
+                    <field name="risk_current_stage_id"/>
+                    <field name="action_name"/>
+                    <field name="risk_next_stage_id"/>
+                     <field name="type_event"/>
+                  </tree>
+            </field>
+        </record>
+
+    <record model="ir.ui.view" id="risk_workflow_approval_structure_form_view">
+      <field name="name">risk.workflow.approval.structure.form</field>
+      <field name="model">risk.workflow.approval.structure</field>
+      <field name="arch" type="xml">
+        <form>
+
+            <sheet>
+                <group>
+<!--                    <field name="action_name"/>-->
+<!--                      <field name="risk_risk_stage_id_curves"/>-->
+                    <field name="risk_workflow_id"/>
+                    <field name="department_id"/>
+                    <field name="job_id"  context="{'default_department_id': department_id}"
+                                           attrs="{'invisible': [ ('department_id', '=', False)]}"/>
+
+                     <field name="risk_current_stage_id"/>
+                     <field name="action_name"/>
+                     <field name="risk_next_stage_id"/>
+                     <field name="type_event"/>
+
+                </group>
+
+                <notebook>
+
+                        <page string="Other Information" >
+                            <group>
+                                <group >
+
+                                </group>
+                                <group >
+
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="risk_workflow_approval_structure_action">
+      <field name="name">Risk Workflow Approval Structure</field>
+      <field name="res_model">risk.workflow.approval.structure</field>
+      <field name="view_mode">tree,form,kanban</field>
+<!--        <field name="search_view_id" ref="risk-engine_name_search_view"/>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              Create a new Risk Workflow Approval Structure
+            </p><p>
+              You must define a Risk  Risk Workflow Approval Structure.
+            </p>
+          </field>
+    </record>
+
+
+
+            <!-- Risk Workflow action list -->
+
+    <record model="ir.ui.view" id="risk_workflow_action_list_search_view">
+      <field name="name">risk.workflow.action.list.search</field>
+      <field name="model">risk.workflow.action.list</field>
+      <field name="arch" type="xml">
+        <search string="Search Risk Workflow action list">
+                     <field name="name"/>
+                     <field name="description"/>
+                    <field name="status"/>
+        </search>
+      </field>
+    </record>
+
+    <record id="risk_workflow_action_list_tree_view" model="ir.ui.view">
+            <field name="name">risk.workflow.action.list.tree</field>
+            <field name="model">risk.workflow.action.list</field>
+
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="status"/>
+
+                  </tree>
+            </field>
+        </record>
+
+    <record model="ir.ui.view" id="risk_workflow_action_list_form_view">
+      <field name="name">risk.workflow.action.list.form</field>
+      <field name="model">risk.workflow.action.list</field>
+      <field name="arch" type="xml">
+        <form>
+
+            <sheet>
+                <group>
+
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="status"/>
+
+
+                </group>
+
+                <notebook>
+
+                        <page string="Other Information" >
+                            <group>
+                                <group >
+
+                                </group>
+                                <group >
+
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+            </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="risk_workflow_action_list_action">
+      <field name="name">Risk Workflow action list</field>
+      <field name="res_model">risk.workflow.action.list</field>
+      <field name="view_mode">tree,form,kanban</field>
+<!--        <field name="search_view_id" ref="risk-engine_name_search_view"/>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              Create a new Risk Workflow action list
+            </p><p>
+              You must define a Risk Workflow action list.
+            </p>
+          </field>
+    </record>
+
+
+
+
+
+
+
+
+
+
+       <!-- inherited views -->
+       <record id="view_department_form_inherit" model="ir.ui.view">
+            <field name="name">hr.department.form</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_form"/>
+            <field name="arch" type="xml">
+
+                <data>
+
+                    <xpath expr="//group/field[@name='name']" position="after">
+                        <field name="code"/>
+                    </xpath>
+
+                </data>
+
+
+            </field>
+        </record>
+
+
+       <record id="view_hr_job_form_inherit" model="ir.ui.view">
+            <field name="name">hr.job.form</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form"/>
+            <field name="arch" type="xml">
+
+                <data>
+                    <xpath expr="//div[hasclass('oe_title')]"        position="after">
+                        <field name="code"/>
+                    </xpath>
+                </data>
+
+            </field>
+        </record>
+
+
+         <!-- message views -->
+        <record id="message_wizard_form" model="ir.ui.view">
+            <field name="name">message.wizard.form</field>
+            <field name="model">message.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <p class="text-center">
+                         <h1>
+                                <field name="message" attrs="{'readonly': True}"  />
+                         </h1>
+                    </p>
+                    <footer>
+                        <button name="action_ok" string="Ok" type="object" default_focus="1" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+
+       <!-- explicit list view definition of counter -->
+        <record model="ir.ui.view" id="risk_counter_search_view">
+            <field name="name">risk.counter.search</field>
+            <field name="model">risk.counter</field>
+            <field name="arch" type="xml">
+                <search string="Search Type License">
+                     <field name="risk_workflow_id"/>
+                    <field name="year"/>
+                    <field name="month"/>
+                    <field name="counter"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="risk_counter_tree_view" model="ir.ui.view">
+            <field name="name">risk.counter.tree</field>
+            <field name="model">risk.counter</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false">
+                    <field name="risk_workflow_id" />
+                    <field name="year"/>
+                    <field name="month"/>
+                    <field name="counter"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="risk_counter_form_view">
+            <field name="name">risk.counter.form</field>
+            <field name="model">risk.counter</field>
+            <field name="arch" type="xml">
+                <form create="false" delete="false">
+
+                    <sheet>
+                        <group>
+                            <field name="risk_workflow_id" readonly="1"/>
+                            <field name="year" readonly="1"/>
+                            <field name="month" readonly="1"/>
+                            <field name="counter"/>
+                        </group>
+                        <notebook>
+
+                            <page string="Other Information">
+                                <group>
+                                    <group>
+
+                                    </group>
+                                    <group>
+
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+       <!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="risk_counter_action">
+      <field name="name">Risk Counter</field>
+      <field name="res_model">risk.counter</field>
+      <field name="view_mode">tree,form,kanban</field>
+      <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+              Create a new counter action
+            </p><p>
+              You must define a Risk Counter.
+            </p>
+      </field>
+    </record>
+
+
+
+
+  </data>
+</odoo>

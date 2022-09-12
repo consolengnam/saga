@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+
+    <record model="risk.application" id="risk_application1">
+        <field name="name">Kalypso</field>
+        <field name="description">Kalypso application</field>
+        <field name="status">1</field>
+    </record>
+
+
+    <record model="risk.workflow" id="risk_workflow1">
+        <field name="name">RAAC &amp;  ITS Process</field>
+        <field name="code">01</field>
+        <field name="status">1</field>
+        <field name="risk_application_id" ref="risk_application1"></field>
+    </record>
+
+     <record model="risk.workflow" id="risk_workflow2">
+        <field name="name">Due Dilligence Process</field>
+        <field name="code">02</field>
+        <field name="status">1</field>
+        <field name="risk_application_id" ref="risk_application1"></field>
+    </record>
+
+
+
+    <record model="risk.stage" id="risk_stage0">
+        <field name="name">Assessment Initiation</field>
+        <field name="tracking_status">Under Assessment Initiation</field>
+        <field name="sequence">10000</field>
+        <field name="code">10000</field>
+         <field name="type_workflow">WF000</field>
+         <field name="risk_workflow_id" ref="risk_workflow1"></field>
+    </record>
+
+    <record model="risk.stage" id="risk_stage1">
+        <field name="name">PFI Document Uploaded</field>
+        <field name="tracking_status">Under Review at BD (RMA)</field>
+        <field name="sequence">10001</field>
+        <field name="code">10001</field>
+         <field name="type_workflow">WF001</field>
+        <field name="risk_workflow_id" ref="risk_workflow1"></field>
+    </record>
+     <record model="risk.stage" id="risk_stage2">
+        <field name="name">RAC Paper &amp; ITS Established</field>
+        <field name="tracking_status">Under check &amp; Verify at BD (HOR) </field>
+        <field name="sequence">10002</field>
+        <field name="code">10002</field>
+         <field name="type_workflow">WF001</field>
+         <field name="risk_workflow_id" ref="risk_workflow1"></field>
+    </record>
+    <record model="risk.stage" id="risk_stage3">
+        <field name="name">Check &amp; Verify - BD (HOR) </field>
+        <field name="tracking_status">Under Check &amp; Verify at RD (CRA) </field>
+        <field name="sequence">10003</field>
+        <field name="code">10003</field>
+         <field name="type_workflow">WF001</field>
+        <field name="risk_workflow_id" ref="risk_workflow1"></field>
+    </record>
+    <record model="risk.stage" id="risk_stage4">
+        <field name="name">Check &amp; Verify - RD (CRA) </field>
+        <field name="tracking_status">Under Check &amp; Verify at RD (SCRA) </field>
+        <field name="sequence">10004</field>
+        <field name="code">10004</field>
+         <field name="type_workflow">WF001</field>
+        <field name="risk_workflow_id" ref="risk_workflow1"></field>
+    </record>
+    <record model="risk.stage" id="risk_stage5">
+        <field name="name">Check &amp; Verify - RD (SCRA) </field>
+        <field name="tracking_status">Under Final Review &amp; Recommend at HBD </field>
+        <field name="sequence">10005</field>
+        <field name="code">10005</field>
+         <field name="type_workflow">WF001</field>
+        <field name="risk_workflow_id" ref="risk_workflow1"></field>
+    </record>
+
+    <record model="risk.stage" id="risk_stage6">
+        <field name="name">Final Review  &amp; Recommend</field>
+        <field name="tracking_status">Under Final Approval at RD (CRO)</field>
+        <field name="sequence">10006</field>
+        <field name="code">10006</field>
+        <field name="type_workflow">WF001</field>
+        <field name="risk_workflow_id" ref="risk_workflow1"></field>
+    </record>
+
+     <record model="risk.stage" id="risk_stage7">
+        <field name="name">Final Approval</field>
+        <field name="tracking_status">RAC Paper  &amp; ITS Approved</field>
+        <field name="sequence">10007</field>
+        <field name="code">10007</field>
+        <field name="type_workflow">WF001</field>
+        <field name="risk_workflow_id" ref="risk_workflow1"></field>
+    </record>
+
+
+</odoo>

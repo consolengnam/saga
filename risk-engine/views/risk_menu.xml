@@ -46,6 +46,9 @@
 
     <menuitem name="Risk Management" id="risk-engine_management" parent="risk-engine_menu_root"/>
     <menuitem name="Pricing Model/Matrix" id="risk-model_simulation" parent="risk-engine_menu_root"/>
+    <menuitem name="Guarantee Origination" id="risk-engine_guarantee_origination" parent="risk-engine_menu_root"/>
+    <menuitem name="Workflow Engine" id="risk-engine_workflow_engine" parent="risk-engine_menu_root"/>
+
 
     <!-- actions -->
 
@@ -61,9 +64,16 @@
     <menuitem name="Pricing Model Matrix – Premium D" id="risk-engine_premium_d" parent="risk-model_simulation" action="risk-engine.risk-engine_premium_d_action"/>
     <menuitem name="Pricing Model Matrix – WARF Weight Matrix" id="risk-engine_warf_weight_matrix" parent="risk-model_simulation" action="risk-engine.risk-engine_warf_weight_matrix_action"/>
     <menuitem name="Pricing Model Matrix – Pricing Model Constants" id="risk-engine_pricing_model_constants" parent="risk-model_simulation" action="risk-engine.risk-engine_pricing_model_constants_action"/>
+    <menuitem name="Risk Model Simulation" id="risk-engine_risk_model_simulation" parent="risk-engine_management" action="risk-engine.risk-engine_simulation_action"/>
 
 
-     <menuitem name="Risk Model Simulation" id="risk-engine_risk_model_simulation" parent="risk-engine_management" action="risk-engine.risk-engine_simulation_action"/>
+    <menuitem name="Credit Risk Assessment" id="risk-credit-risk-assessment" parent="risk-engine_guarantee_origination" action="risk-engine_model_workflow_action"/>
 
+    <menuitem name="Workflow Applications" id="risk-workflow_application" parent="risk-engine_workflow_engine" action="risk_workflow_approval_structure_action"/>
+     <menuitem name="Workflows" id="risk-workflows" parent="risk-engine_workflow_engine" action="risk_workflow_approval_structure_action"/>
+     <menuitem name="Workflow Status(Step)" id="risk-workflow_status" parent="risk-engine_workflow_engine" action="risk_workflow_approval_structure_action"/>
+     <menuitem name="Workflow Action list" id="risk-workflow_action_list" parent="risk-engine_workflow_engine" action="risk_workflow_action_list_action"/>
+     <menuitem name="Workflow Approval Structure" id="risk-workflow_approval_structure" parent="risk-engine_workflow_engine" action="risk_workflow_approval_structure_action"/>
+    <menuitem name="Workflow Counter" id="risk-workflow_counter_action" parent="risk-engine_workflow_engine" action="risk_counter_action"/>
   </data>
 </odoo>
