@@ -300,3 +300,67 @@ class RiskCounter(models.Model):
             if result:
                 for compter in result:
                     return compter
+
+    class RiskRegion(models.Model):
+        _name = 'risk.region'
+        _description = 'The Region'
+        _rec_name = 'name'
+
+        name = fields.Char(string='Name', required=True, translate=True)
+        code = fields.Char(string='Code', required=True, translate=True)  # internal code
+        description = fields.Text(string='Description', required=False, translate=True)
+        _sql_constraints = [('name_uniq', 'unique (name)', _("Region name already exists !")),
+                            ('code_uniq', 'unique (code)', _("Region Code already exists !"))]
+
+    class RiskParamRaacMemoReview(models.Model):
+        _name = 'risk.param.raac.memo.review'
+        _description = 'The RAAC MEMO'
+        _rec_name = 'name'
+
+        name = fields.Char(string='Name', required=True, translate=True)
+        description = fields.Text(string='Description', required=False, translate=True)
+        status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1')
+        _sql_constraints = [('name_uniq', 'unique (name)', _("Memo review name already exists !"))]
+
+
+    class RiskRaacMemoReview(models.Model):
+        _name = 'risk.raac.memo.review'
+        _description = 'The RAAC MEMO'
+        _rec_name = 'description_id'
+
+        description_id = fields.Many2one('risk.param.raac.memo.review', string="Description")
+        transmission_status = fields.Selection([('1', 'Yes'), ('2', 'No'), ('3', 'N/A')], string='Transmission Status')
+        comments = fields.Char(string='Comments',  translate=True)
+        risk_model_workflow_id = fields.Many2one('risk.model.workflow', string="Workflow")
+        editable_by_bd_rma = fields.Boolean(string='Editable By BD-RMA', related='risk_model_workflow_id.editable_by_bd_rma')
+
+    class RiskParamAcceptanceTerm(models.Model):
+        _name = 'risk.param.acceptance.term'
+        _description = 'The RAAC param acceptance term'
+        _rec_name = 'name'
+
+        name = fields.Char(string='Name', required=True, translate=True)
+        description = fields.Text(string='Description', required=False, translate=True)
+        status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1')
+        _sql_constraints = [('name_uniq', 'unique (name)', _("Memo review name already exists !"))]
+
+    class RiskAcceptanceTerm(models.Model):
+        _name = 'risk.acceptance.term'
+        _description = 'The RAAC acceptance term'
+        _rec_name = 'description_id'
+
+        description_id = fields.Many2one('risk.param.acceptance.term', string="Description")
+        check = fields.Boolean('Accept?')
+        comments = fields.Char(string='Comments', translate=True)
+        risk_model_workflow_id = fields.Many2one('risk.model.workflow', string="Workflow")
+
+    class RiskAcceptanceTermTransient(models.TransientModel):
+        _name = 'risk.acceptance.term.transient'
+        _description = 'The RAAC acceptance term'
+        _rec_name = 'description_id'
+
+        description_id = fields.Many2one('risk.param.acceptance.term', string="Description")
+        check = fields.Boolean('Accept?')
+        comments = fields.Char(string='Comments', translate=True)
+        risk_movement_id = fields.Many2one('risk.movement.wizard', string="Workflow")
+        stage_code = fields.Char(string='Code', related='risk_movement_id.stage_id.code', readonly=True)

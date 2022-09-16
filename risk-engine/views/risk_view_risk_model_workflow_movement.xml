@@ -25,7 +25,6 @@
             <field name='model'>risk.movement.wizard</field>
             <field name='arch' type='xml'>
                 <form string="Transmission">
-                    attrs="{'invisible': [ ('id', '=', False)], 'readonly': True}"
                     <sheet>
                             <group string="Endorsement Section">
                                 <field name='transmitter_id' attrs="{'required': True, 'invisible':True}"/>
@@ -38,6 +37,11 @@
                                 <field name='next_stage_id' attrs="{'required': True , 'invisible':True}"/>
                                 <field name='recipient_id' attrs="{'required': True , 'invisible':True}"/>
                                 <field name='job_recipient_id' attrs="{'required': True , 'invisible':True}"/>
+                            </group>
+
+                            <group  attrs="{'invisible': [('stage_code', 'not in', ['10001'])]}" string="Risk Acceptance Term">
+                                <field name="risk_acceptance_term"  nolabel="1"    context="{'tree_view_ref':'view_risk_acceptance_term_transient_tree_view'}"/>
+                                 <field name='stage_code' attrs="{'invisible':True}"/>
                             </group>
                    </sheet>
                     <footer>

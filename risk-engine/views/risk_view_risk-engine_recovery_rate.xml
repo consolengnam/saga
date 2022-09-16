@@ -45,7 +45,7 @@
                         <group>
                             <field name="rate"/>
                             <field name="country_id"/>
-                            <field name="status"/>
+<!--                            <field name="status"/>-->
                         </group>
 
                         <notebook>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record model="risk.param.acceptance.term" id="risk-engine.risk_param_acceptance_term1">
+
+        <field name="name">I acknowledge receipt of all above documents and I have carefully analysed them. </field>
+
+        <field name="status">1</field>
+    </record>
+    <record model="risk.param.acceptance.term" id="risk-engine.risk_param_acceptance_term2">
+
+        <field name="name">I have identified no issue justifying that the preliminary Risk Assessment has not been performed according to AGF risk management policy.</field>
+
+        <field name="status">1</field>
+    </record>
+
+ </odoo>

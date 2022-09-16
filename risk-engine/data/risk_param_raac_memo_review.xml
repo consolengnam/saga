@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record model="risk.param.raac.memo.review" id="risk-engine.risk_param_raac_memo_review1">
+
+        <field name="name">Duly Signed LoR </field>
+
+        <field name="status">1</field>
+    </record>
+    <record model="risk.param.raac.memo.review" id="risk-engine.risk_param_raac_memo_review2">
+
+        <field name="name">Annual Reports Including duly signed audited financial statements for 3 years / Interim financial statements </field>
+
+        <field name="status">1</field>
+    </record>
+    <record model="risk.param.raac.memo.review" id="risk-engine.risk_param_raac_memo_review3">
+
+        <field name="name">Financial spreads</field>
+
+        <field name="status">1</field>
+    </record>
+    <record model="risk.param.raac.memo.review" id="risk-engine.risk_param_raac_memo_review4">
+
+        <field name="name">Guarantee fees calculation based on pricing model</field>
+
+        <field name="status">1</field>
+    </record>
+    <record model="risk.param.raac.memo.review" id="risk-engine.risk_param_raac_memo_review5">
+
+        <field name="name">Call Report</field>
+
+        <field name="status">1</field>
+    </record>
+    <record model="risk.param.raac.memo.review" id="risk-engine.risk_param_raac_memo_review6">
+
+        <field name="name">Evidence that KYC, PEP, AML and Anti-Terrorism checks has been done on potential PFI, Shareholders and Directors</field>
+
+        <field name="status">1</field>
+    </record>
+    <record model="risk.param.raac.memo.review" id="risk-engine.risk_param_raac_memo_review7">
+
+        <field name="name">RAAC Memorandum	</field>
+
+        <field name="status">1</field>
+    </record>
+ </odoo>

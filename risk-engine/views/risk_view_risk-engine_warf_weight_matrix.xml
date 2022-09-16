@@ -55,9 +55,9 @@
                              <field name="borrower_weight"/>
                              <field name="transaction_weight"/>
                         </group>
-                        <group>
+                       <!-- <group>
                              <field name="status"/>
-                        </group>
+                        </group>-->
                     </group>
                     <notebook>
                         <page string="Model Warf Weight" name="risk_engine_warf_weight_matrix">

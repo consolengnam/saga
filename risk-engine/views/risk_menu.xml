@@ -47,7 +47,7 @@
     <menuitem name="Risk Management" id="risk-engine_management" parent="risk-engine_menu_root"/>
     <menuitem name="Pricing Model/Matrix" id="risk-model_simulation" parent="risk-engine_menu_root"/>
     <menuitem name="Guarantee Origination" id="risk-engine_guarantee_origination" parent="risk-engine_menu_root"/>
-    <menuitem name="Workflow Engine" id="risk-engine_workflow_engine" parent="risk-engine_menu_root"/>
+    <menuitem name="Workflow Engine" id="risk-engine_workflow_engine" parent="risk-engine_menu_root" groups="risk-engine.ADMIN"/>
 
 
     <!-- actions -->

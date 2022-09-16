@@ -43,6 +43,11 @@
         <field name="comment">Risk management Chief Risk Officer</field>
          <field name="category_id" ref="module_category_risk_engine"/>
     </record>
+    <record id="ADMIN" model="res.groups">
+        <field name="name">ADMIN</field>
+        <field name="comment">Risk ADMIN</field>
+         <field name="category_id" ref="module_category_risk_engine"/>
+    </record>
 
 
 

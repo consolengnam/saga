@@ -27,6 +27,8 @@
                 <tree>
                     <field name="model_application_number"/>
                     <field name="process"/>
+                    <field name="pfi_id"/>
+                    <field name="opportunity_id"/>
                     <field name="create_uid" string="Initiated By"/>
                     <field name="create_date" string="Initiated On"/>
                     <field name="stage_id"/>
@@ -44,63 +46,237 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                       <!-- <button name="%(action_risk_movement_submit)d" string="Submit"
-                                class="fa fa-paper-plane-o" type="action"
-                                attrs="{'invisible': [('check_position','!=', True)]}"></button>
-                        <button name="%(action_risk_movement_cancel)d" string="Reset"
-                                class="fa fa-reply" type="action"
-                                attrs="{'invisible': [('check_cancel_position','!=', True)]}"></button>-->
+                        <!-- <button name="%(action_risk_movement_submit)d" string="Submit"
+                                 class="fa fa-paper-plane-o" type="action"
+                                 attrs="{'invisible': [('check_position','!=', True)]}"></button>
+                         <button name="%(action_risk_movement_cancel)d" string="Reset"
+                                 class="fa fa-reply" type="action"
+                                 attrs="{'invisible': [('check_cancel_position','!=', True)]}"></button>-->
 
                         <field name="check_position" invisible="1"/>
                         <field name="check_cancel_position" invisible="1"/>
                         <field name="check_return_position" invisible="1"/>
                         <field name="risk_workflow_id" invisible="1"/>
+                        <field name="stage_code" invisible="1"/>
+                         <field name="risk_models_simulation" invisible="1"/>
+                         <field name="editable_by_bd_rma" invisible="1"/>
+                         <field name="stage_code"   invisible="1" />
+                         <field name="check_save_bd_rma"  invisible="1" />
+                         <field name="check_not_submit_bd_rma"  invisible="1" />
+
+
+
+
 
 
                         <button name="%(action_risk_movement_submit)d" string="Submit"
                                 class="fa fa-paper-plane-o" type="action"
-                                attrs="{'invisible': [('check_position','!=', True)]}"
-                                ></button>
+                                attrs="{'invisible': ['|',('check_position','!=', True), ('check_not_submit_bd_rma','=', True)]}"
+                        ></button>
                         <button name="%(action_risk_movement_cancel)d" string="Reset"
-                                class="fa fa-ban" type="action" attrs="{'invisible': [('check_cancel_position','!=', True)]}"
-                                ></button>
+                                class="fa fa-ban" type="action"
+                                attrs="{'invisible': [('check_cancel_position','!=', True)]}"
+                        ></button>
                         <button name="%(action_risk_movement_return)d" string="Return"
                                 class="fa fa-reply" type="action"
                                 attrs="{'invisible': [('check_return_position','!=', True)]}"
-                                ></button>
+                        ></button>
+
+
+
+<!--
+                         <button name="create_risk_models_simulation" string="Risk"
+                                class="fa fa-reply" type="action"
+                                attrs="{'invisible': [('check_position','!=', True)]}"
+                        ></button>-->
+
+
+
+
+
+
 
 
                         <!--                        <field name="status" widget="statusbar" statusbar_visible="1,2" readonly="1"/>-->
                         <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}"/>
                     </header>
                     <sheet>
+                        <div class="oe_button_box" name="button_box" attrs="{'invisible': [('check_save_bd_rma', '=', False)]}">
+                             <button class="oe_stat_button" type="object" string="Risk Engine" name="create_risk_models_simulation"
+                                icon="fa-pencil-square-o">
+                             </button>
+                         </div>
 
-                        <group>
-                            <group>
-                                <field name="model_application_number" attrs="{'invisible': [ ('id', '=', False)], 'readonly': True}"/>
-                                <field name="model_workflow_description"/>
+                     <!--
+                     <field name="many2onefield" options="{'no_create': True, 'no_create_edit':True}" />
+                     <field name="risk_models_simulation"
+                                              attrs="{'invisible': [('check_position','!=', True)]}"   widget="many2onebutton"  />-->
+
+                        <div attrs="{'invisible': [('stage_code', 'not in', ['10000'])]}">
+                            <div >
+                                <p>INSTRUCTION: Choose a Partner Financial Institution (PFI) from the dropdown list,
+                                    then select an Opportunity available for the selected PFI and all necessary
+                                    documents are displayed.
+                                </p>
+                            </div>
+                            <h1>
+                                <separator string="PFI Opportunity / Documentation"/>
+                            </h1>
+
+                            <group colspan="4">
+                                <field name="model_application_number"
+                                       attrs="{'invisible':True, 'readonly': True}"/>
+                                <field name="pfi_id"/>
+                                <field name="opportunity_id" attrs="{'invisible': [ ('pfi_id', '=', False)]}"/>
                             </group>
 
-                        </group>
-                        <notebook>
-                            <page string="Other Information">
+                            <div attrs="{'invisible': [ ('opportunity_id', '=', False)]}">
+                                <separator string="E&amp;S Screening Questionnaire"/>
+                                <div>
+                                    <p>This questionnaire aims to formalise the screening phase described in the
+                                        Environmental &amp; Social (E&amp;S) Framework. This questionnaire must be
+                                        completed by the Relationship Manager and submitted to the AGF Chief Risk
+                                        Officer (in the event of an excluded activity) and to the Environmental
+                                        &amp; Social Manager (if otherwise) prior to or with the RAAC.
+                                    </p>
+                                </div>
 
                                 <group>
+                                    <group>
+                                        <field name="agf_screening_id"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"
+                                               context="{'default_opportinuty_id': opportunity_id}"/>
+                                        <field name="guarantee_party"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                        <field name="guarantee_identifier"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                        <field name="co_guarantor"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="types_of_institution"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                        <field name="executed_by"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                        <field name="es_country"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                        <field name="es_date"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                    </group>
+                                </group>
+                                <div>
+                                    <p>Does the transaction or bank partners’ operations involve one or several
+                                        activities included in AGF’s Exclusion List (above)?
+                                    </p>
+                                </div>
+
+                                <group>
+                                    <field name="es_activities" nolabel="1"/>
+                                </group>
+                                <div>
+                                    <p>
+                                        If yes, specify which ones and provide an explanation. If the transaction has
+                                        various
+                                        activities (PFI, group, etc.), the share of its activities included in the list
+                                        above
+                                        must be specified.
+
+                                    </p>
+                                </div>
+                                <group>
+                                    <field name="es_activities_reason_yes" nolabel="1"/>
+                                </group>
+                                <div>
+                                    <p>
+                                        If not, explain how the non-inclusion to this list was verified.
+                                    </p>
+                                </div>
+                                <group>
+                                    <field name="es_activities_reason_no" nolabel="1"/>
+                                </group>
+
+                            </div>
+
+                        </div>
+
+
+                        <div attrs="{'invisible': [('stage_code', 'in', ['10000'])]}">
+
+                            <group string="Credit Risk Assessment Application">
+                                <group string="RAAC Memo Review Template ">
+
+                                    <group>
+                                        <field name="pfi_id_prospective"/>
+                                        <field name="country_id"  attrs="{'readonly': [('editable_by_bd_rma', '=', False)], 'required': [('editable_by_bd_rma', '=', True)]}" />
+                                        <field name="tiering" attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}"  />
+                                        <field name="product_id" attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}"/>
+
+                                        <field name="lor_date" attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}"/>
+                                        <field name="submission_date" attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}"/>
+
+                                        <field name="others" attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="opportunity_id_code" />
+                                        <field name="region_id" attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}"/>
+                                        <field name="head_of_region" attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}"/>
+                                        <field name="exercice" attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}"/>
+                                        <field name="reviewer" attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}"/>
+                                        <field name="reviewer_date" attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}"/>
+
+                                    </group>
 
                                 </group>
-                                <div class="oe_clear"/>
-                            </page>
+                                <group string="E&amp;S Categorization Template">
 
-                        </notebook>
+                                    <group>
+                                        <field name="agf_screening_id"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)], 'readonly': [('stage_code', 'not in', ['10000'])]}"
+                                               context="{'default_opportinuty_id': opportunity_id}"/>
+                                        <field name="guarantee_party"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                        <field name="guarantee_identifier"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                        <field name="co_guarantor"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="types_of_institution"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                        <field name="executed_by"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                        <field name="es_country"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                        <field name="es_date"
+                                               attrs="{'invisible': [ ('opportunity_id', '=', False)]}"/>
+                                    </group>
 
-                         <group string="Action Log">
-                                <field name="movement_ids" nolabel="1"   context="{'tree_view_ref':'view_movement_tree_view'}"  />
-                                <!-- <field name="create_uid" string="Username"/>
-                               <field name="fullname" string="Fullname"/>
-                               <field name="create_date" string="Date"/>-->
+                                </group>
+
+                                <group string="Risk Acceptance Term" attrs="{'invisible': [('stage_code', 'in', ['10000','10001'])]}">
+                                    <field name="risk_acceptance_term" nolabel="1"
+                                           context="{'tree_view_ref':'view_risk_acceptance_term_tree_view'}"/>
+                                </group>
+
+                                <group string="Documents required for RAAC Memo" >
+                                    <field name="risk_raac_memo_review" nolabel="1"
+                                           context="{'tree_view_ref':'view_risk_raac_memo_review_tree_view'}"/>
+                                </group>
+
+                            </group>
+
+                        </div>
+
+
+                        <group string="Action Log" attrs="{'invisible': [ ('id', '=', False)]}">
+                            <field name="movement_ids" nolabel="1"
+                                   context="{'tree_view_ref':'view_movement_tree_view'}"/>
+                            <!-- <field name="create_uid" string="Username"/>
+                           <field name="fullname" string="Fullname"/>
+                           <field name="create_date" string="Date"/>-->
                         </group>
-                    </sheet>
 
+                    </sheet>
 
 
                     <div class="oe_chatter">

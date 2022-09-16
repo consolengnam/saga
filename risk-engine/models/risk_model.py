@@ -18,7 +18,7 @@ class RiskModels(models.Model):
 
     model_name = fields.Char(string='Model Name', required=True)
     model_description = fields.Text(string='Model Description', required=True)
-    status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1')
+    status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1', readonly=True)
     # type_id = fields.Many2one('risk.models.types', string='Type', required=True)
     risk_model_factors = fields.One2many('risk.model.factor', 'risk_model_id', required=True)
     type_risk = fields.Selection([

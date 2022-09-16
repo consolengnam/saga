@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base' ,  'mail', 'hr',
+    'depends': ['base' ,  'mail', 'hr', 'crm' , 'agf'
       ],
 
     # always loaded
@@ -46,6 +46,9 @@
         'data/risk_agency_default_rates.xml',
         'data/risk_free_vectors.xml',
         'data/risk_stage.xml',
+
+        'data/risk_param_acceptance_term.xml',
+        'data/risk_param_raac_memo_review.xml',
 
     ],
     # only loaded in demonstration mode

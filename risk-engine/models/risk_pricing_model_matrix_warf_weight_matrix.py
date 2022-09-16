@@ -14,7 +14,7 @@ class RiskWarfWeightMatrices(models.Model):
     lender_weight = fields.Float(string='Lender Weight', digits=(5, 2), required=True)
     borrower_weight = fields.Float(string='Borrower Weight', digits=(5, 2), required=True)
     transaction_weight = fields.Float(string='Transaction Weight', digits=(5, 2), required=True)
-    status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1')
+    status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1' , readonly=True)
     product_id = fields.Many2one('risk.guarantee.products', 'product Name', required=True)
 
 

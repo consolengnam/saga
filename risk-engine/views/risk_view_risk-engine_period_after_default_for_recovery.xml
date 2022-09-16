@@ -49,9 +49,9 @@
                             <field name="period"/>
                             <field name="country_id"/>
                         </group>
-                        <group>
+                    <!--    <group>
                              <field name="status"/>
-                        </group>
+                        </group>-->
                     </group>
                     <notebook>
                         <page string="Model Factors" name="risk_model_factors">

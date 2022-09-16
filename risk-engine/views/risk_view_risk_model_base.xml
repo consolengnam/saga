@@ -315,5 +315,50 @@
 
 
 
+       <!-- risk raac memo review tree view -->
+       <record id="view_risk_raac_memo_review_tree_view" model="ir.ui.view">
+            <field name="name">risk.raac.memo.review.tree</field>
+            <field name="model">risk.raac.memo.review</field>
+            <field name="arch" type="xml">
+                <tree  editable="bottom" create="false" delete="false">
+                       <field name="editable_by_bd_rma" invisible="1"/>
+                       <field name="description_id"  readonly="1"  />
+                       <field name="description_id"  invisible="1"  />
+                       <field name="transmission_status"  attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}" />
+                       <field name="comments"   attrs="{'readonly': [('editable_by_bd_rma', '=', False)] , 'required': [('editable_by_bd_rma', '=', True)]}" />
+                </tree>
+            </field>
+        </record>
+
+       <!-- risk acceptance term -->
+       <record id="view_risk_acceptance_term_transient_tree_view" model="ir.ui.view">
+            <field name="name">risk.acceptance.term.transient.tree</field>
+            <field name="model">risk.acceptance.term.transient</field>
+            <field name="arch" type="xml">
+                <tree  editable="bottom" create="false" delete="false">
+                       <field name="stage_code"  invisible="1"  nolabel="1"  />
+                       <field name="check"    nolabel="1"  attrs="{'required': [('stage_code', 'in', ['10001'])]}" />
+                       <field name="description_id"  readonly="1"  nolabel="1"  />
+                       <field name="description_id"  invisible="1"  nolabel="1"  />
+
+                </tree>
+            </field>
+        </record>
+
+       <!-- risk acceptance term -->
+       <record id="view_risk_acceptance_term_tree_view" model="ir.ui.view">
+            <field name="name">risk.acceptance.term.tree</field>
+            <field name="model">risk.acceptance.term</field>
+            <field name="arch" type="xml">
+                <tree  editable="bottom" create="false" delete="false">
+                       <field name="check"   readonly="1"  nolabel="1"   />
+                       <field name="description_id"  readonly="1"  nolabel="1"  />
+                </tree>
+            </field>
+        </record>
+
+
+
+
   </data>
 </odoo>

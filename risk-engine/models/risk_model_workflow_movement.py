@@ -74,6 +74,9 @@ class RiskMovement(models.Model):
 
         return is_delete
 
+    #risk_acceptance_term = fields.One2many('risk.acceptance.term', 'risk_movement_id', string="Description")
+
+
 
 
 
@@ -237,6 +240,11 @@ class RiskMovementWizard(models.TransientModel):
                                 self.recipient_id = risk_workflow_approval_structure_roles_result.department_id.id
                                 self.job_recipient_id = risk_workflow_approval_structure_roles_result.id
 
+        return self.init_risk_acceptance_term_data()
+
+    stage_code = fields.Char(string='Code', related='stage_id.code', readonly=True)
+
+
     def add_risk_movement(self):
         '''Transmission action'''
 
@@ -268,17 +276,44 @@ class RiskMovementWizard(models.TransientModel):
 
             })
 
+            if movement.stage_id.code =='10001':
 
+                risk_acceptance_term=[]
 
-            if newmovement:
+                if newmovement:
 
-                results_workflow.write({
-                    'last_movement_id': newmovement.id,
-                    'stage_id': movement.next_stage_id.id,
-                    'position_id': movement.job_recipient_id.id,
-                    'date_last_modif': current_time,
-                    'role_id': movement.job_recipient_id.id,
-                })
+                    for rec in movement.risk_acceptance_term:
+                        if rec.check != True :
+                            raise ValidationError(_('Please validate Risk Acceptance Term before move to the next stage.'))
+                        if rec:
+                            value = {
+                                'description_id': rec.description_id.id,
+                                'check': rec.check,
+                                'comments': rec.comments,
+                                'risk_model_workflow_id': movement.risk_model_workflow_id.id,
+
+                            }
+                            risk_acceptance_term.append((0, 0, value))
+
+                    results_workflow.write({
+                        'last_movement_id': newmovement.id,
+                        'stage_id': movement.next_stage_id.id,
+                        'position_id': movement.job_recipient_id.id,
+                        'date_last_modif': current_time,
+                        'role_id': movement.job_recipient_id.id,
+                        'risk_acceptance_term': risk_acceptance_term
+                    })
+            else :
+
+                if newmovement:
+
+                    results_workflow.write({
+                        'last_movement_id': newmovement.id,
+                        'stage_id': movement.next_stage_id.id,
+                        'position_id': movement.job_recipient_id.id,
+                        'date_last_modif': current_time,
+                        'role_id': movement.job_recipient_id.id,
+                    })
 
         message = _("Submission completed successfully")
 
@@ -415,3 +450,31 @@ class RiskMovementWizard(models.TransientModel):
     def _get_default_stage_id(self):
         Stage = self.env['risk.stage']
         return Stage.search([('code', '=', IN_PROCESS_STATE)], limit=1)
+
+
+    risk_acceptance_term = fields.One2many('risk.acceptance.term.transient', 'risk_movement_id', string="Description")
+
+    # @api.onchange('final_status')
+    # def  init_risk_acceptance_term_data_onchange(self):
+    #     return self.init_risk_acceptance_term_data()
+    def init_risk_acceptance_term_data(self):
+
+        ligne_risk_acceptance_term_ids = []
+
+        for rec in self:
+            rec.write({'risk_acceptance_term': [(5, 0, 0)]})
+
+        query_model = self.env['risk.param.acceptance.term']
+        query_model_results= query_model.search([('status', '=', '1')])
+        for rec in query_model_results:
+            if rec:
+                value = {
+                    'description_id': rec.id,
+
+                }
+                ligne_risk_acceptance_term_ids.append((0, 0, value))
+
+        return {'value': {
+            'risk_acceptance_term': ligne_risk_acceptance_term_ids,
+        }
+        }

@@ -24,7 +24,7 @@ class RiskModelsSimulation(models.Model):
     model_simulation_name = fields.Char(string='Model Simulation Name', required=True,
                                         default=_default_model_simulation_name)
     model_simulation_description = fields.Text(string='Model Simulation Description', required=False)
-    status = fields.Selection([('1', 'In progress'), ('2', 'Ended')], required=True, default='1')
+    status = fields.Selection([('1', 'Draft'), ('2', 'Validate')], required=True, default='1', readonly=True)
 
     def _get_risk_models(self):
         print("-------------bonjour------------------")
@@ -35,16 +35,16 @@ class RiskModelsSimulation(models.Model):
     # risk_model_lender_ids = fields.Many2many('risk.models', string='Country Risk', required=False)
 
     country_risk_model_id = fields.Many2one('risk.models', string='Country Risk',
-                                            domain="[('type_risk', '=', 'country_risk_models')]", required=True)
+                                            domain="[('type_risk', '=', 'country_risk_models')]", required=False)
 
     # country_risk_model_id = fields.Many2one('risk.models', string='Country Risk', domain="[('type_risk', '=', 'country_risk_models')]", required=False)
     lender_risk_model_id = fields.Many2one('risk.models', string='Lender Risk',
-                                           domain="[('type_risk', '=', 'lender_risk_models')]", required=True)
+                                           domain="[('type_risk', '=', 'lender_risk_models')]", required=False)
     borrower_risk_model_id = fields.Many2one('risk.models', string='Borrower Risk',
-                                             domain="[('type_risk', '=', 'borrower_risk_models')]", required=True)
+                                             domain="[('type_risk', '=', 'borrower_risk_models')]", required=False)
     transaction_risk_model_id = fields.Many2one('risk.models', string='Transaction Risk',
                                                 domain="[('type_risk', '=', 'transaction_risk_models')]",
-                                                required=True)
+                                                required=False)
 
     # type_risk = fields.Char(string='Type ', related='country_risk_model_id.type_risk')
 
@@ -689,9 +689,10 @@ class RiskModelsSimulation(models.Model):
 
         if self.risk_models_amortization_schedule_ids:
             for rec in self.risk_models_amortization_schedule_ids:
-                results_amortization = self.env['risk.models.amortization.schedule'].search([('id', '=', rec.id)])
-                if results_amortization:
-                    results_amortization.unlink()
+                if rec and rec.id :
+                    results_amortization = self.env['risk.models.amortization.schedule'].search([('id', '=', rec.id)])
+                    if results_amortization:
+                        results_amortization.unlink()
 
         risk_models_armotization_schedule_data_dict = self.traiter_risk_models_armotization_schedule_data(period,facility_amount,sum_weighted_product_score,conversion_factor_default_rate,coverage_ratio,recovery_rate,period_after_default_for_recovery,premium_d, premium_f)
 
@@ -724,6 +725,11 @@ class RiskModelsSimulation(models.Model):
     def create(self, vals):
 
         '''This action is used to create Simulation transaction in the database.'''
+
+        weighted_score_total = 0
+        weighted_score_total_lender = 0
+        weighted_score_total_borrower = 0
+        weighted_score_total_transaction = 0
 
         if "risk_models_simulation_models_model_factor_ids" in vals.keys():
             weighted_score_total = 0
@@ -816,14 +822,15 @@ class RiskModelsSimulation(models.Model):
 
     def init_risk_model_factor_id_key(self, risk_models_simulation_models_model_sub_factor_ids, subfactor_model):
         for risk_models_simulation_models_model_sub_factor_id in risk_models_simulation_models_model_sub_factor_ids:
-            result = self.env[subfactor_model].browse(risk_models_simulation_models_model_sub_factor_id[1])
-            if not risk_models_simulation_models_model_sub_factor_id[2]:
-                risk_models_simulation_models_model_sub_factor_id[2] = {}
+            if isinstance(risk_models_simulation_models_model_sub_factor_id[1], int) :
+                result = self.env[subfactor_model].browse(risk_models_simulation_models_model_sub_factor_id[1])
+                if not risk_models_simulation_models_model_sub_factor_id[2]:
+                    risk_models_simulation_models_model_sub_factor_id[2] = {}
 
-            risk_models_simulation_models_model_sub_factor_id[2][
-                "risk_model_factor_id"] = result.risk_model_factor_id.id
-            if not "score" in risk_models_simulation_models_model_sub_factor_id[2].keys():
-                risk_models_simulation_models_model_sub_factor_id[2]["score"] = result.answer.point
+                risk_models_simulation_models_model_sub_factor_id[2][
+                    "risk_model_factor_id"] = result.risk_model_factor_id.id
+                if not "score" in risk_models_simulation_models_model_sub_factor_id[2].keys():
+                    risk_models_simulation_models_model_sub_factor_id[2]["score"] = result.answer.point
 
     def init_risk_model_factor_id_key_write(self, risk_models_simulation_models_model_sub_factor_ids, subfactor_model):
         for risk_models_simulation_models_model_sub_factor_id in risk_models_simulation_models_model_sub_factor_ids:
@@ -835,6 +842,10 @@ class RiskModelsSimulation(models.Model):
 
     def write(self, vals):
         '''This action is used to update Simulation transaction in the database.'''
+        weighted_score_total = 0
+        weighted_score_total_lender = 0
+        weighted_score_total_borrower = 0
+        weighted_score_total_transaction = 0
 
         if not "drapeau"  in vals.keys():
             if self.risk_models_simulation_models_model_factor_ids:
@@ -982,6 +993,16 @@ class RiskModelsSimulation(models.Model):
         riskModelsSimulation = super(RiskModelsSimulation, self).write(vals)
 
         return riskModelsSimulation
+
+    @api.model
+    def _search(self, args, offset=0, limit=None, order=None, count=False, access_rights_uid=None):
+        '''Search action.'''
+
+
+        args += [('risk_model_workflow_id', '=', False)]
+
+        return super(RiskModelsSimulation, self)._search(args, offset, limit, order, count=count,
+                                                      access_rights_uid=access_rights_uid)
 
     # def recompute_factor_and_subfactor(self, factor_ids, sub_factor_ids):
     #
@@ -1193,6 +1214,26 @@ class RiskModelsSimulation(models.Model):
         if self.risk_model_lender_ids.ids:
             return self.init_multiple_risk_models_simulation_data(self.risk_model_lender_ids.ids)
 
+
+
+
+
+    risk_model_workflow_id = fields.Many2one('risk.model.workflow', string="Workflow", required=False)
+
+
+
+
+    #------------------------------validate and dreft action
+    def button_validate(self):
+        self.write({
+            'status': '2',
+         })
+
+    def button_draft(self):
+        self.write({
+            'status': '1',
+         })
+
 # ----------------------------------------MANAGE OF COUNTRY RISK-------------------------------------------------------------------------------------------------------------------------------------------------
 # --------------------------------------------------------------------
 class RiskModelsSimulationModelsModelFactor(models.Model):
@@ -1207,6 +1248,10 @@ class RiskModelsSimulationModelsModelFactor(models.Model):
     risk_score = fields.Float(string='Risk Score', required=False)
     # weighted_score = fields.Float(string='Weighted Score', required=False,  compute="_compute_weighted_score")
     weighted_score = fields.Float(string='Weighted Score', required=False)
+
+    status = fields.Selection("Status", related='risk_models_simulation_id.status')
+
+
     # weighted_score_total = fields.Float(string='Weighted Score', required=False)
 
     # @api.depends('weighted_score', 'risk_models_simulation_id.country_risk_model_id')
@@ -1239,6 +1284,7 @@ class RiskModelsSimulationModelsModelSubFactor(models.Model):
     # score = fields.Float(string='Score', required=False, related='answer.point', inverse='_inverse_score', Store=True)
     # inverse_score = fields.Float(string='Score', required=False)
 
+    status = fields.Selection("Status", related='risk_models_simulation_id.status')
     @api.depends('answer')
     def _compute_score(self):
         for rec in self:
@@ -1267,6 +1313,7 @@ class RiskModelsSimulationModelsModelFactorLender(models.Model):
     risk_score = fields.Float(string='Risk Score', required=False)
     # weighted_score = fields.Float(string='Weighted Score', required=False,  compute="_compute_weighted_score")
     weighted_score = fields.Float(string='Weighted Score', required=False)
+    status = fields.Selection("Status", related='risk_models_simulation_id.status')
 
     # @api.depends('risk_score')
     # def _compute_weighted_score(self):
@@ -1292,6 +1339,7 @@ class RiskModelsSimulationModelsModelSubFactorLender(models.Model):
 
     # score = fields.Float(string='Score', required=False, related='answer.point', inverse='_inverse_score', Store=True)
     # inverse_score = fields.Float(string='Score', required=False)
+    status = fields.Selection("Status", related='risk_models_simulation_id.status')
 
     @api.depends('answer')
     def _compute_score(self):
@@ -1321,6 +1369,7 @@ class RiskModelsSimulationModelsModelFactorBorrower(models.Model):
     risk_score = fields.Float(string='Risk Score', required=False)
     # weighted_score = fields.Float(string='Weighted Score', required=False,  compute="_compute_weighted_score")
     weighted_score = fields.Float(string='Weighted Score', required=False)
+    status = fields.Selection("Status", related='risk_models_simulation_id.status')
 
     # @api.depends('risk_score')
     # def _compute_weighted_score(self):
@@ -1346,6 +1395,7 @@ class RiskModelsSimulationModelsModelSubFactorBorrower(models.Model):
 
     # score = fields.Float(string='Score', required=False, related='answer.point', inverse='_inverse_score', Store=True)
     # inverse_score = fields.Float(string='Score', required=False)
+    status = fields.Selection("Status", related='risk_models_simulation_id.status')
 
     @api.depends('answer')
     def _compute_score(self):
@@ -1375,6 +1425,7 @@ class RiskModelsSimulationModelsModelFactorTransact(models.Model):
     risk_score = fields.Float(string='Risk Score', required=False)
     # weighted_score = fields.Float(string='Weighted Score', required=False,  compute="_compute_weighted_score")
     weighted_score = fields.Float(string='Weighted Score', required=False)
+    status = fields.Selection("Status", related='risk_models_simulation_id.status')
 
     # @api.depends('risk_score')
     # def _compute_weighted_score(self):
@@ -1400,6 +1451,7 @@ class RiskModelsSimulationModelsModelSubFactorTransact(models.Model):
 
     # score = fields.Float(string='Score', required=False, related='answer.point', inverse='_inverse_score', Store=True)
     # inverse_score = fields.Float(string='Score', required=False)
+    status = fields.Selection("Status", related='risk_models_simulation_id.status')
 
     @api.depends('answer')
     def _compute_score(self):

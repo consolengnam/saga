@@ -12,6 +12,6 @@ class PeriodAfterDefaultforRecoveries(models.Model):
     _rec_name = 'period'
 
     period = fields.Float(string='Period(Tenor)', digits=(5, 2), required=True)
-    status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1')
+    status = fields.Selection([('1', 'Active'), ('2', 'Inactive')], required=True, default='1' , readonly=True)
     country_id = fields.Many2one('res.country', string='Country', required=True)
 
