@@ -86,6 +86,8 @@ access_risk_param_acceptance_term1, risk_param_acceptance_term1,model_risk_param
 
 access_risk_acceptance_term_transient1, risk_acceptance_term_transient1,model_risk_acceptance_term_transient,,1,1,1,1
 
+access_crm_lead1, risk_crm_lead1,crm.model_crm_lead,,1,0,0,0
+
 
 
 
