@@ -46,7 +46,7 @@ access_risk_model_workflow4,risk.model.workflow4,model_risk_model_workflow,RM-SC
 access_risk_model_workflow5,risk.model.workflow5,model_risk_model_workflow,BD-Head,1,1,0,0
 access_risk_model_workflow6,risk.model.workflow6,model_risk_model_workflow,RM-CRO,1,1,0,0
 
-access_risk_model_workflow6,risk.model.workflow6,model_risk_model_workflow,,1,0,0,0
+access_risk_model_workflow7,risk.model.workflow7,model_risk_model_workflow,,1,0,0,0
 
 access_risk_stage1,risk.stage1,model_risk_stage,,1,1,1,1
 
